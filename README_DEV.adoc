@@ -1,0 +1,51 @@
+= Developer README for datavis technologies repository
+
+== Including svelte components
+Based on https://dtang.dev/2020-01-25-adding-svelte-3-to-a-jekyll-site
+
+* Create separate `svelte-components` directory containing `rollup.config.js`, etc.
+* Create `svelte-components/src` directory with:
+** `.svelte` component files
+** `main.js`
+* In `svelte-components` directory, run `npm install`.
+
+* For each component you want to use, add the following to `main.js`:
+
+[source,javascript]
+----
+import CustomComponent1 from './CustomComponent1.svelte'
+import CustomComponent2 from './CustomComponent2.svelte'
+
+new CustomComponent1({
+	target: document.querySelector('#svelte-custom-component-1')
+})
+
+new CustomComponent2({
+	target: document.querySelector('#svelte-custom-component-2')
+})
+
+----
+
+
+* Add the following in each `.adoc` file in which you want to include a svelte component:
+
+[source,html]
+----
+++++
+<link href="/dist/svelte-bundle.css" rel="stylesheet" />
+++++
+
+++++
+<script defer src="/dist/svelte-bundle.js"></script>
+++++
+----
+
+* Where you want to include a svelte component:
+[source,html]
+----
+++++
+<div id="svelte-custom-component-1"></div>
+++++
+----
+
+* To run: `cd svelte-components ; rollup -c rollup.config.js ; cd .. ; make ; http-server`

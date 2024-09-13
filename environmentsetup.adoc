@@ -1,0 +1,60 @@
+== Environment setup
+In this part of the course, we will focus on the programming aspect. We will use standard web technologies for this: HTML, CSS and javascript.
+
+We will use https://stackblitz.com[stackblitz], an "instant fullstack web IDE for the javascript ecosystem" (source: Stackblitz developer site). Nevertheless, we also mention below how to set up the necessary stack on your own computer.
+
+=== Stackblitz
+image:stackblitz.png[width=50%,pdfwidth=50%]
+
+There are many different types of projects that stackblitz has templates for. For data visualisation, you might use a vanilla HTML/CSS/javascript setup, or (as in this course) Sveltekit.
+
+image:stackblitz_vanilla.png[width=50%,pdfwidth=50%]
+
+image:stackblitz_fullstack.png[width=50%,pdfwidth=50%]
+
+=== Local installation
+If you want to set up a development environment on your own machine, you will need node and Visual Studio Code.
+
+==== Node
+We'll need to install node, a javascript runtime. You can get it http://nodejs.org[here].
+
+image:nodejs.png[width=25%,pdfwidth=25%]
+
+==== Visual Studio Code
+We'll use Visual Studio Code ("vscode" for short) as a code editor. You can get it https://code.visualstudio.com[here].
+
+image:vscode.png[]
+
+You will also want to add some _extensions_ to make programming for visualisation a bit easier. You can do this by clicking on the "Extensions" icon in the left bar:
+
+image:vscode_extensions.png[width=10%,pdfwidth=10%]
+
+The extensions that we recommend, are:
+
+- Svelte for VS Code (by Svelte)
+- Svelte Intellisense (by ardenivanov)
+
+=== Exercises
+We have set up a group of exercises that will guide you through the different facets of creating visualisations using web technologies and sveltekit. You will find these at the bottom of each page.
+
+*Svelte* is a language and compiler for building web applications. It allows you to create reusable components. *SvelteKit* is a full-stack web application framework built _on top of_ Svelte.
+
+==== Github
+To be able to log into stackblitz, you'll have to create an account on https://github.com/[github] first. This will make it easier to get everything organised.
+
+// We have prepared a project on github so that the right structures are set up and the necessary boilerplate code is ready to go. To get set up:
+
+// ===== On github
+// - Log into github
+// - Go to http://github.com/vda-lab/datavis-technologies-handson
+// - Click on "Fork"
+
+// ===== On stackblitz
+// - Log in using your github account
+// - Go to https://stackblitz.com/codeflow[https://stackblitz.com/codeflow] and click on "Join the Codeflow Beta"
+// - Click on "repositories" in the left and then on the "datavis-technologies-handson"
+
+// image:stackblitz_repositories.png[width=75%,pdfwidth=75%]
+
+
+// image:exercises-website-screenshot.png[]

@@ -1,0 +1,1155 @@
+== Basic data visualisation with svelte
+ifndef::backend-pdf[]
+++++
+<link href="dist/svelte-bundle.css" rel="stylesheet" type="text/css"/>
+<script defer src="dist/svelte-bundle.js" type="text/javascript"></script>
+++++
+endif::[]
+
+ifdef::backend-pdf[]
+NOTE: This section contains several interactive visuals. These are available in the html-version, but not in the PDF version.
+endif::[]
+
+The code in the previous section with `getElementById`, `setAttribute`, `appendChild`, etc gets the job done, but it's very verbose. But there are easier ways of doing this. In this tutorial, we will use http://svelte.dev[svelte] and http://kit.svelte.dev[sveltekit] as our main approach. Sveltekit is a programming framework like React or Vue that provides us with some tools to build websites (and therefore visualisations) more easily. Svelte is a preprocessor that converts code that we write into vanilla javascript. You can compare sveltekit to a restaurant, and svelte to its kitchen. The magic happens in the kitchen, but customers interact with it through the restaurant. *Svelte* is a language and compiler that allows you to create reusable components; *SvelteKit* is a full-stack web application framework built _on top of_ Svelte.
+
+image:svelte-logo.png[width=10%,pdfwidth=10%]
+
+"Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks like React and Vue do the bulk of their work in the browser, Svelte shifts that work into a compile step that happens when you build your app. Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically updates the DOM when the state of your app changes."
+-- svelte.dev
+
+Below, we'll first go over the basics of svelte, and then integrate that into sveltekit.
+
+=== HTML, CSS and javascript in svelte
+In the previous sections, we generally kept HTML, CSS and javascript in separate files. In svelte, we do not do this. A svelte file therefore consists of 3 parts:
+
+1. a javascript section (`<script></script>`)
+2. a CSS section (`<style></style>`)
+3. an HTML section (the rest)
+
+Any of these can be omitted if you don't need them.
+
+IMPORTANT: The javascript and CSS only apply to the HTML written in this specific file. This means that different _components_ (i.e. files) can be styled independently.
+
+=== Using the svelte REPL
+To get a quick feel of what Svelte looks like, go to the online REPL (Read-Eval-Print-Loop) at http://svelte.dev/repl.
+
+image:svelte-repl.png[]
+
+You can write regular HTML in the "App.svelte" tab, but don't add the `<html>`, `<head>` and `<body>` tags.
+
+A svelte file can have three parts:
+
+- `<script>`
+- `<style>`
+- the rest is HTML
+
+Change the code in the editor with the code below, and you should see 2 circles and 1 rectangle:
+
+[source,html]
+----
+<svg width=400 height=400>
+  <circle cx=100 cy=100 r=15 />
+  <circle cx=150 cy=75 r=20 />
+  <rect x=250 y=300 width=30 height=20 />
+</svg>
+----
+
+=== Basics of svelte
+The svelte website has a very good tutorial at http://svelte.dev/tutorial. You should definitely go over it and refer back to it when you have questions. We'll highlight loops, conditionals and reactivity in this document, but these are only a small part of svelte's strengths.
+
+==== Looping over datapoints: `{#each}`
+Svelte helps us to loop over lists in a declarative way. The following code in html gives a bulleted list:
+
+[source,html,linenums]
+----
+<ul>
+  <li>John</li>
+  <li>Jane</li>
+  <li>Joe</li>
+</ul>
+----
+
+ifndef::backend-pdf[]
+++++
+<ul>
+  <li>John</li>
+  <li>Jane</li>
+  <li>Joe</li>
+</ul>
+++++
+endif::[]
+
+ifdef::backend-pdf[]
+- John
+- Jane
+- Joe
+endif::[]
+
+In svelte, we can create an array in the `script` section, and use the `#each` pragma to loop over all items. First, we'll create an array called `names` (denoted with the square brackets `[]`) in the `script` section. In the HTML itself, we can loop over them, using the `{#each}` directive (which is closed using `{/each}`). In that loop, each value is put in the temporary variable `name`:
+
+[source,html,linenums]
+----
+<script>
+  let names = ["John","Jane","Joe"];
+</script>
+
+<ul>
+  {#each names as name}
+    <li>{name}</li>
+  {/each}
+</ul>
+----
+
+NOTE: You can refer to javascript variables that were defined in the `<script>` section or in the `#each` pragma by putting between curly brackets, e.g. `{name}`.
+
+IMPORTANT: The `{#each}` syntax works only in the HTML part of a svelte file, not for the script part which is regular javascript.
+
+Similarly, instead of hard-coding the datapoints in the SVG, or using the `getElementById`, `appendChild` etc as in the previous section, we have an easier way of looping over datapoints in svelte. First, we'll create an array called `datapoints`, each containing an `x` and `y` value in the `script` section. In the HTML itself, we can loop over them, using the `{#each}` directive (which is closed using `{/each}`).
+
+[source,html,linenums]
+----
+<script>
+  let datapoints = [{x: 100, y: 100},
+                    {x: 150, y: 275},
+                    {x: 10, y: 101},
+                    {x: 80, y: 183},
+                    {x: 350, y: 45},
+                    {x: 201, y: 285},
+                    {x: 150, y: 306},
+                    {x: 90, y: 102},
+                    {x: 73, y: 39},
+                    {x: 332, y: 269}]
+</script>
+
+<style>
+    circle {
+        fill-opacity: 0.5;
+    }
+</style>
+
+<svg width=400 height=400>
+  {#each datapoints as dp}
+    <circle cx={dp.x} cy={dp.y} r=10 />
+  {/each}
+</svg>
+----
+
+In line 21-23, we loop over the `datapoints` array, each time putting a single element in a local `dp` variable. We can refer to the `x` and `y` properties like we do on line 22.
+
+NOTE: As with regular arrays, you can refer to javascript _objects_ that were defined in the `<script>` section or in the `#each` pragma by putting between curly brackets, e.g. `{dp.x}`, and adding a period followed by the property.
+
+The result:
+
+ifndef::backend-pdf[]
+++++
+<svg width="400" height="400" style="border: 1px; border-style: solid;">
+    <circle cx="100" cy="100" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="150" cy="275" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="10" cy="101" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="80" cy="183" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="350" cy="45" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="201" cy="285" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="150" cy="306" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="90" cy="102" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="73" cy="39" r="10" style="fill-opacity: 0.5"/>
+    <circle cx="332" cy="269" r="10" style="fill-opacity: 0.5"/>
+</svg>
+++++
+endif::[]
+
+ifdef::backend-pdf[]
+image:svg18.png[width=25%,pdfwidth=25%]
+endif::[]
+
+==== Conditionals: `{#if}`
+Similarly, the `{#if}` directive (in full: `{#if} ... {:else} ... {/if}`) allows you to put conditions in your html. For example, let's create an array of individuals as objects, that contain both a name and a gender.
+
+[source,html,linenums]
+----
+<script>
+  let individuals = [
+    {"name":"Julia","gender":"F"},
+    {"name":"John","gender":"M"},
+    {"name":"Joe","gender":"M"},
+    {"name":"Jane","gender":"F"}];
+</script>
+
+<ul>
+    {#each individuals as individual}
+        {#if individual.gender == "F"}
+            <li>{individual.name} ({individual.gender})</li>
+        {/if}
+    {/each}
+</ul>
+----
+
+This will return:
+
+ifndef::backend-pdf[]
+++++
+<ul>
+ <li>Julia (F)</li>
+  <li>Jane (F)</li>
+</ul>
+++++
+endif::[]
+
+ifdef::backend-pdf[]
+- Julia (F)
+- Jane (F)
+endif::[]
+
+TIP: Go to the svelte tutorial at http://svelte.dev/tutorial and go through the following sections: "Introduction" and "Logic"
+
+For our scatterplot, let's add a value to all these datapoints, and draw either a blue circle or a red rectangle based on that value.
+
+[source,html,linenums]
+----
+<script>
+  let datapoints = [{x: 100, y: 100, value: 9},
+                    {x: 150, y: 275, value: 11},
+                    {x: 10, y: 101, value: 72},
+                    {x: 80, y: 183, value: 2},
+                    {x: 350, y: 45, value: 10},
+                    {x: 201, y: 285, value: 109},
+                    {x: 150, y: 306, value: 24},
+                    {x: 90, y: 102, value: -4},
+                    {x: 73, y: 39, value: 88},
+                    {x: 332, y: 269, value: 8}]
+</script>
+
+<style>
+  svg {
+    background-color: whitesmoke;
+  }
+  circle {
+    fill: steelblue;
+  }
+  rect {
+    fill: red;
+  }
+</style>
+
+<svg width=400 height=400>
+  {#each datapoints as datapoint}
+    {#if datapoint.value > 10}
+      <circle cx={datapoint.x} cy={datapoint.y} r=10 />
+    {:else}
+      <rect x={datapoint.x} y={datapoint.y} width=10 height=10 />
+    {/if}
+  {/each}
+</svg>
+----
+
+The result:
+
+image:svelte-if.png[width=50%,pdfwidth=50%]
+
+==== Reactivity
+This is one of the major features of svelte which has an immense effect on programming experience, its _reactivity_. Reactivity means that when some variable `a` depends on a variable `b`, and `b` is changed, that the value of `a` is automatically updated as well. This is what makes a tool like Excel so strong: if you have a cell in a spreadsheet with a formula `=A1*2`, it will have the value of cell A1 multiplied by 2. If you change the value of A1, the value in the derived cell is _automatically_ updated as well. Most programming languages do not have this baked in, but with svelte you do have that functionality.
+
+We do this using the `$:` pragma. For example:
+
+[source,html,linenums]
+----
+<script>
+  let slider_value = 50;
+
+  $: multiplied_value = slider_value * 2
+</script>
+
+<input type="range" min="0" max="100" bind:value={slider_value} />
+<p>The value {slider_value} multiplied by 2 is {multiplied_value}.</p>
+----
+
+We've seen before that we can use curly brackets `{}` to pass in a value. Here we also need to work in the other direction: when the value of the slider changes, it should be passed through to the script above. We do that using `bind:value`. Sliding left and right will now update the multiplied value as well. You can try it below.
+
+// NOTE: This embedded interactive slider does not work at the moment.
+
+ifndef::backend-pdf[]
+*_INTERACTIVE_*
+++++
+<div id="svelte-slider"></div>
+++++
+endif::[]
+
+ifdef::backend-pdf[]
+image:svelte-reactivity.png[width=50%,pdfwidth=50%]
+endif::[]
+
+=== About sveltekit
+
+==== Local installation
+
+Although it is extremely useful for quickly checking things, we can't use the REPL for _real_ work. Still, you might go back to it regularly to test something out. 
+
+Instead, we can develop sveltekit applications (i.c. visualisations) locally, on our own machine. See https://kit.svelte.dev[the sveltekit website] on how to get set up. These are the commands you need:
+
+```
+npm create svelte@latest my-app
+cd my-app
+npm install
+npm run dev -- --open
+```
+
+The first step will create a new directory (called `my-app`) with your application. It will ask you for some information like if you'd want to have an empty (skeleton) setup, or already have demo code included. The `npm run install` installs all dependencies (which are listed in the `package.json` file). Finally, `npm run dev` will start a local webserver so that you can access your application. The output will list which port the application is running on. This will most probably be port 5173, so you should open the website `http://localhost:5173`. If you use `npm run dev -- --open` it will automatically open that website for you.
+
+NOTE: Using `npm run dev` without the `-- --open` works as well. You will however need to open the webpage yourself. This is often the better option if you want to restart the server.
+
+==== Directory structure and routing
+To understand how data can be loaded in sveltekit, we need to understand how routing works. _Routing_ maps a file to a URL and vice versa. The directory structure in sveltekit is important: each URL points to a subdirectory of `src/routes`. For example:
+
+- http://localhost:5173 points to the `src/routes/` directory
+- http://localhost:5173/about points to the `src/routes/about/` directory
+- http://localhost:5173/contact points to the `src/routes/contact/` directory
+- ...
+
+Each of these directories should have a `+page.svelte` (Notice the `+`-sign!) file, which contains the actual content of that page.
+
+[source]
+----
+...
+|
++- src/
+|  +- routes/
+|      +- +page.svelte
+|      +- about/
+|      |   +- +page.svelte
+|      +- contact/
+|          +- +page.svelte
+|
+...
+----
+
+See https://kit.svelte.dev/docs/routing for more information.
+
+=== Loading data in sveltekit
+As we have a `<script>` section in a `.svelte` file, we can define variables and data there, like this:
+
+[source,javascript]
+----
+<script>
+  let values = [1,2,3,"a string"]
+</script>
+
+{JSON.stringify(values)}
+----
+In this example, we create a value and show a "stringified" version in the browser.
+
+This works great, except when we have large datasetes. We'll need to load those in a different way. Enter `+page.js`.
+
+If we need to load data before a page (as defined in `+page.svelte`) is rendered, we add a `+page.js` file in the same directory. For example, if the root `index.html` and `contact` need data:
+
+[source]
+----
+...
+|
++- src/
+|  +- routes/
+|      +- +page.svelte
+|      +- +page.js            <1>
+|      +- about/
+|      |   +- +page.svelte
+|      +- contact/
+|          +- +page.svelte
+|          +- +page.js        <1>
+|
+...
+----
+
+==== Hard-coding our data
+Let's start with the proof-of-principle setup: we hard-code the data to be loaded.
+
+Make the `src/routes/+page.js` look like this:
+
+[source,javascript]
+----
+export const load = () => {
+  return {
+    values: [1,2,3,"a string"]
+  }
+}
+----
+
+And the `src/routes/+page.svelte` look like this:
+
+[source,html]
+----
+<script>
+    export let data;
+</script>
+
+{JSON.stringify(data)}
+----
+
+You should see `values: [1,2,3,"a string"]` in your web browser at http://localhost:5173.
+
+==== From an online JSON file
+Imagine we need to load the iris dataset, available from a public url (https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json). The data file looks like this:
+
+[source,json]
+[.small]
+----
+[
+  {"sepalLength": 5.1, "sepalWidth": 3.5, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.9, "sepalWidth": 3.0, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.7, "sepalWidth": 3.2, "petalLength": 1.3, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.6, "sepalWidth": 3.1, "petalLength": 1.5, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 5.0, "sepalWidth": 3.6, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 5.4, "sepalWidth": 3.9, "petalLength": 1.7, "petalWidth": 0.4, "species": "setosa"},
+  ...
+]
+----
+
+To load that data, we'd write the following `+page.js`:
+
+[source,javascript]
+[.small]
+----
+export const load = async ({ fetch }) => { (1)
+  const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json') (2)
+  const dataFlowers = await responseFlowers.json() (3)
+
+  return {
+    flowers: dataFlowers (4)
+  }
+}
+----
+
+What happens here?
+
+- **(1)**: We create an asynchronous function `load`...
+- **(2)**: ...that captures the HTTP response into a variable `responseFlowers`...
+- **(3)**: ...from which we extract the `json` part which actually contains the data.
+
+It's interesting to add a `console.log(res)` after line 3 to see what that `res` looks like.
+
+In **(4)** we create the actual return value of the `+page.js` file: it is a _map_ with a single key `flowers` and its value coming from `dataFlowers`.
+
+To use that data in the `+page.svelte` file, we need to define a `data` variable and get the flowers from it. A simple page showing the sepal length of al flowers would therefore look like this:
+
+[source,html,linenums]
+----
+<script>
+  export let data;
+</script>
+
+<ul>
+  {#each data.flowers as flower}
+  <li>{flower.sepalLength}</li>
+  {/each}
+</ul>
+----
+
+NOTE: The variable _must_ to be called `data`.
+
+.Synchronous vs asynchronous programming
+****
+In contrast to other languages that you may know (e.g. python and R), javascript is an _asynchronous_ language. When you write a program in a synchronous programming language, the program executes instructions in series. This means that each instruction must be completed before moving on to the next one. In contrast, in an asynchronous programming language like javascript, the program can start executing a new instruction before completing the previous one. In some cases we do not want that and actually need to wait until the previous command has finished. To get around it, we can use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises[promises] with the `async`/`await` combination.
+****
+
+The `+page.js` example above is a minimal one: you can add additional data transformations. For example, the iris dataset has the following form:
+
+[source,json]
+[.small]
+----
+[
+  {"sepalLength": 5.1, "sepalWidth": 3.5, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.9, "sepalWidth": 3.0, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.7, "sepalWidth": 3.2, "petalLength": 1.3, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 4.6, "sepalWidth": 3.1, "petalLength": 1.5, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 5.0, "sepalWidth": 3.6, "petalLength": 1.4, "petalWidth": 0.2, "species": "setosa"},
+  {"sepalLength": 5.4, "sepalWidth": 3.9, "petalLength": 1.7, "petalWidth": 0.4, "species": "setosa"},
+  ...
+]
+----
+
+but we would like to add a unique ID to each of these records. Also, we'd like to have the full species name, e.g. "Iris setosa" instead of just "setosa". We can adapt the script above like this:
+
+[source,javascript,linenums]
+[.small]
+----
+export const load = async ({ fetch }) => {
+    const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
+    const dataFlowers = await responseFlowers.json()
+    dataFlowers.forEach((d,i) => { d.id = i, d.species = "Iris " + d.species })
+  
+    return {
+      flowers: dataFlowers
+    }
+  }
+----
+
+The data that is now passed to `+page.svelte` looks like this:
+
+[source,json]
+[.small]
+----
+[
+  {"id": 0, "sepalLength": 5.1, "sepalWidth": 3.5, "petalLength": 1.4, "petalWidth": 0.2, "species": "Iris setosa"},
+  {"id": 1, "sepalLength": 4.9, "sepalWidth": 3.0, "petalLength": 1.4, "petalWidth": 0.2, "species": "Iris setosa"},
+  {"id": 2, "sepalLength": 4.7, "sepalWidth": 3.2, "petalLength": 1.3, "petalWidth": 0.2, "species": "Iris setosa"},
+  {"id": 3, "sepalLength": 4.6, "sepalWidth": 3.1, "petalLength": 1.5, "petalWidth": 0.2, "species": "Iris setosa"},
+  {"id": 4, "sepalLength": 5.0, "sepalWidth": 3.6, "petalLength": 1.4, "petalWidth": 0.2, "species": "Iris setosa"},
+  {"id": 5, "sepalLength": 5.4, "sepalWidth": 3.9, "petalLength": 1.7, "petalWidth": 0.4, "species": "Iris setosa"},
+  ...
+]
+----
+
+==== From an online CSV file
+In contrast to JSON, `fetch` is not able to automatically parse a CSV file. We'll have to do that ourselves. We have to install the PapaParse npm package. To do so:
+
+- Stop the `npm run dev` server.
+- Run `npm install papaparse` in the root folder of your svelte application.
+- Restart `npm run dev`.
+
+Here's a working example using data about flights. The file looks like this:
+
+[source]
+[.small]
+----
+from_airport,from_city,from_country,from_long,from_lat,to_airport,to_city,to_country,to_long,to_lat,airline,airline_country,distance
+Balandino,Chelyabinsk,Russia,61.838,55.509,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,1458
+Balandino,Chelyabinsk,Russia,61.838,55.509,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,775
+Balandino,Chelyabinsk,Russia,61.838,55.509,Tolmachevo,Novosibirsk,Russia,83.084,55.021,Aerocondor,Portugal,1341
+Domododevo,Moscow,Russia,38.51,55.681,Balandino,Chelyabinsk,Russia,61.838,55.509,Aerocondor,Portugal,1458
+...
+----
+
+[source,javascript,linenums]
+[.small]
+----
+import Papa from 'papaparse'
+
+export const load = async ({ fetch }) => {
+    const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
+    const dataFlowers = await responseFlowers.json()
+    dataFlowers.forEach((d,i) => { d.id = i, d.species = "Iris " + d.species })
+
+
+    const responseFlights = await fetch('https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.csv', {
+      headers: {
+        'Content-Type': 'text/csv'
+    }})
+    let csvFlights = await responseFlights.text()
+    let parsedCsvFlights = Papa.parse(csvFlights, {header: true})
+
+    return {
+      flowers: dataFlowers,
+      flights: parsedCsvFlights.data
+    }
+}
+----
+If you get an error in the console that mentions the CORS policy (`No 'Access-Control-Allow-Origin' header is present`), try using `https` instead of `http` in the URL for the dataset.
+
+Let's walk over this code:
+
+- line 1: import the PapaParse package
+- line 5-7: we have to add the `'Content-Type': 'text/csv'` to what is returned because your browser would otherwise try to download the file instead of using it in our application
+- line 8: In the JSON example before, we got the actual data through `response.json()`. Here we need it as a text: `response.text()`
+- line 9: Finally, we need to _parse_ the text to actual values. This will return an object where those values are available under the `data` key, which we extract on line 12.
+
+You can always add a `console.log()` for `csvFlights` or `parsedCsvFlights` to see what those variables look like.
+
+We get the following output:
+
+[source]
+----
+Balandino (Chelyabinsk)
+Balandino (Chelyabinsk)
+Domododevo (Moscow)
+Domododevo (Moscow)
+Domododevo (Moscow)
+Domododevo (Moscow)
+Domododevo (Moscow)
+Domododevo (Moscow)
+Heydar Aliyev (Baku)
+Khrabrovo (Kaliningrad)
+Kazan (Kazan)
+Kazan (Kazan)
+Kazan (Kazan)
+Kazan (Kazan)
+Kazan (Kazan)
+Pulkovo (St. Petersburg)
+Pulkovo (St. Petersburg)
+Pulkovo (St. Petersburg)
+Franz Josef Strauss (Munich)
+----
+
+==== From an local JSON or CSV file
+The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? Actually, this is very simple as we are running our own server. If you put the data file in the `static` directory of your svelte project, you can access it directly, e.g. with
+
+- `Papa.parse('http://localhost:5173/airports.csv', { …​ })`, or
+- `fetch('http://localhost:5173/airports.json')`
+
+==== From an SQL database
+===== Data stored in local SQLite3 database
+Let's say we have a small database with employee data. It only has one table, `employees`, with the following columns: `name` and `firstname`.
+
+To load data from this SQLite3 database, we'll use the https://knexjs.org/[knex.js] query builder. It'll make it easier to switch between different types of SQL databases later (mysql, postgresql, etc). To get it to work with a local sqlite3 database, install `knex` and the necessary sqlite driver:
+
+```
+npm install knex --save
+npm install better-sqlite3 --save
+```
+
+Create a new file `src/lib/db.js` with the following contents:
+
+[source,javascript]
+----
+import knex from 'knex'
+
+export default knex({
+    client: 'better-sqlite3',
+    connection: {
+        filename: "./static/test.db"
+    },
+  })
+----
+The path is relative to the main directory in sveltekit.
+
+Above, we have used the `+page.js` file to load our data from CSV sources. For loading SQL data, we will however need to name our file `+page.server.js` (see https://kit.svelte.dev/docs/routing#page-page-server-js for details).
+
+Make the `+page.server.js` file look like this:
+
+[source,javascript]
+----
+import db from '$lib/db';
+
+export const load = () => {
+    const fetchData = async () => {
+        let employees = await db.select('*')
+                                .from('employees')
+                                .limit(2)
+        return employees
+    }
+
+    return {
+        employees: fetchData()
+    }
+}
+----
+
+We can then access these in our `+page.svelte`:
+
+[source,javascript]
+----
+<script>
+    export let data = [];
+</script>
+
+<h1>Employees</h1>
+
+<ul>
+{#each data.employees as employee}
+    <li>{employee.firstname} {employee.name}</li>
+{/each}
+</ul>
+----
+
+
+===== Data stored in mysql database
+Loading data from a mysql database is very similar, although we will run into a small bump here.
+
+Say we want to access data from `knownGene` table of the UCSC Genome database (http://genome-euro.ucsc.edu/).
+
+Replace the `lib/db.js` file with the following.
+
+[source,javascript]
+----
+import knex from 'knex'
+
+export default knex({
+  client: 'mysql',
+  version: '5.7',
+  connection: {
+    host: 'genome-euro-mysql.soe.ucsc.edu',
+    port: 3306,
+    user: 'genome',
+    password: '',
+    database: 'hg38'
+  },
+})
+----
+
+Based on our experience with sqlite3, the `+page.server.js` file would look like this:
+
+[source,javascript]
+----
+import db from '$lib/db';
+
+export const load = () => {
+    const fetchData = async () => {
+        let genes = await db.select('*')
+                                .from('knownGene')
+                                .limit(20)
+        return genes
+    }
+
+    return {
+        genes: fetchData()
+    }
+}
+----
+
+Unfortunately, we get an error `Error: Data returned from load while rendering / is not serializable: Cannot stringify arbitrary non-POJOs (data.genes[0])`. If we add a `console.log(genes)` in our `+page.server.js` file, we see that what is returned from the server is the following:
+
+[source,json]
+----
+[
+  RowDataPacket {
+    name: 'ENST00000456328.2',
+    chrom: 'chr1',
+    strand: '+',
+    ...
+  },
+  RowDataPacket {
+    name: 'ENST00000619216.1',
+    chrom: 'chr1',
+    strand: '-',
+    ...
+  }
+]
+----
+
+However, we expected the output to look like this:
+
+[source,javascript]
+----
+[
+  {
+    name: 'ENST00000456328.2',
+    chrom: 'chr1',
+    strand: '+',
+    ...
+  },
+  {
+    name: 'ENST00000619216.1',
+    chrom: 'chr1',
+    strand: '-',
+    ...
+  }
+]
+----
+
+We can accomplish this to parse the output first before we return it, using `return JSON.parse(JSON.stringify(genes))` instead of just `return genes` (source: https://stackoverflow.com/questions/31221980/how-to-access-a-rowdatapacket-object):
+
+[source,javascript]
+----
+import db from '$lib/db';
+
+export const load = () => {
+    const fetchData = async () => {
+        let genes = []
+        genes = await db.select('*')
+                                .from('knownGene')
+                                .limit(20)
+        return JSON.parse(JSON.stringify(genes))
+    }
+
+    return {
+        genes: fetchData()
+    }
+}
+----
+
+==== Loading multiple datasets
+Above we only loaded a single dataset, but obviously we will sometimes need multiple datasets in our application. To do this we just add an additional variable to the `load` function in our `+page.js`. For example:
+
+[source,javascript,linenums]
+[.small]
+----
+import Papa from 'papaparse'
+
+export const load = async ({ fetch }) => {
+    const responseFlights = await fetch('https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.csv', {
+      headers: {
+        'Content-Type': 'text/csv'
+    }})
+    let csvFlights = await responseFlights.text()
+    let parsedCsvFlights = Papa.parse(csvFlights, {header: true})
+
+    return {
+      flights: parsedCsvFlights.data
+    }
+}
+----
+
+[source,javascript,linenums]
+[.small]
+----
+export const load = async ({ fetch }) => {
+  const responseGenes = await fetch("https://some-url/genes.json")
+  const dataGenes = await responseGenes.json()
+
+  const responseProteins = await fetch("https://some-other-url/proteins.json")
+  const dataProteins = await responseProteins.json()
+
+  return {
+    genes: dataGenes,
+    proteins: dataProteins
+  }
+----
+
+As before, the `data` variable in `+page.svelte` is the object that is returned by `+page.js` (i.c. `{genes: [...,...,...], proteins: [...,...,...]}`)
+
+=== Data subpages and slugs
+In many cases, we might want to have a subpage for each datapoint. Imagine a blog with many posts, where those posts are stored as a large JSON structure. From what we've seen above, we are able to create a page that lists the title of all blog posts. But we're still unable to show a single blog _post_. Similarly, we might have a site that shows a list of genes, but you cannot go to the information of a _single_ gene.
+
+Let's say we want to create a page for every single flower, using its ID in the URL. For example, to get the information (or a visualisation) for flower 5, we would use the URL http://localhost:5173/flowers/5. This is the same URL as before for the list, but adding the flower ID. To get this to work, we use `[slug]`: create a new directory under the flowers folder:
+
+----
+...
+|
++- src/
+|  +- routes/
+|      +- +page.svelte
+|      +- flowers/
+|          +- +page.svelte
+|          +- +page.js
+|          +- [slug]
+|              +- +page.svelte
+|              +- +page.js
+|
+...
+----
+
+IMPORTANT: The directory name must be `[slug]`, including the square brackets!
+
+image:slugs.png[width=50%,pdfwidth=50%]
+
+What this `[slug]` allows you to do, is add _parameters_ to the URL. In our case, this could for example be the ID of a flower. The `+page.js` in the `[slug]` directory can be very similar to the one in the `flowers` directory, but there are some important differences:
+
+[source,javascript,linenums]
+[.small]
+----
+export const load = async ({ fetch, params }) => { (1)
+  const res = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
+  const data = await res.json()
+  data.forEach((d,i) => { d.id = i })
+  let data_for_slug = data.filter((d) => { return d.id == params.slug})[0] (2)
+
+  return {
+    flower: data_for_slug
+  }
+}
+----
+
+In this code, we
+
+- **(1)** call `fetch` _and_ `params` in the loading function instead of only `fetch`
+- **(2)** filter the returned data based on the id of the flower `d.id == params.slug`
+
+In the `+page.svelte` file we can then display or visualise only the information for that single flower.
+
+NOTE: See https://kit.svelte.dev/docs/load for the full documentation on how to load data in sveltekit.
+
+
+=== Our first real scatterplot
+Now - finally - we can start working on the real thing and create a data visualisation. Let's plot the longitude and latitude (present as `long` and `lat` in the datafile) of all departure airports in http://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.json. If we do this, we should get something that looks like a map of the world.
+
+Load the data using `+page.js` as described above. Below we show the contents of the `+page.svelte` file.
+
+[source,html,linenums]
+----
+<script>
+  export let data = [];
+</script>
+
+<style>
+  svg {
+      border: 1px;
+      border-style: solid;
+  }
+  circle {
+      fill: steelblue;
+      fill-opacity: 0.5;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+      <circle cx={datapoint.from_long} cy={datapoint.from_lat} r="2" />
+  {/each}
+</svg>
+----
+
+The resulting image looks like this:
+
+image:flights_attempt1.png[width=50%,pdfwidth=50%]
+
+This is clearly _not_ what we expected. The reason is simple: the longitude in the data file ranges from -180 until 180 and the latitude is between -90 and 90. If we plot these directly as circles than 3/4 of all datapoints will be outside of the SVG (because they have either a negative longitude or latitude). Instead of using `cx={datapoint.from_long}` we have to rescale that longitude from its original range (called its _domain_) to a new _range_.
+
+image:domain-range.png[width=50%,pdfwidth=50%]
+
+The formula to do this is:
+
+image:scaling_formula.png[width=50%,pdfwidth=50%]
+
+// \[
+// \frac{(range_{max} - range_{min})*(x-domain_{min})}{domain_{max}-domain_{min}} + range_{min}
+// \]
+
+Let's put that in a function that we can use. Add the `rescale` function to the `script` section of your svelte file, and call it where we need to set `cx` and `cy`.
+
+[source,html,linenums]
+----
+<script>
+  export let data = [];
+
+  const rescale = function(x, domain_min, domain_max, range_min, range_max) {
+      return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
+  }
+</script>
+
+<style>
+  circle {
+      fill: steelblue;
+      fill-opacity: 0.5;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+      <circle cx={rescale(datapoint.from_long, -180, 180, 0, 800)}
+              cy={rescale(datapoint.from_lat, -90, 90, 0, 400)}
+              r=3 />
+  {/each}
+</svg>
+----
+
+Our rescaling function is defined on lines 7-9 and used on lines 21 and 22.
+
+The result:
+
+image:flights_attempt2.png[width=50%,pdfwidth=50%]
+
+This is better, but the world is upside down. This is because the origin [0,0] in SVG is in the top left, not the bottom left. We therefore have to flip the scale as well, and set the range to `400,0` instead of `0,400` for `cy`. If we do that we'll get the world the right side up.
+
+image:flights_attempt3.png[width=50%,pdfwidth=50%]
+
+=== D3 scales
+In the example above, we have written our own code for rescaling the longitude (-180 to 180) and latitude (-90 to 90) to width (0 to 800) and height (400 to 0). We can however also use the powerful functionality provided by http://d3js.org[D3].
+
+.D3 - Data-Driven Documents
+****
+D3 (Data-Driven Documents) has been the go-to library for data visualisation for many years. It allows you to create very complex and interactive visuals like showcased in the https://observablehq.com/@d3/gallery[D3 gallery].
+
+image:d3-gallery.png[width=75%,pdfwidth=75%]
+
+The functionality of D3 has been split in different modules (see https://github.com/orgs/d3/repositories?type=all[here]), that cover for example the creation of hexagonal bins, working with geographic projections, creating force-directed graphs, and scaling.
+
+Although very powerful, this library does have a steep learning curve. For example, creating a scatterplot like the one above using D3, you'd write
+
+[source,javascript,linenums]
+----
+d3.select("#my_svg")
+  .append("g")
+  .selectAll("circle")
+  .data(datapoints)
+  .enter()
+  .append("circle")
+    .attr("cx", function(d) { return rescale(datapoint.from_long, -180, 180, 0, 800) })
+    .attr("cy", function(d) { return rescale(datapoint.from_lat, -90, 90, 400, 0) })
+    .attr("r", 3)
+----
+
+That is why we focus on using svelte in this tutorial for the main work, and use D3 modules when we need them for a specific tasks (e.g. scaling). For example, this blog post by Connor Rothshield also goes into why he switched from D3 to svelte+D3 for data visualisation: https://www.connorrothschild.com/post/svelte-and-d3
+
+D3 is organised as a group of modules (see https://github.com/d3/d3/blob/main/API.md), so we can choose to load only those functions that have to do with scaling (`d3-scale`), colour (`d3-color`), etc.
+
+Here is an overview of the different modules:
+
+image:d3-modules.png[width=50%,pdfwidth=50%]
+
+(Source: https://wattenberger.com/blog/d3) For an interactive version, see https://wattenberger.com/blog/d3.
+****
+
+Let's replace our own rescaling function with a linear scale provided by D3. We will load the `scaleLinear` function from `d3-scale`.
+
+IMPORTANT: We have to install the `d3-scale` module first. Do this by running `npm install d3-scale` on the command line.
+
+[source,html,linenums]
+----
+<script>
+  import { scaleLinear } from 'd3-scale'; <1>
+
+  export let data = [];
+
+  const scaleX = scaleLinear().domain([-180,180]).range([0,800]) <2>
+  const scaleY = scaleLinear().domain([-90,90]).range([400,0]) <2>
+</script>
+
+<style>
+  circle {
+      fill: steelblue;
+      fill-opacity: 0.5;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+      <circle cx={scaleX(datapoint.from_long)} <3>
+              cy={scaleY(datapoint.from_lat)}
+              r=3 />
+  {/each}
+</svg>
+----
+In *(1)* we load `scaleLinear` and make the function available in our code. We define a `scaleX` and a `scaleY` function in *(2)*. The `domain` refers to the actual data, and `range` to the projection (in this case: pixel position). In *(3)* we use `scaleX` and `scaleY`.
+
+Note that the range does not have to be numeric: we can also use colours here. D3 is clever enough to interpolate colours across the range. In the example below, we let the colour of the points go from red to green along with the longitude. (If we had information on the altitude of the airports, this would be more useful.)
+
+[source,html,linenums]
+----
+<script>
+  import { scaleLinear } from 'd3-scale';
+
+  export let data = [];
+
+  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
+  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
+  const scaleColour = scaleLinear().domain([-180,180]).range(["red","green"]) <1>
+</script>
+
+<style>
+  circle { <2>
+      fill-opacity: 0.5;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+      <circle cx={scaleX(datapoint.from_long)}
+              cy={scaleY(datapoint.from_lat)}
+              r=3
+              style={"fill:" + scaleColour(datapoint.from_long)} /> <3>
+  {/each}
+</svg>
+----
+We added a scale with colours as the range in *(1)*, remove the default colour for a circle in *(2)*, and set the CSS colour dynamically in *(3)* using.
+
+image:domain-range-colours.png[width=50%,pdfwidth=50%]
+
+D3 provides a lot of other scales as well, including logarithmic, time, radial etc. Check out https://github.com/d3/d3-scale for more information.
+
+Let's add another scale: we can let the size of the point be dependent of the `distance` in the csv file
+
+[source,html,linenums]
+----
+<script>
+  import { scaleLinear } from 'd3-scale';
+
+  export let data = [];
+
+  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
+  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
+  const scaleRadius = scaleLinear().domain([1,15406]).range([2,10])
+  </script>
+
+<style>
+  svg {
+    border: 1px;
+    border-style: solid;
+  }
+  circle {
+    fill: steelblue;
+    fill-opacity: 0.5;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+    <circle cx={scaleX(datapoint.from_long)}
+        cy={scaleY(datapoint.from_lat)}
+        r={scaleRadius(datapoint.distance)} />
+  {/each}
+</svg>
+----
+
+image:flights_radius.png[width=50%,pdfwidth=50%]
+
+=== Classes
+Above we have used a colour scale that ranges from red to green according to longitude. If we want to handle categorical aspects in the data (e.g. if a flight is international or domestic), we can actually do this easier, using HTML classes. For an overview, see the "HTML, CSS and javascript" section of this tutorial. (This will become very important once we start looking into brushing and linking in the next section.)
+
+If we change the code above by (a) adding a `circle.international` in the CSS that sets the fill colour to red, and (b) add a `class="international"` as a property of the `circle` element, all the airports will be red. But can we actually make this dependent on the actual data?
+
+We give an HTML element one or more classes like so:
+
+[source,html]
+----
+<circle class="first_class second_class third_class" />
+----
+
+Using svelte, we can do this dynamically. To know if a flight is international, we can check if its `from_country` is different from its `to_country`.
+
+[source,html]
+----
+<circle class={datapoint.from_country != datapoint.to_country ? 'international' : 'domestic' } />
+----
+
+Or in its shorthand version:
+
+[source,html]
+----
+<circle class:international={datapoint.from_country != datapoint.to_country} />
+----
+
+[source,html,linenums]
+----
+<script>
+  import { scaleLinear } from 'd3-scale';
+
+  export let data = [];
+
+  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
+  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
+  const scaleRadius = scaleLinear().domain([1,15406]).range([2,10])
+  </script>
+
+<style>
+  svg {
+    border: 1px;
+    border-style: solid;
+  }
+  circle {
+    fill: steelblue;
+    fill-opacity: 0.5;
+  }
+  circle.international { <1>
+    fill: red;
+  }
+</style>
+
+<svg width="800" height="400">
+  {#each data.flights as datapoint}
+    <circle cx={scaleX(datapoint.from_long)}
+        cy={scaleY(datapoint.from_lat)}
+        r={scaleRadius(datapoint.distance)}
+        class:international={datapoint.from_country != datapoint.to_country}/> <2>
+  {/each}
+</svg>
+----
+*(1)* is where we set the colour of international flights; *(2)* is where we apply it.
+
+image:flights_colour.png[width=50%,pdfwidth=50%]
+
+=== Exercises
+[#exercises_viswithsvelte,sidebar,role=assignment]
+--
+Here are some exercises related to this chapter:
+
+* Svelte markup: https://svelte.dev/repl/724a8216d6c84491b7b04951718f0b0d?version=3.59.1
+* Foreach: https://svelte.dev/repl/161b76456d00443db6100f7d40e546b1?version=3.59.1
+* If-else-then: https://svelte.dev/repl/a603bddd25ed441e9680e2c93a1a1966?version=3.59.1
+* Scales: https://svelte.dev/repl/f2cdcb8400f2430f9134206798596a97?version=3.59.1
+* Colour scales: https://svelte.dev/repl/f555af12649a4d918db9f46c88ea72a0?version=3.59.1
+* Axes: https://svelte.dev/repl/a06224b0183c4f44b6de3f7a734e812e?version=3.59.1
+* Paths using d3.line: https://svelte.dev/repl/ec5b4a3992e7459086668fe4e03c011a?version=3.59.1
+* Hover: https://svelte.dev/repl/c602355ed2cf4398921f50f7746079ff?version=3.59.1
+* Working with objects: https://svelte.dev/repl/08e9e88a020244d5a7cd80b2e0befa3b?version=3.59.1
+* Extent: https://svelte.dev/repl/b31541e1dcfb439e818c639427e6db68?version=3.59.1
+* Make scales: https://svelte.dev/repl/c6eb38ca440a4dc5b8efa487f92b771d?version=3.59.1
+* Make scatterplot: https://svelte.dev/repl/4c447e06f79e4c478682b8476bf1833a?version=3.59.1
+* Add axes: https://svelte.dev/repl/3e6b6e947bdb480687d29392d944e15c?version=3.59.1
+* Set circle colour: https://svelte.dev/repl/87536213d7044ddc9ed2dfacb208086c?version=3.59.1
+--

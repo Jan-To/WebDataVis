@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="author" content="Jan Aerts">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<title>Implementing data visualisations using Svelte</title>
+<style>
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";
+
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+#map_canvas img,#map_canvas embed,#map_canvas object,.map_canvas img,.map_canvas embed,.map_canvas object{max-width:none!important}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+.antialiased,body{-webkit-font-smoothing:antialiased}
+img{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{display:inline-block;color:rgba(0,0,0,.8);font-size:.75em;line-height:1.4;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:-.15em .15em 0 .15em;padding:.2em .6em .2em .5em;vertical-align:middle;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.05em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.spread{width:100%}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1{padding-right:.75em;font-weight:bold}
+td.hdlist1,td.hdlist2{vertical-align:top}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none}
+span.footnote,span.footnoteref{vertical-align:super;font-size:.875em}
+span.footnote a,span.footnoteref a{text-decoration:none}
+span.footnote a:active,span.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em;line-height:1.3;font-size:.875em;margin-left:1.2em;text-indent:-1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+h1,h2{letter-spacing:-.01em}
+dt,th.tableblock,td.content{text-rendering:optimizeLegibility}
+p,td.content{letter-spacing:-.01em}
+p strong,td.content strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img{page-break-inside:avoid}
+thead{display:table-header-group}
+img{max-width:100%!important}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+
+/* Custom things */
+.assignment {
+    background-color: #FFCC6F55;
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px;
+}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_advanced_visualisation_using_svelte" class="article toc2 toc-left">
+<div id="header">
+<h1>Implementing data visualisations using Svelte</h1>
+<div class="details">
+<span id="author" class="author">Jan Aerts</span><br>
+<span id="email" class="email"><a href="mailto:jan.aerts@kuleuven.be">jan.aerts@kuleuven.be</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="index.html">Implementing data visualisations using Svelte</a></span></p><ul class="sectlevel1">
+<li><a href="_environment_setup.html">1. Environment setup</a>
+</li>
+<li><a href="_html_css_and_javascript.html">2. HTML, CSS, and javascript</a>
+</li>
+<li><a href="_basic_data_visualisation.html">3. Basic data visualisation</a>
+</li>
+<li><a href="_basic_data_visualisation_with_svelte.html">4. Basic data visualisation with svelte</a>
+</li>
+<li><a href="_custom_components.html">5. Custom components</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html"><span class="toc-current">6. Advanced visualisation using svelte</span></a>
+<ul class="sectlevel2">
+<li><a href="_advanced_visualisation_using_svelte.html#_slider">6.1. Slider</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_tooltips">6.2. Tooltips</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_axes">6.3. Axes</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_brush">6.4. Brush</a>
+<ul class="sectlevel3">
+<li><a href="_advanced_visualisation_using_svelte.html#_using_hover">6.4.1. Using hover</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_using_a_brush">6.4.2. Using a brush</a>
+</li>
+</ul>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_specific_visuals">6.5. Specific visuals</a>
+<ul class="sectlevel3">
+<li><a href="_advanced_visualisation_using_svelte.html#_map">6.5.1. Map</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html#_force_directed_graph">6.5.2. Force-directed graph</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="_resources.html">7. Resources</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_advanced_visualisation_using_svelte">6. Advanced visualisation using svelte</h2>
+<div class="sectionbody">
+<link href="dist/svelte-bundle.css" rel="stylesheet" type="text/css"/>
+<script defer src="dist/svelte-bundle.js" type="text/javascript"></script>
+<div class="sect2">
+<h3 id="_slider">6.1. Slider</h3>
+<div class="paragraph">
+<p>Let&#8217;s add a slider to the iris visualisation from the previous section that allows us to change the number of flowers displayed in a row instead of the hard-coded 20.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+    import Flower from './Flower.svelte';
+
+    export let data;
+    let slider_value = 20; <b class="conum">(1)</b>
+    $: get_xy = function(idx) { <b class="conum">(2)</b>
+        let y = 25 + (Math.floor(idx / slider_value) * 50) <b class="conum">(3)</b>
+        let x = 25 + ((idx % slider_value) * 50) <b class="conum">(3)</b>
+        return [x,y]
+    }
+&lt;/script&gt;
+
+Number of flowers per line: {slider_value}&lt;br/&gt;
+&lt;input type="range" min="10" max="20" bind:value={slider_value} /&gt;&lt;br/&gt; <b class="conum">(4)</b>
+&lt;svg width=1000 height=1000&gt;
+    {#each data.flowers as datapoint,idx}
+        &lt;g transform="translate({get_xy(idx)[0]}, {get_xy(idx)[1]})"&gt;
+            &lt;Flower datapoint={datapoint} /&gt;
+        &lt;/g&gt;
+    {/each}
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We combined what we saw earlier in this section on adding sliders. What changed in our code?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>(1)</strong>: We create a new variable that holds the value for the slider and set its default to 20.</p>
+</li>
+<li>
+<p><strong>(2)</strong>: Our function itself will now change as we change the slider. This means that we need to make the function reactive, and replace <code>const</code> with <code>$:</code>.</p>
+</li>
+<li>
+<p><strong>(3)</strong>: We replace the hard-coded value of <code>20</code> with the value from the slider.</p>
+</li>
+<li>
+<p><strong>(4)</strong>: And we add the actual slider.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The result: <strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div id="svelte-flowers-with-slider"></div>
+<div id="assignment_flowerslider" class="openblock assignment">
+<div class="content">
+<div class="paragraph">
+<p><span class="big"><strong>Practice</strong></span></p>
+</div>
+<div class="paragraph">
+<p>Add a second slider that allows you to change the size of the flowers themselves.</p>
+</div>
+</div>
+</div>
+<div id="assignment_flowerscatterplot" class="openblock assignment">
+<div class="content">
+<div class="paragraph">
+<p><span class="big"><strong>Practice</strong></span></p>
+</div>
+<div class="paragraph">
+<p>Change this example so that, instead of a grid of flowers, these flowers are presented as a scatterplot based on the length and width of their sepals, like so:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/scatterplot-flowers.png" alt="scatterplot flowers" width="50%"></span></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Getting back to our airport data, let&#8217;s create a version with a slider that highlights only those airports serving flights with a given distance:</p>
+</div>
+<div class="paragraph">
+<p><strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div style="width=400px" id="svelte-flights-with-slider"></div>
+<div class="paragraph">
+<p>The code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  let slider_value = 5000;
+  export let data = []
+
+  const rescale = function(x, domain_min, domain_max, range_min, range_max) {
+    return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
+  }
+&lt;/script&gt;
+
+&lt;style&gt;
+  circle {
+    opacity: 0.5;
+    fill: blue;
+  }
+  circle.international {
+    fill: red;
+  }
+  circle.hidden {
+    opacity: 0.05;
+  }
+&lt;/style&gt;
+
+&lt;h1&gt;Airport flights data&lt;/h1&gt;
+Airports serving flights in this range (km): {slider_value - 1000} - {slider_value + 1000} &lt;br/&gt;
+&lt;input type="range" min="1" max="15406" bind:value={slider_value} class="slider" id="myRange" /&gt;
+&lt;svg width=1000 height=500&gt;
+  {#each data.flights as datapoint}
+    &lt;circle cx={rescale(datapoint.from_long, -180, 180, 0, 800)}
+            cy={rescale(datapoint.from_lat, -90, 90, 400, 0)}
+            r={rescale(datapoint.distance, 1, 15406, 2,10)}
+            class:international="{datapoint.from_country != datapoint.to_country}"
+            class:hidden="{Math.abs(datapoint.distance - slider_value) &gt; 1000}"&gt;
+      &lt;title&gt;{datapoint.from_airport}&lt;/title&gt;
+    &lt;/circle&gt;
+  {/each}
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tooltips">6.2. Tooltips</h3>
+<div class="paragraph">
+<p>Following the "overview first, zoom and filter, and details on demand" mantra, we want to be able to show details when we hover over a datapoint.</p>
+</div>
+<div class="paragraph">
+<p>A quick and dirty way to do this, is by using a <code>title</code> element embedded within the visual element. For example: instead of</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;circle cx=50 cy=50 r=10 /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>we can write</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;circle cx=50 cy=50 r=10&gt;
+  &lt;title&gt;My tooltip&lt;/title&gt;
+&lt;/circle&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we hover over that circle, the text "My tooltip" will be shown after a couple of seconds. You can replace that hard-coded text with, for example, <code>{datapoint.species}</code>. The result:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/tooltip-title.png" alt="tooltip title" width="33%"></span></p>
+</div>
+<div class="paragraph">
+<p>But we can take this much further, and show the glyph of the flower and additional information as the tooltip, like in the examples below.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/tooltip-1.png" alt="tooltip 1" width="33%"></span>
+<span class="image"><img src="assets/tooltip-2.png" alt="tooltip 2" width="33%"></span></p>
+</div>
+<div class="paragraph">
+<p>To make this happen, we create a <code>div</code> that is only shown if <code>selected_datapoint</code> is defined.</p>
+</div>
+<div class="paragraph">
+<p>Our <code>Flower.svelte</code> is the same as we had above. <code>+page.svelte</code> becomes:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+    import Scatterplot from './Scatterplot.svelte'
+    export let data = [];
+    $: console.log(data.flowers)
+&lt;/script&gt;
+
+&lt;style&gt;
+    circle {
+        fill: steelblue;
+        fill-opacity: 0.5;
+    }
+&lt;/style&gt;
+
+&lt;Scatterplot datapoints={data.flowers} x="sepalLength" y="sepalWidth"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We adapt <code>Scatterplot.svelte</code> like so:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  import { scaleLinear } from 'd3-scale';
+  import { extent } from 'd3-array';
+  import Flower from './Flower.svelte'
+
+  export let datapoints = [];
+  export let x;
+  export let y;
+
+  export let selected_datapoint = undefined;
+
+  $: xScale = scaleLinear().domain(extent(datapoints.map((d) =&gt; { return d[x]}))).range([0,400])
+  $: yScale = scaleLinear().domain(extent(datapoints.map((d) =&gt; { return d[y]}))).range([0,400])
+
+  let mouse_x, mouse_y; <b class="conum">(1)</b>
+  const setMousePosition = function(event) { <b class="conum">(2)</b>
+    mouse_x = event.clientX;
+    mouse_y = event.clientY;
+  }
+&lt;/script&gt;
+
+&lt;style&gt;
+  svg {
+    background-color: whitesmoke;
+    margin: 5px;
+    padding: 20px;
+  }
+  circle {
+    fill: steelblue;
+    fill-opacity: 0.3;
+  }
+  circle.selected {
+    fill: red;
+    fill-opacity: 1;
+  }
+  #tooltip { <b class="conum">(3)</b>
+    position: fixed;
+    background-color: white;
+    padding: 3px;
+    border: solid 1px;
+  }
+  svg.tooltip { <b class="conum">(4)</b>
+    margin: 0px;
+    padding: 0px;
+  }
+&lt;/style&gt;
+
+&lt;p&gt;{x} by {y}&lt;/p&gt;
+&lt;svg width=400 height=400&gt;
+  {#each datapoints as datapoint}
+    &lt;circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
+            r=5
+            class:selected="{selected_datapoint &amp;&amp; datapoint.id == selected_datapoint.id}"
+            on:mouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}} <b class="conum">(5)</b>
+            on:mouseout={function() {selected_datapoint = undefined}}/&gt;
+  {/each}
+&lt;/svg&gt;
+
+{#if selected_datapoint != undefined} <b class="conum">(6)</b>
+&lt;div id="tooltip" style="left: {mouse_x + 10}px; top: {mouse_y - 10}px"&gt;
+&lt;svg class="tooltip" width=20 height=20&gt;
+  &lt;g transform="translate(10,10)"&gt;
+  &lt;Flower datapoint={selected_datapoint} /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;&lt;br/&gt;
+Species: {selected_datapoint.species}
+&lt;/div&gt;
+{/if}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The main magic happens in <strong>(6)</strong>, where we only show this <code>div</code> when <code>selected_datapoint</code> is defined. The <code>div</code> gets an id of <code>tooltip</code> and we set its position next to the location of the mouse (more on that below). The div itself contains an SVG with the flower, and a line of text stating the species. If <code>Flower</code> would be an SVG itself, we wouldn&#8217;t have to define the <code>&lt;svg&gt;</code> here, but looking at the <code>Flower.svelte</code> file, it returns a <code>&lt;g&gt;</code> which should be <em>part</em> of an SVG.</p>
+</div>
+<div class="paragraph">
+<p>The <code>div</code> gets a position that depends on <code>mouse_x</code> and <code>mouse_y</code>. These are set in <strong>(5)</strong> when we hover over a circle, using the <code>setMousePosition(event)</code> defined in <strong>(2)</strong>. Such mouse event are automatically passed the event that triggers them. Check what is in these events by adding a <code>console.log(event)</code> in the <code>setMousePosition</code> function.</p>
+</div>
+<div class="paragraph">
+<p>Normally a new <code>div</code> is positioned <em>after</em> the previous one. This means that the tooltip would be displayed to the right of or below the scatterplot, whether or not we define that <code>style</code> attribute in <strong>(6)</strong>. To fix this, we need to set <code>position: fixed;</code> in the CSS. Finally, as we have <em>two</em> SVGs (one for the scatterplot, and one contained within the tooltip), we might have to give each a different style. In our case, we set the padding and margin to 0 for the SVG in the tooltip.</p>
+</div>
+<div class="paragraph">
+<p>Try it out here: <strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div id="svelte-tooltip"></div>
+</div>
+<div class="sect2">
+<h3 id="_axes">6.3. Axes</h3>
+<div class="paragraph">
+<p>There are different ways to draw axes on plots. Looking again at the iris dataset, we can follow the do-it-yourself approach, or use the <code>d3-axis</code> library. In the first option, we draw a long line with small lines and text for each tick. As this approach is very simple it is often used.</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  import { scaleLinear } from 'd3-scale';
+  import { extent } from 'd3-array';
+  export let datapoints = [];
+  let margins = {"left": 30, "top": 30, "bottom": 30, "right": 30}
+
+  $: xDomain = extent(datapoints, (d) =&gt; d.sepalLength)
+  $: yDomain = extent(datapoints, (d) =&gt; d.sepalWidth)
+  $: xScale = scaleLinear().domain(xDomain).range([margins.left,300-margins.right])
+  $: yScale = scaleLinear().domain(yDomain).range([margins.top,300-margins.bottom])
+
+  $: console.log(xDomain)
+  $: xTicks = [4.5,5,5.5,6,6.5,7,7.5]
+  $: yTicks = [2,2.5,3,3.5,4]
+  &lt;/script&gt;
+
+  &lt;style&gt;
+  svg { background-color: whitesmoke }
+  circle { opacity: 0.5; }
+  line { stroke: black; }
+  text { font-size: 12px; }
+  text.x { text-anchor: middle; }
+  text.y { text-anchor: end; }
+  &lt;/style&gt;
+
+  &lt;svg width=300 height=300&gt;
+  {#each datapoints as datapoint}
+    &lt;circle cx={xScale(datapoint.sepalLength)} cy={yScale(datapoint.sepalWidth)} r=5 /&gt;
+  {/each}
+
+  &lt;!-- x axis --&gt;
+  &lt;line x1={margins.left} y1={300-margins.bottom} x2={300-margins.right} y2={300-margins.bottom} /&gt;
+  {#each xTicks as tick}
+    &lt;line x1={xScale(tick)} y1={300-margins.bottom-3} x2={xScale(tick)} y2={300-margins.bottom+3} /&gt;
+    &lt;text class="x" alignment-baseline="hanging" x={xScale(tick)} y={300-margins.bottom+5}&gt;{tick}&lt;/text&gt;
+  {/each}
+
+  &lt;!-- y axis --&gt;
+  &lt;line x1={margins.left} y1={margins.top} x2={margins.left} y2={300-margins.bottom} /&gt;
+  {#each yTicks as tick}
+    &lt;line x1={margins.left-3} y1={yScale(tick)} x2={margins.left+3} y2={yScale(tick)} /&gt;
+    &lt;text class="y" alignment-baseline="middle" x={margins.left-5} y={yScale(tick)}&gt;{tick}&lt;/text&gt;
+  {/each}
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/axes_diy.png" alt="axes diy" width="30%"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_brush">6.4. Brush</h3>
+<div class="sect3">
+<h4 id="_using_hover">6.4.1. Using hover</h4>
+<div class="paragraph">
+<p>Being able to link different visuals together can have a <em>big</em> impact on how much insight you can gain from them. Below, we will look into how to make this happen. We&#8217;ll create two scatterplots on the iris data, and link these together. The final result will be as below. Notice that when you hover over a point, there will also be a point in the other scatterplot that becomes red.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div style="width=400px" id="svelte-brushlink"></div>
+<div class="paragraph">
+<p>Note that there are multiple ways of achieving this, and definitely look into "svelte stores" as well. Here&#8217;s we&#8217;ll go bare bones and do the minimum possible.</p>
+</div>
+<div class="paragraph">
+<p><code>Scatterplot.svelte</code>:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  import { scaleLinear } from 'd3-scale';
+  import { extent } from 'd3-array';
+
+  export let datapoints = []
+  export let x;
+  export let y;
+
+  export let selected_datapoint = undefined; <b class="conum">(1)</b>
+
+  $: xScale = scaleLinear()
+                .domain(extent(datapoints.map((d) =&gt; { return d[x]})))
+                .range([0,400])
+  $: yScale = scaleLinear()
+                .domain(extent(datapoints.map((d) =&gt; { return d[y]})))
+                .range([0,400])
+&lt;/script&gt;
+
+&lt;style&gt;
+  svg {
+    background-color: whitesmoke;
+    margin: 5px;
+    padding: 20px;
+  }
+  circle {
+    fill: steelblue;
+    fill-opacity: 0.3;
+  }
+  circle.selected { <b class="conum">(2)</b>
+    fill: red;
+    fill-opacity: 1;
+  }
+&lt;/style&gt;
+
+&lt;p&gt;{x} by {y}&lt;/p&gt;
+&lt;svg width=400 height=400&gt;
+  {#each datapoints as datapoint}
+    &lt;circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
+            r=5
+            on:mouseover={function() {selected_datapoint = datapoint}} <b class="conum">(3)</b>
+            on:mouseout={function() {selected_datapoint = undefined}} <b class="conum">(4)</b>
+            class:selected="{selected_datapoint &amp;&amp; datapoint.id == selected_datapoint.id}" <b class="conum">(5)</b>
+    /&gt;
+  {/each}
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What happens here?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>(1)</strong> We&#8217;ll need to have a <code>selected_datapoint</code> variable to keep track of which datapoint is the selected one.</p>
+</li>
+<li>
+<p><strong>(2)</strong> Instead of using <code>circle:hover</code>, we will set the class of our datapoint to <code>selected</code> and apply styles like that.</p>
+</li>
+<li>
+<p><strong>(3)</strong> Using <code>on:mouseover</code> we can set the <code>selected_datapoint</code>&#8230;&#8203;</p>
+</li>
+<li>
+<p><strong>(4)</strong> &#8230;&#8203; which is unset on <code>on:mouseout</code>.</p>
+</li>
+<li>
+<p><strong>(5)</strong> Finally, we can set the class of our circle to <code>selected</code> if <code>selected_datapoint</code> is defined and the id of our datapoint is the same as the selected datapoint.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>src/routes/+page.svelte</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+    import Scatterplot from "./Scatterplot.svelte";
+
+    export let data = [];
+    let selected_datapoint = undefined;
+&lt;/script&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;Scatterplot
+            bind:selected_datapoint
+            datapoints={data.flowers}
+            x="sepalLength"
+            y="sepalWidth" /&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;Scatterplot
+            bind:selected_datapoint
+            datapoints={data.flowers}
+            x="petalLength"
+            y="petalWidth" /&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We define a variable <code>selected_datapoint</code> <strong>(1)</strong> that will contain a copy of any datapoint that we hover over in any of the scatterplots. Next, we way of checking if a circle is selected. We can do this by adding a unique ID to all datapoints <strong>(2)</strong>. Finally, we pass the selected datapoint to the scatterplots themselves, but do this using the <code>bind</code> operator, so that these scatterplots can pass that info back into the main code (from where it then can be passed to the other scatterplot).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_a_brush">6.4.2. Using a brush</h4>
+<div class="paragraph">
+<p>The above is a poor-man&#8217;s version, and we&#8217;d like to have a more useful brush where you can select a <em>region</em> of the plot. D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. In the example below, we only create a proof-of-concept for brushing; in a real setting you would create separate components which would solve some of the issue of the brush going outside the plot, etc.</p>
+</div>
+<div class="paragraph">
+<p>The plots below show the iris dataset: the left part shows sepal length (x-axis) vs sepal width (y-axis); the right part sepal length (x-axis) vs petal length (y-axis). Brushing on the left part selects flowers that are then highlighted on the right one.</p>
+</div>
+<div class="paragraph">
+<p><strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div id="svelte-realbrushlink"></div>
+<div class="paragraph">
+<p><code>src/routes/+page.svelte</code>:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+    import { scaleLinear } from 'd3-scale';
+    import Papa from 'papaparse';
+    import { onMount } from 'svelte';
+    import { extent } from 'd3-array'
+
+    let w = 400;
+    let h = 400;
+
+    let datapoints = []
+    onMount(() =&gt; {
+        Papa.parse("https://vda-lab.github.io/assets/iris.csv", {
+            header: true,
+            download: true,
+            complete: function(results) {
+                let counter = 0
+                datapoints = results.data.slice(0,-1)
+                datapoints.map((d) =&gt; d.sepal_length = +d.sepal_length)
+                datapoints.map((d) =&gt; d.sepal_width = +d.sepal_width)
+                datapoints.map((d) =&gt; d.petal_length = +d.petal_length)
+                datapoints.map((d) =&gt; d.petal_width = +d.petal_width)
+                datapoints.forEach((d) =&gt; {
+                    d["id"] = counter
+                    counter++;
+                })
+            }
+        })
+    })
+
+    // slScale: sepal_length, swScale: sepal_width, plScale: petal_length
+    $: slScale = scaleLinear().domain(extent(datapoints.map((d) =&gt; { return d.sepal_length}))).range([5,w-5])
+    $: swScale = scaleLinear().domain(extent(datapoints.map((d) =&gt; { return d.sepal_width}))).range([h-5,5])
+    $: plScale = scaleLinear().domain(extent(datapoints.map((d) =&gt; { return d.petal_length}))).range([h-5,5])
+
+    let selectedDatapoints = [];
+    // $: console.log(datapoints.filter((d) =&gt; { return selectedDatapoints.includes(d.id) }))
+
+    let dragging = false;
+    let startX = 0; let startY = 0;
+    let startDataX = 0; let startDataY = 0;
+    let brushWidth = 0; let brushHeight = 0;
+    let mouseX = 0; let mouseY = 0;
+    let mouseDataX = 0; let mouseDataY = 0;
+
+    const startBrush = (e) =&gt; {
+        startX = e.offsetX;
+        startY = e.offsetY;
+
+        startDataX = slScale.invert(startX)
+        startDataY = swScale.invert(startY)
+        mouseX = startX;
+        mouseY = startY;
+        dragging = true;
+    };
+    const updateBrush = (e) =&gt; {
+        mouseX = e.offsetX;
+        mouseY = e.offsetY;
+
+        mouseDataX = slScale.invert(mouseX)
+        mouseDataY = swScale.invert(mouseY)
+
+        brushWidth = mouseX - startX;
+        brushHeight = mouseY - startY;
+        if (brushWidth &lt; 0) { brushWidth = -brushWidth; }
+        if (brushHeight &lt; 0) { brushHeight = -brushHeight; }
+    };
+
+    const getBrushedDatapoints = () =&gt; {
+        selectedDatapoints = datapoints
+            .filter((d) =&gt; {
+                return (
+                    Math.min(startDataX, mouseDataX) &lt; d.sepal_length &amp;&amp; d.sepal_length &lt; Math.max(startDataX, mouseDataX) &amp;&amp;
+                    Math.min(startDataY, mouseDataY) &lt; d.sepal_width &amp;&amp; d.sepal_width &lt; Math.max(startDataY, mouseDataY)
+                )})
+            .map((d) =&gt; d.id);
+    };
+&lt;/script&gt;
+
+&lt;svg width={w*2} height={h}
+    on:mousedown={(e) =&gt; { startBrush(e); }}
+    on:mousemove={(e) =&gt; { if (dragging) { updateBrush(e); getBrushedDatapoints(); } }}
+    on:mouseup={() =&gt; { dragging = false; }}
+    on:dblclick={() =&gt; { brushWidth = 0; brushHeight = 0; }}
+&gt;
+    &lt;rect class="brush" x={Math.min(startX, mouseX)} y={Math.min(startY, mouseY)}
+                        width={brushWidth} height={brushHeight} /&gt;
+    &lt;g&gt;
+    {#each datapoints as datapoint}
+        &lt;circle cx={slScale(datapoint.sepal_length)} cy={swScale(datapoint.sepal_width)} r="5"
+            class:selected={selectedDatapoints.includes(datapoint.id)} /&gt;
+    {/each}
+    &lt;/g&gt;
+
+    &lt;line x1={w} x2={w} y1=0 y2={h} /&gt;
+
+    &lt;g class="plot" transform="translate({w},0)"&gt;
+    {#each datapoints as datapoint}
+        &lt;circle cx={slScale(datapoint.sepal_length)} cy={plScale(datapoint.petal_length)} r="5"
+            class:selected={selectedDatapoints.includes(datapoint.id)} /&gt;
+    {/each}
+    &lt;/g&gt;
+&lt;/svg&gt;
+
+&lt;style&gt;
+    line { stroke: black}
+    circle { fill: steelblue; }
+    circle.selected { fill: red; }
+    rect.brush { fill: black; fill-opacity: 0.3; }
+&lt;/style&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_specific_visuals">6.5. Specific visuals</h3>
+<div class="paragraph">
+<p>Below, we will just post example code that can be used as a starting point for more complex visuals. We won&#8217;t go in depth into explaining this code, though.</p>
+</div>
+<div class="sect3">
+<h4 id="_map">6.5.1. Map</h4>
+<div class="paragraph">
+<p>We have shown airports by just plotting their longitude and latitude as a scatterplot, but it&#8217;d be nice to plot them on top of an actual map. There are different libraries for doing this, including D3 (see <a href="https://www.pluralsight.com/guides/maps-made-easy-with-d3" class="bare">https://www.pluralsight.com/guides/maps-made-easy-with-d3</a>) and <a href="https://leafletjs.com">leaflet.js</a>, developed by Vladimir Agafonkin.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll first have to install the leaflet library with <code>npm install leaflet</code>. You will also have to add the following line to your <code>+page.js</code>: <code>export const ssr = false;</code></p>
+</div>
+<div class="paragraph">
+<p>A minimal, basic map:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  import { onMount } from "svelte";
+  import L from "leaflet";
+
+  export let data = [];
+  let map;
+
+  onMount(async () =&gt; {
+    map = L.map("map", { preferCanvas: true }).setView(
+      [50.8476, 4.3572],
+      2,
+    );
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          'Map data &amp;copy; &lt;a href="https://www.openstreetmap.org/"&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href="https://creativecommons.org/licenses/by-sa/2.0/"&gt;CC-BY-SA&lt;/a&gt;',
+        maxZoom: 18,
+      },
+    ).addTo(map);
+    let real_brussels = L.marker([50.901, 4.4856]).addTo(map);
+    real_brussels.bindTooltip("Real Brussels airport").openTooltip();
+    let brussels_in_datafile = L.marker([51.502, 4.807], {
+      markerColor: "red",
+    }).addTo(map);
+    brussels_in_datafile
+      .bindTooltip("Brussels airport in datafile")
+      .openTooltip();
+
+    data.flights.forEach((d) =&gt; {
+      L.circle(
+        [+d.from_lat, +d.from_long],
+        {
+          stroke: false,
+          color: "black",
+          radius: 50000  // is radius in meters
+        },
+      ).addTo(map);
+    });
+  });
+&lt;/script&gt;
+
+&lt;svelte:head&gt;
+  &lt;link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    crossorigin=""
+  /&gt;
+
+  &lt;script
+    src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    crossorigin=""
+  &gt;
+  &lt;/script&gt;
+&lt;/svelte:head&gt;
+
+&lt;div id="map" /&gt;
+
+&lt;style&gt;
+  #map {
+      height: 480px;
+  }
+&lt;/style&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/world-map.png" alt="world map" width="50%"></span></p>
+</div>
+<div class="paragraph">
+<p>You might see that some of the airports are in the ocean. Indeed, if we look at Brussels airport, the latitude and longitude in the input file are not exactly the same as the real ones.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/brussels_airport.png" alt="brussels airport" width="50%"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_force_directed_graph">6.5.2. Force-directed graph</h4>
+<div class="paragraph">
+<p>D3 has a very solid library for drawing node-link diagrams, available at <a href="https://github.com/d3/d3-force" class="bare">https://github.com/d3/d3-force</a>. Data for a network consists of nodes and links, and should be formatted like this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nodes must have an ID, e.g. <code>{"id": 1,"name": "A"}</code>.</p>
+</li>
+<li>
+<p>Links must have a <code>source</code> and a <code>target</code>, e.g. <code>{"source": 1,"target": 2}</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Again, first install the necessary library: <code>npm install d3-force</code>.</p>
+</div>
+<div class="paragraph">
+<p>A simple node-link diagram which allows for dragging nodes around:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;script&gt;
+  import { onMount } from 'svelte';
+  import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force'
+
+  let nodes = [
+    {"id": 1,"name": "A"}, {"id": 2,"name": "B"},
+    {"id": 3,"name": "C"}, {"id": 4,"name": "D"},
+    {"id": 5,"name": "E"}, {"id": 6,"name": "F"},
+    {"id": 7,"name": "G"}, {"id": 8,"name": "H"},
+    {"id": 9,"name": "I"}, {"id": 10,"name": "J"}
+  ]
+  let links = [
+    {"source": 1,"target": 2}, {"source": 1,"target": 5},
+    {"source": 2,"target": 6}, {"source": 2,"target": 4},
+    {"source": 2,"target": 7}, {"source": 3,"target": 4},
+    {"source": 8,"target": 3}, {"source": 4,"target": 5},
+    {"source": 4,"target": 9}, {"source": 5,"target": 10}
+  ]
+
+  let draggedNode = null;
+  let simulation;
+
+  function dragNode(event) {
+    if ( draggedNode ) {
+      draggedNode.x = event.offsetX;
+      draggedNode.y = event.offsetY;
+      draggedNode.cx = draggedNode.x
+      draggedNode.cy = draggedNode.y
+      ticked()
+    }
+  }
+
+  onMount(runSimulation);
+
+  function ticked() {
+      nodes = nodes
+      links = links
+  }
+
+  function runSimulation() {
+      simulation = forceSimulation(nodes)
+          .force("link", forceLink(links).id(d =&gt; d.id))
+          .force("charge", forceManyBody().strength(-50))
+          .force("center", forceCenter(200,200))
+          .on('tick', ticked)
+  }
+&lt;/script&gt;
+
+&lt;style&gt;
+  circle {
+  fill: steelblue;
+      visibility:visible;
+  }
+  circle:hover {
+      fill: red;
+  }
+  line {
+      stroke: #999;
+      stroke-opacity: 0.6;
+  }
+  .selected {
+      fill: red;
+      r: 7;
+  }
+&lt;/style&gt;
+
+&lt;svg
+  width="400"
+  height="400"
+  on:mousemove={dragNode}
+  on:mouseup={() =&gt; { if ( draggedNode ) { runSimulation() }; draggedNode = null; }}&gt;
+  {#each links as link}
+  &lt;line x1='{link.source.x}' y1='{link.source.y}'
+        x2='{link.target.x}' y2='{link.target.y}' &gt;
+  &lt;/line&gt;
+  {/each}
+
+  {#each nodes as point}
+      &lt;circle
+          class:selected={point.selected}
+          cx={point.x}
+          cy={point.y}
+          r="8"
+          on:mousedown={() =&gt; { draggedNode = point ; runSimulation() } }
+          &gt;
+        &lt;title&gt;{point.id}&lt;/title&gt;
+      &lt;/circle&gt;
+  {/each}
+&lt;/svg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong><em>INTERACTIVE</em></strong></p>
+</div>
+<div id="svelte-nodelink"></div>
+<div id="assignment_nodelink" class="openblock assignment">
+<div class="content">
+<div class="paragraph">
+<p><span class="big"><strong>Practice</strong></span></p>
+</div>
+<div class="paragraph">
+<p>Create a network graph where the nodes are not just circles, but a glyph like we did for the iris flowers.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_custom_components.html">Custom components</a> | ↑ Up: <a href="index.html">Implementing data visualisations using Svelte</a> | Next: <a href="_resources.html">Resources</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-03-18 17:39:58 +0100
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>

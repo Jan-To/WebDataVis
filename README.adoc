@@ -1,0 +1,4 @@
+= Data visualisation technologies
+Material used for data visualisation courses at KU Leuven and UHasselt.
+
+Access at http://vda-lab.gitlab.io/datavis-technologies

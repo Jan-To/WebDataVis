@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="author" content="Jan Aerts">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<title>Implementing data visualisations using Svelte</title>
+<style>
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";
+
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+#map_canvas img,#map_canvas embed,#map_canvas object,.map_canvas img,.map_canvas embed,.map_canvas object{max-width:none!important}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+.antialiased,body{-webkit-font-smoothing:antialiased}
+img{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{display:inline-block;color:rgba(0,0,0,.8);font-size:.75em;line-height:1.4;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:-.15em .15em 0 .15em;padding:.2em .6em .2em .5em;vertical-align:middle;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.05em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.spread{width:100%}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1{padding-right:.75em;font-weight:bold}
+td.hdlist1,td.hdlist2{vertical-align:top}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none}
+span.footnote,span.footnoteref{vertical-align:super;font-size:.875em}
+span.footnote a,span.footnoteref a{text-decoration:none}
+span.footnote a:active,span.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em;line-height:1.3;font-size:.875em;margin-left:1.2em;text-indent:-1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+h1,h2{letter-spacing:-.01em}
+dt,th.tableblock,td.content{text-rendering:optimizeLegibility}
+p,td.content{letter-spacing:-.01em}
+p strong,td.content strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img{page-break-inside:avoid}
+thead{display:table-header-group}
+img{max-width:100%!important}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+
+/* Custom things */
+.assignment {
+    background-color: #FFCC6F55;
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px;
+}
+</style>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_html_css_and_javascript" class="article toc2 toc-left">
+<div id="header">
+<h1>Implementing data visualisations using Svelte</h1>
+<div class="details">
+<span id="author" class="author">Jan Aerts</span><br>
+<span id="email" class="email"><a href="mailto:jan.aerts@kuleuven.be">jan.aerts@kuleuven.be</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="index.html">Implementing data visualisations using Svelte</a></span></p><ul class="sectlevel1">
+<li><a href="_environment_setup.html">1. Environment setup</a>
+</li>
+<li><a href="_html_css_and_javascript.html"><span class="toc-current">2. HTML, CSS, and javascript</span></a>
+<ul class="sectlevel2">
+<li><a href="_html_css_and_javascript.html#_general_html_file_structure">2.1. General HTML file structure</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_create_your_first_page">2.2. Create your first page</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_the_document_object_model_dom">2.3. The Document Object Model (DOM)</a>
+<ul class="sectlevel3">
+<li><a href="_html_css_and_javascript.html#_attributes">2.3.1. Attributes</a>
+</li>
+</ul>
+</li>
+<li><a href="_html_css_and_javascript.html#_styling_elements_using_css">2.4. Styling elements using CSS</a>
+<ul class="sectlevel3">
+<li><a href="_html_css_and_javascript.html#_inline_css">2.4.1. Inline CSS</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_css_in_the_head">2.4.2. CSS in the head</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_using_css_selectors">2.4.3. Using CSS selectors</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_css_in_a_separate_file">2.4.4. CSS in a separate file</a>
+</li>
+</ul>
+</li>
+<li><a href="_html_css_and_javascript.html#_adding_behaviour_using_javascript">2.5. Adding behaviour using javascript</a>
+<ul class="sectlevel3">
+<li><a href="_html_css_and_javascript.html#_inline_javascript">2.5.1. Inline javascript</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_loading_javascript_from_a_file">2.5.2. Loading javascript from a file</a>
+</li>
+<li><a href="_html_css_and_javascript.html#_javascript_basics">2.5.3. Javascript basics</a>
+</li>
+</ul>
+</li>
+<li><a href="_html_css_and_javascript.html#_exercises_2">2.6. Exercises</a>
+</li>
+</ul>
+</li>
+<li><a href="_basic_data_visualisation.html">3. Basic data visualisation</a>
+</li>
+<li><a href="_basic_data_visualisation_with_svelte.html">4. Basic data visualisation with svelte</a>
+</li>
+<li><a href="_custom_components.html">5. Custom components</a>
+</li>
+<li><a href="_advanced_visualisation_using_svelte.html">6. Advanced visualisation using svelte</a>
+</li>
+<li><a href="_resources.html">7. Resources</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_html_css_and_javascript">2. HTML, CSS, and javascript</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Back in the 1990s, java was the programming language of choice if you wanted something visual and interactive on your screen. Over the years, this has shifted towards standard web technologies HTML, CSS and javascript.</p>
+</div>
+<div class="sect2">
+<h3 id="_general_html_file_structure">2.1. General HTML file structure</h3>
+<div class="paragraph">
+<p>Any website you visit basically consists of the same components. The whole page is contained within a <code>html</code> section, which will contain a <code>body</code>, and possibly a <code>head</code> and <code>script</code>. Below is a minimal html page.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        The actual content is here...
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A page containing some actual content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My webpage&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Introduction to HTML&lt;/h1&gt;
+        &lt;h2&gt;Simple structure&lt;/h2&gt;
+        &lt;p&gt;Most webpages have a simple structure; see this course...&lt;/p&gt;
+
+        &lt;h2&gt;Images and external links&lt;/h2&gt;
+        &lt;p&gt;These pages can contain images and links, for example:&lt;/p&gt;
+        &lt;img src="http://vda-lab.github.io/assets/stad_airquality.png" width=200 /&gt;
+        &lt;a href="http://vda-lab.github.io"&gt;Link to VDA-lab website&lt;/a&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/simple_page.png" alt="simple page" width="50%"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_your_first_page">2.2. Create your first page</h3>
+<div class="paragraph">
+<p>At this point, create a file called with an <code>.html</code> extension with the contents shown above (e.g. using vscode), and open it in any webbrowser. At this point, we suggest creating a separate file for different exercises (e.g. <code>exercise1.html</code>, <code>exercise2.html</code>, etc).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_document_object_model_dom">2.3. The Document Object Model (DOM)</h3>
+<div class="paragraph">
+<p>To give some structure to HTML we use <em>tags</em> to indicate <em>elements</em>. The collection of all these (nested) elements is called the Document Object Model or <em>DOM</em>.</p>
+</div>
+<div class="paragraph">
+<p>Tags exist to denote headers, lists, paragraphs, etc.</p>
+</div>
+<div class="paragraph">
+<p>Most tags need to be <em>opened</em> and then <em>closed</em>. For example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;li&gt;</code> &#8230;&#8203; <code>&lt;/li&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;h3&gt;</code> &#8230;&#8203; <code>&lt;/h3&gt;</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are some exceptions, such as when you create a horizontal line (<code>&lt;hr/&gt;</code>) or want to add a linebreak (<code>&lt;br/&gt;</code>).</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a list of the most relevant attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> &#8230;&#8203;: heading of level 1, 2, &#8230;&#8203;</p>
+</li>
+<li>
+<p><code>&lt;ul&gt;</code>: unordered list</p>
+</li>
+<li>
+<p><code>&lt;ol&gt;</code>: ordered list</p>
+</li>
+<li>
+<p><code>&lt;li&gt;</code>: list item within unordered or ordered list</p>
+</li>
+<li>
+<p><code>&lt;p&gt;</code>: paragraph</p>
+</li>
+<li>
+<p><code>&lt;g&gt;</code>: group other elements</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>&lt;div&gt;</code> is a generic container that will be useful later in the tutorial.</p>
+</div>
+<div class="paragraph">
+<p>You can find a complete list of HTML elements at <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">2.3.1. Attributes</h4>
+<div class="paragraph">
+<p>Tags can have attributes, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;a href="www.google.com"&gt;</code> defines the destination of a link, for example like <a href="http://www.google.com">this</a>.</p>
+</li>
+<li>
+<p><code>&lt;p style="color: blue"&gt;</code> sets the colour of that paragraph to blue</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_id_and_class"><code>id</code> and <code>class</code></h5>
+<div class="paragraph">
+<p>We will use the special attributes <code>id</code> and <code>class</code> a lot later in this session.</p>
+</div>
+<div class="paragraph">
+<p>The <code>id</code> attribute gives an element a certain id (obviously), and that id needs to be unique within the document.</p>
+</div>
+<div class="paragraph">
+<p>The <code>class</code> attribute assigns that element to a certain class. We can use this to easily select different elements together. See for example the <code>unimportant</code> class that we add to two of the shopping list items below. A single HTML element can have multiple classes. We can do this by adding them in all separate with a
+space. For example: <code>&lt;li class="datapoint selected"&gt;</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_some_other_examples">Some other examples</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;p&gt;Shopping list:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li class="unimportant"&gt;Eggs&lt;/li&gt;
+&lt;li class="unimportant"&gt;Milk&lt;/li&gt;
+&lt;li&gt;Toothpaste&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A button that does nothing, and a generic <code>div</code> element. But note that the generic <code>div</code> has an <code>id</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;div id="my_new_div"&gt;... and a generic HTML block with an id&lt;/div&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_styling_elements_using_css">2.4. Styling elements using CSS</h3>
+<div class="paragraph">
+<p>A typical website will not only contain HTML, but also CSS (cascading style sheets) and javascript.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">HTML</dt>
+<dd>
+<p>provides the basic structure of the page, which can be enhanced using CSS and javascript</p>
+</dd>
+<dt class="hdlist1">CSS</dt>
+<dd>
+<p>is used to control presentation, formatting and layout: what it <em>looks</em> like.</p>
+</dd>
+<dt class="hdlist1">javascript</dt>
+<dd>
+<p>is used to control the <em>behaviour</em> of different elements and the page as a whole.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>There are different ways to add CSS to your webpage.</p>
+</div>
+<div class="sect3">
+<h4 id="_inline_css">2.4.1. Inline CSS</h4>
+<div class="paragraph">
+<p>We can add CSS directives using the <code>style</code> attribute on HTML elements. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1 style="color: red;"&gt;HTML, CSS and javascript&lt;/h1&gt;
+        &lt;p style="font-family: cursive;"&gt;Shopping list:&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li style="color: blue;"&gt;Eggs&lt;/li&gt;
+            &lt;li style="color: blue; opacity: 0.5;"&gt;Milk&lt;/li&gt;
+            &lt;li style="color: blue;"&gt;Toothpaste&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;Link to the VDA-lab website is &lt;a style="font-weight: bold;" href="http://vda-lab.github.io"&gt;here&lt;/a&gt;.&lt;/p&gt;
+        &lt;button type="submit"&gt;Submit&lt;/button&gt;
+        &lt;div id="my_new_div"&gt;... and a generic HTML block with an id&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What it looks like:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/inline_css.png" alt="inline css" width="50%"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_css_in_the_head">2.4.2. CSS in the head</h4>
+<div class="paragraph">
+<p>When we use CSS inline as above, we can set the style for individual elements. But if we want to make all headers bold, we&#8217;d need to add <code>font-weight: bold</code> to <em>every</em> single <code>&lt;h1&gt;</code>. To set the style for whole groups of elements, we better define that once instead of for each element. We can do this in the <code>&lt;head&gt;</code> using the <code>&lt;style&gt;</code> element. In the example below, we make all headers of level 1 green, each list item should be blue, and links should be bold.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+        &lt;style&gt;
+            li { color: blue; }
+            h1 { color: green; }
+            a { font-weight: bold;}
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;CSS in the head&lt;/h1&gt;
+        &lt;p&gt;We have some text here with a &lt;a href="www.google.com"&gt;link&lt;/a&gt; to Google, and a list:&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;Eggs&lt;/li&gt;
+            &lt;li style="opacity: 0.5;"&gt;Milk&lt;/li&gt;
+            &lt;li&gt;Toothpaste&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/css_in_head.png" alt="css in head" width="50%"></span></p>
+</div>
+<div class="paragraph">
+<p>As you can see in this example, you can combine CSS in the head with inline CSS in which case the inline CSS takes precedence: the second list item is partly transparent.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_css_selectors">2.4.3. Using CSS selectors</h4>
+<div class="paragraph">
+<p>In the last example, we set the color for every list item to blue, but wanted to have one specific item transparent as well. We did this by combining CSS directives at two different places. A better approach is to separate the HTML and CSS even more, instead of hard-coding this transparency. We can do this using <strong>CSS selectors</strong>. These are a very powerful way to <em>select</em> different elements. The <code>id</code> and <code>class</code> attributes we mentioned above are crucial.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To select all elements of a certain <em>type</em> (e.g. <code>&lt;h1&gt;</code> or <code>&lt;p&gt;</code>), use the name of that element.</p>
+</li>
+<li>
+<p>To select all elements with a certain <em>class</em> (e.g. <code>&lt;li class="important"&gt;</code>), prepend that class with a period <code>.</code>.</p>
+</li>
+<li>
+<p>To select the element with a given <em>id</em> (e.g. <code>&lt;p id="paragraph_5&gt;</code>), prepend that id with a hash <code>#</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your CSS can look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css">h1 { color: red; }
+a { font-weight: bold;}
+p {
+    max-width: 400px;
+}
+.unimportant {
+    opacity: 0.5
+}
+#paragraph_5 { font-family: cursive; }
+
+ul li { color: blue; }
+p:hover {
+    background-color: aqua;
+}
+p::first-letter {
+    font-size: larger;
+    font-weight: bolder;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above, we</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>make all <code>&lt;h1&gt;</code> red</p>
+</li>
+<li>
+<p>make all links <code>&lt;a&gt;</code> bold</p>
+</li>
+<li>
+<p>set the maximum with of all paragraphs (<code>&lt;p&gt;</code>) to 400 pixels</p>
+</li>
+<li>
+<p>give all elements that have <code>unimportant</code> as a class an opacity of 50%</p>
+</li>
+<li>
+<p>set the element with <code>id</code> of <code>paragraph_5</code> in italics</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Those are the most basic selectors. But these can be combined and make much more complex. In the following line, we set the colour of a list item <code>&lt;li&gt;</code> to blue, but only if it&#8217;s preceded by a <code>&lt;ul&gt;</code>. This means that items in an <em>ordered</em> list (<code>&lt;ol&gt;</code>) will <em>not</em> be blue. We can also use <em>pseudo-classes</em>, like <code>:hover</code> (which matches the element your mouse is hovering on), or <code>::first-letter</code> (which speaks for itself).</p>
+</div>
+<div class="paragraph">
+<p>For the full reference, see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+        &lt;style&gt;
+            ul li { color: blue; }
+            h1 { color: red; }
+            a { font-weight: bold;}
+            .unimportant {
+                opacity: 0.5
+            }
+            p {
+                max-width: 400px;
+            }
+            #paragraph_5 { font-family: cursive; }
+            p:hover {
+                background-color: aqua;
+            }
+            p::first-letter {
+                font-size: larger;
+                font-weight: bolder;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;CSS selectors&lt;/h1&gt;
+        &lt;p style="font-family: cursive;"&gt;Shopping list:&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li class="unimportant"&gt;Eggs&lt;/li&gt;
+            &lt;li class="unimportant"&gt;Milk&lt;/li&gt;
+            &lt;li&gt;Toothpaste&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;Link to the VDA-lab website is &lt;a href="http://vda-lab.github.io"&gt;here&lt;/a&gt;.&lt;/p&gt;
+        &lt;p id="paragraph_5"&gt;This is a handwritten paragraph.&lt;/p&gt;
+        &lt;h2&gt;Explanation&lt;/h2&gt;
+        &lt;p&gt;In CSS (= Cascading Style Sheets) you define the style. There are 3 main ways (there are more)
+            to tell the css which elements should get that style, using &lt;b&gt;CSS selectors&lt;/b&gt;:
+        &lt;/p&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;b&gt;element&lt;/b&gt;: e.g. &lt;kbd&gt;h1 {color: red}&lt;/kbd&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;b&gt;class&lt;/b&gt;: e.g. &lt;kbd&gt;.unimportant {opacity: 0.5}&lt;/kbd&gt;)
+                =&gt; prepend with a period &lt;kbd&gt;.&lt;/kbd&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;b&gt;id&lt;/b&gt;: e.g. &lt;kbd&gt;#paragraph_5&lt;/kbd&gt; =&gt; prepend with a
+                hash &lt;kbd&gt;#&lt;/kbd&gt;.&lt;/li&gt;
+            &lt;li&gt;&lt;b&gt;*&lt;/b&gt;: everything&lt;/li&gt;
+        &lt;/ol&gt;
+        You can also use &lt;em&gt;pseudo-classes&lt;/em&gt;:
+        &lt;ol&gt;
+            &lt;li&gt;&lt;b&gt;:hover&lt;/b&gt;: matches an elements that is being hovered over by the mouse,
+                e.g. &lt;kbd&gt;p:hover&lt;/kbd&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;b&gt;::first-letter&lt;/b&gt;: first letter in an element&lt;/li&gt;
+            &lt;li&gt;...&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>has this result:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/css_selectors.png" alt="css selectors" width="50%"></span></p>
+</div>
+<div class="paragraph">
+<p>Notice the brightly coloured paragraph&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_css_in_a_separate_file">2.4.4. CSS in a separate file</h4>
+<div class="paragraph">
+<p>Instead of adding the complete css inline or in the head of a file, we can also put it in a separate file. We load this file in the head, using <code>&lt;link rel="stylesheet" href="my_css_file.css"&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+        &lt;link rel="stylesheet" href="flashy_styles.css"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;HTML and CSS&lt;/h1&gt;
+        &lt;p&gt;Some text here...&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Developer tools and console</div>
+<div class="paragraph">
+<p>Whatever you write in the <code>.html</code> file, it gets <em>rendered</em> in the browser so you do not see the tags anymore. However, each browser has <em>developer tools</em> that allow you to get to the underlying HTML code. You can activate them here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Chrome: View &gt; Developer &gt; Developer Tools</p>
+</li>
+<li>
+<p>Firefox: Tools &gt; Browser Tools &gt; Web Developer Tools</p>
+</li>
+<li>
+<p>Safari: Develop &gt; Show Web Inspector</p>
+</li>
+<li>
+<p>Vivaldi: Tools &gt; Developer Tools</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/developer_tools.png" alt="developer tools"></span></p>
+</div>
+<div class="paragraph">
+<p>In the image above you see the rendered version of the page on the left, and the underlying source on the right.</p>
+</div>
+<div class="paragraph">
+<p>You will also see a tab named <code>console</code> in the developer tools.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+To know what&#8217;s going on in your javascript code, you can add <code>console.log(your_variable)</code>. The value of that variable will then be visible in the console.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_behaviour_using_javascript">2.5. Adding behaviour using javascript</h3>
+<div class="paragraph">
+<p>We can use javascript to add additional functionality to a site.</p>
+</div>
+<div class="sect3">
+<h4 id="_inline_javascript">2.5.1. Inline javascript</h4>
+<div class="paragraph">
+<p>We can add the javascript within the <code>body</code> between <code>script</code> tags. If we want to reference existing elements (such as the <code>demo</code> element in our example below, we have to put the <code>script</code> at the <em>end</em> of the <code>body</code>. In this example below, a counter is updated every time we push the button.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+        &lt;link rel="stylesheet" href="styles.css"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;We can use javascript to add additional functionality to a site.&lt;/p&gt;
+        &lt;button onclick="handleClick()"&gt;Increment the counter&lt;/button&gt;
+
+        &lt;p id="demo"&gt;&lt;/p&gt;
+
+        &lt;script&gt;
+            let count = 0;
+            function handleClick() {
+                count += 1
+                document.getElementById("demo").innerHTML = "You clicked the button " + count + " times."
+            }
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s walk through this code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In line 8, we create a <code>button</code> to which we attach an action whenever we click (<code>onclick</code>) on it. The action is called <code>handleClick</code> (but this might be any name that we give it).</p>
+</li>
+<li>
+<p>Lines 343 to 349 define the javascript.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>We set a counter to zero in line 344. This happens the moment that the page is opened or refreshed.</p>
+</li>
+<li>
+<p>The actual function is defined in lines 345 to 348. Whenever we click the button, these lines are executed.</p>
+</li>
+<li>
+<p>First we increment the counter with 1.</p>
+</li>
+<li>
+<p>Then we find the element with <code>id</code> of <code>demo</code> (<code>document.getElementById("demo")</code>) and set its contents (<code>innerHTML</code>) to the text "You clicked&#8230;&#8203;"</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>document.getElementById()</code> might be overwhelming, but we will find easier ways to do this later.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_loading_javascript_from_a_file">2.5.2. Loading javascript from a file</h4>
+<div class="paragraph">
+<p>If the code becomes a bit more involved, we can put it in a separate file, and reference it in the <code>&lt;head&gt;</code> like so, in line 5 below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My HTML file&lt;/title&gt;
+        &lt;link rel="stylesheet" href="styles.css"&gt;
+        &lt;script src="script1.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;We can use javascript to add additional functionality to a site.&lt;/p&gt;
+        &lt;button onclick="handleClick()"&gt;Increment the counter&lt;/button&gt;
+
+        &lt;p id="demo"&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Intermezzo - The JSON format</div>
+<div class="paragraph">
+<p>From the next section onwards we will work with variables and data. At this point it is important to describe the JSON data format.</p>
+</div>
+<div class="paragraph">
+<p>The JSON ("JavaScript Object Notation") data representation format follows the same principle as XML, in that it describes the data in the object itself. This format is used in many Application Programming Interfaces (APIs) such as <a href="https://dummyjson.com/products" class="bare">https://dummyjson.com/products</a>, as well as the internal representation of complex data in javascript code.</p>
+</div>
+<div class="paragraph">
+<p>An example JSON object containing information about the BRCA2 gene, involved in breast cancer:</p>
+</div>
+<div class="listingblock small">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{ id: 12345,
+  common_name: "BRCA2",
+  names: ["BRCA2", "ENST00000544455.6", "FACD", "FANCD1"],
+  description: "Breast cancer type 2 susceptibility protein",
+  location : {
+    genome_build: "hg38",
+    chromosome: "13",
+    start: 32315086,
+    end: 32400268,
+    strand: "+"
+  },
+  diseases: [{
+    name: "breast cancer",
+    description: "Defects in BRCA2 are a cause of susceptibility to breast cancer (BC)"
+  }, {
+    name: "BROVCA2",
+    description: "Defects in BRCA2 are involved in familial breast-ovarian cancer type 2"
+  }, {
+    name: "FANCD1",
+    description: "Defects in BRCA2 are the cause of Fanconi anemia complementation group D type 1"
+  }]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Data in JSON format (or javascript objects) are presented in key/value pairs. To be completely JSON-compliant the key should be put in quotes, although those are often omitted for brevity (as in the example above). Different key/value pairs are separated by a comma. JSON values can be of different types. They can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Scalars</strong>: strings (in quotes; see e.g. <code>common_name</code> above), numbers (without quotes; see e.g. <code>start</code>), booleans (<code>true</code>/<code>false</code>), or <code>null</code>.</p>
+</li>
+<li>
+<p><strong>Arrays</strong> containing zero or more elements, surrounded by square brackets (<code>[]</code>). For example, see <code>names</code> in the example above.</p>
+</li>
+<li>
+<p>Other <strong>objects</strong>, surrounded by curley brackets (<code>{}</code>; see e.g. <code>location</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The values of arrays and objects can again be scalars, arrays or other objects. For example, the value for the <code>diseases</code> key is an array of objects.</p>
+</div>
+<div class="paragraph">
+<p>The top-level element in a JSON-formatted file can be of any of the above types. In the example, this is an object.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_javascript_basics">2.5.3. Javascript basics</h4>
+<div class="sect4">
+<h5 id="_variables">Variables</h5>
+<div class="paragraph">
+<p>Variables in javascript are defined using the <code>var</code>, <code>let</code>, or <code>const</code> commands. For all purposes, <code>var</code> and <code>let</code> are exactly the same. There are slight differences in their scopes, but <code>let</code> was created because <code>var</code> 's scope was an important source for bugs in javascript. Ergo: use <code>let</code>.</p>
+</div>
+<div class="paragraph">
+<p><em>Declaring</em> and <em>assigning</em> variables are two different things: a variable <em>declaration</em> means that you create the variable and give it a name; with variable <em>assignment</em> you give it an actual value.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">var first_variable;           // declaration of first_variable
+first_variable = "a";         // assignment of value to first_variable
+let second_variable;          // declaration of second_variable
+second_variable = "b";        // assignment of value to second_variable
+let third_variable = "c";     // declaration and assignment done in one go
+console.log(third_variable);  // value of third_value is printed to the console
+third_variable = "d";         // third_variable gets a new value
+console.log(third_variable);  // value of third_value is printed to the console</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In contrast to <code>var</code> and <code>let</code>, a variable that is declared using <code>const</code> can <em>not</em> be assigned a new value.</p>
+</div>
+<div class="paragraph">
+<p>Everything on a line after a double forward slash (<code>//</code>) in javascript is seen as a comment and not parsed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+We&#8217;ll see later that in Svelte, you can also declare variables using <code>$:</code> instead of <code>let</code> or <code>const</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_functions">Functions</h5>
+<div class="paragraph">
+<p>There are several ways of creating functions in javascript. Below, we show three statements that do the same thing: take 2 arguments, add them, return the result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">// First version
+function function_1(a,b) { return a + b }
+
+// Second version
+let function_2 = function(a,b) { return a + b }
+
+// Third version
+let function_3 = (a,b) =&gt; { return a + b }
+
+console.log(function_1(1,2))
+console.log(function_2(1,2))
+console.log(function_3(1,2))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the second and third version, it might sometimes be useful to use <code>const</code> (or <code>$:</code>) depending on the use case. The difference between the first version on the one hand, and the second and third on the other is not relevant in the cases that we will use them.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_2">2.6. Exercises</h3>
+<div id="exercises_htmlcssjavascript" class="openblock assignment">
+<div class="content">
+<div class="paragraph">
+<p>Here are some exercises related to this chapter:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Headers: <a href="https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1" class="bare">https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1</a></p>
+</li>
+<li>
+<p>Lists: <a href="https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1" class="bare">https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1</a></p>
+</li>
+<li>
+<p>Text tags: <a href="https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1" class="bare">https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1</a></p>
+</li>
+<li>
+<p>Styles (inline): <a href="https://svelte.dev/repl/e1f0c316e39c45cb97fbf1fe18126e4c?version=3.59.1" class="bare">https://svelte.dev/repl/e1f0c316e39c45cb97fbf1fe18126e4c?version=3.59.1</a></p>
+</li>
+<li>
+<p>CSS classes: <a href="https://svelte.dev/repl/987e9e43eab74967912e83b302401291?version=3.59.1" class="bare">https://svelte.dev/repl/987e9e43eab74967912e83b302401291?version=3.59.1</a></p>
+</li>
+<li>
+<p>Printing: <a href="https://svelte.dev/repl/f7fe97bc39ba4ecf8b9077bf5e497450?version=3.59.1" class="bare">https://svelte.dev/repl/f7fe97bc39ba4ecf8b9077bf5e497450?version=3.59.1</a></p>
+</li>
+<li>
+<p>Variables: <a href="https://svelte.dev/repl/5b50bf2c9bea4811ad62ef82ca38f18e?version=3.59.1" class="bare">https://svelte.dev/repl/5b50bf2c9bea4811ad62ef82ca38f18e?version=3.59.1</a></p>
+</li>
+<li>
+<p>Arrays: <a href="https://svelte.dev/repl/b7f4e0f2a9034b16972f82f86df39ee1?version=3.59.1" class="bare">https://svelte.dev/repl/b7f4e0f2a9034b16972f82f86df39ee1?version=3.59.1</a></p>
+</li>
+<li>
+<p>Objects: <a href="https://svelte.dev/repl/f5fe639471b04e588048059076e25ad7?version=3.59.1" class="bare">https://svelte.dev/repl/f5fe639471b04e588048059076e25ad7?version=3.59.1</a></p>
+</li>
+<li>
+<p>Functions: <a href="https://svelte.dev/repl/b1e70f4349cc4a4ca8169f808794a099?version=3.59.1" class="bare">https://svelte.dev/repl/b1e70f4349cc4a4ca8169f808794a099?version=3.59.1</a></p>
+</li>
+<li>
+<p>Scope: <a href="https://svelte.dev/repl/7c44e0ca379c4e869aa37d6dceb1429d?version=3.59.1" class="bare">https://svelte.dev/repl/7c44e0ca379c4e869aa37d6dceb1429d?version=3.59.1</a></p>
+</li>
+<li>
+<p>Importing: <a href="https://svelte.dev/repl/424ccb07f0bf4a23a82ea4789f8ca25d?version=3.59.1" class="bare">https://svelte.dev/repl/424ccb07f0bf4a23a82ea4789f8ca25d?version=3.59.1</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_environment_setup.html">Environment setup</a> | ↑ Up: <a href="index.html">Implementing data visualisations using Svelte</a> | Next: <a href="_basic_data_visualisation.html">Basic data visualisation</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-03-18 17:39:58 +0100
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>
