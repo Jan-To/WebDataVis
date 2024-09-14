@@ -24,22 +24,10 @@ Any website you visit basically consists of the same components. The whole page 
 '
 />
 
-<!--
-  <!DOCTYPE html>
-  <html>
-      <head>
-      </head>
-      <body>
-          The actual content is here...
-      </body>
-  </html>
+<p>Here is a page containing some actual content:</p>
 
-
-A page containing some actual content:
-
-[source, html, linenums]
-----
-<!DOCTYPE html>
+<Highlight language={typescript} code=
+'<!DOCTYPE html>
 <html>
     <head>
         <title>My webpage</title>
@@ -54,11 +42,9 @@ A page containing some actual content:
         <img src="http://vda-lab.github.io/assets/stad_airquality.png" width=200 />
         <a href="http://vda-lab.github.io">Link to VDA-lab website</a>
     </body>
-</html>
-----
+</html>'/>
 
-image:simple_page.png[width=50%,pdfwidth=50%]
-
+<!--
 === Create your first page
 At this point, create a file called with an `.html` extension with the contents shown above (e.g. using vscode), and open it in any webbrowser. At this point, we suggest creating a separate file for different exercises (e.g. `exercise1.html`, `exercise2.html`, etc).
 

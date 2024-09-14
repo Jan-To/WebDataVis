@@ -1,6 +1,57 @@
-<nav>
-	<a href="/">About</a>
-	<a href="/htmlcssjs">HTML, CSS and Javascript</a>
-</nav>
+<script>
+	import ashes from "svelte-highlight/styles/ashes";
+</script>
 
-<slot></slot>
+<svelte:head>
+  {@html ashes}
+</svelte:head>
+
+<div class="container">
+	<div class="nav-container">
+		<ul class="navbar">
+			<li class="nav-element"><a href="/">About</a></li>
+			<li class="nav-element"><a href="/htmlcssjs">HTML, CSS and Javascript</a></li>
+		</ul>
+	</div>
+	<div class='content-container'>
+		<div class='content'>
+			<slot></slot>
+		</div>
+	</div>
+</div>
+
+<style>
+	:global(body) {
+		margin: 0;
+	}
+
+	.container {
+		margin: 0;
+		position: relative;
+	}
+
+	.nav-container {
+		width: 250px;
+		background-color: #f8f8f7;
+		border-right: 1px solid #efefed;
+		float: left;
+		margin: 0;
+		position: fixed;
+		height: 100%;
+	}
+
+	.navbar {
+	}
+
+	.nav-element {
+	}
+
+	.content-container {
+		padding-left: 250px;
+	}
+
+	.content {
+		max-width: 1024px;
+		margin: 0 auto;
+	}
+</style>
