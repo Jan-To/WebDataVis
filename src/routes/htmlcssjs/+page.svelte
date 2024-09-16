@@ -10,7 +10,10 @@
 </p>
 
 <h2>General HTML file structure</h2>
-Any website you visit basically consists of the same components. The whole page is contained within a `html` section, which will contain a `body`, and possibly a `head` and `script`. Below is a minimal html page.
+<p>
+    Any website you visit basically consists of the same components. The whole page is contained within a `html` section, 
+    which will contain a `body`, and possibly a `head` and `script`. Below is a minimal html page.
+</p>
 
 <Highlight language={typescript} code=
 '<!DOCTYPE html>
@@ -44,17 +47,22 @@ Any website you visit basically consists of the same components. The whole page 
     </body>
 </html>'/>
 
+<h2>Create your first page</h2>
+<p>
+    At this point, create a file called with an `.html` extension with the contents shown above 
+    (e.g. using vscode), and open it in any webbrowser. At this point, we suggest creating a separate 
+    file for different exercises (e.g. `exercise1.html`, `exercise2.html`, etc).
+</p>
+
+<h2>The Document Object Model (DOM)</h2>
+<p>
+    To give some structure to HTML we use _tags_ to indicate _elements_. The collection of all these 
+    (nested) elements is called the Document Object Model or _DOM_.
+    Tags exist to denote headers, lists, paragraphs, etc.
+    Most tags need to be _opened_ and then _closed_. For example:
+</p>
+
 <!--
-=== Create your first page
-At this point, create a file called with an `.html` extension with the contents shown above (e.g. using vscode), and open it in any webbrowser. At this point, we suggest creating a separate file for different exercises (e.g. `exercise1.html`, `exercise2.html`, etc).
-
-=== The Document Object Model (DOM)
-To give some structure to HTML we use _tags_ to indicate _elements_. The collection of all these (nested) elements is called the Document Object Model or _DOM_.
-
-Tags exist to denote headers, lists, paragraphs, etc.
-
-Most tags need to be _opened_ and then _closed_. For example:
-
 - `<li>` ... `</li>`
 - `<h3>` ... `</h3>`
 
