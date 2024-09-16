@@ -1,6 +1,10 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
+    import Highlight, { LineNumbers } from "svelte-highlight";
+    import xml from "svelte-highlight/languages/xml";
+    import css from "svelte-highlight/languages/css";
+    import json from "svelte-highlight/languages/json";
+    import ExStyling from "./ExStyling.svelte";
+    import ExHead from "./ExHead.svelte";
 </script>
 
 <h1>HTML, CSS and Javascript</h1>
@@ -15,7 +19,7 @@
     which will contain a `body`, and possibly a `head` and `script`. Below is a minimal html page.
 </p>
 
-<Highlight language={typescript} code=
+<Highlight language={xml} code=
 '<!DOCTYPE html>
 <html>
     <head>
@@ -24,12 +28,11 @@
         The actual content is here...
     </body>
 </html>
-'
-/>
+'/>
 
 <p>Here is a page containing some actual content:</p>
 
-<Highlight language={typescript} code=
+<Highlight language={xml} code=
 '<!DOCTYPE html>
 <html>
     <head>
@@ -47,11 +50,10 @@
     </body>
 </html>'/>
 
-<h2>Create your first page</h2>
+<h3>Create your first page</h3>
 <p>
-    At this point, create a file called with an `.html` extension with the contents shown above 
-    (e.g. using vscode), and open it in any webbrowser. At this point, we suggest creating a separate 
-    file for different exercises (e.g. `exercise1.html`, `exercise2.html`, etc).
+    If you want to experiment, create a file called with an `.html` extension with the contents shown above 
+    (e.g. using vscode), and open it in any webbrowser. 
 </p>
 
 <h2>The Document Object Model (DOM)</h2>
@@ -62,103 +64,165 @@
     Most tags need to be _opened_ and then _closed_. For example:
 </p>
 
-<!--
-- `<li>` ... `</li>`
-- `<h3>` ... `</h3>`
+<Highlight language={xml} code=
+'<h1> ... </h1>
+<p> ... </p>
+'/>
 
-There are some exceptions, such as when you create a horizontal line (`<hr/>`) or want to add a linebreak (`<br/>`).
+<p>
+    There are some exceptions, such as when you create a horizontal line <code>&lt;hr/&gt;</code> 
+    or want to add a linebreak <code>&lt;br/&gt;</code> .
+    Here's a list of the most relevant attributes:
+</p>
 
-Here's a list of the most relevant attributes:
+<Highlight language={xml} code=
+'<h1>, <h2> ...: heading of level 1, 2, ...
+<ul>: unordered list
+<ol>: ordered list
+<li>: list item within unordered or ordered list
+<p>: paragraph
+<g>: group other elements
+<div>: a generic container
+<svg>: an svg
+...'/>
+<p>
+    You can find a complete list of HTML elements at <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element'>https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>.
+</p>
 
-- `<h1>`, `<h2>` ...: heading of level 1, 2, ...
-- `<ul>`: unordered list
-- `<ol>`: ordered list
-- `<li>`: list item within unordered or ordered list
-- `<p>`: paragraph
-- `<g>`: group other elements
-- ...
+<h3>Attributes</h3>
+<p>
+    Tags can have attributes, for example:
+</p>
+<div class=code-half>
+    <Highlight language={xml} code=
+'<a href="www.google.com">Click Here</a> defines the destination of a link.
+<p style="color: blue"> sets the colour of that paragraph to blue </p> '/>
+</div>
+<div class='view-half'>
+    <a href="www.google.com">Click Here</a> defines the destination of a link.
+    <p style="color: blue"> sets the colour of that paragraph to blue </p>
+</div>
 
-`<div>` is a generic container that will be useful later in the tutorial.
+<h3><code>id</code> and <code>class</code></h3> 
+<p>
+    We will use the special attributes <code>id</code> and <code>class</code> a lot later in this session.
 
-You can find a complete list of HTML elements at https://developer.mozilla.org/en-US/docs/Web/HTML/Element[https://developer.mozilla.org/en-US/docs/Web/HTML/Element].
+    The <code>id</code> attribute gives an element a certain id (obviously), 
+    and that id needs to be unique within the document.
 
-==== Attributes
-Tags can have attributes, for example:
+    The <code>class</code> attribute assigns that element to a certain class. 
+    We can use this to easily select different elements together. 
+    See for example the <code>unimportant</code> class that we add to 
+    two of the shopping list items below. 
+    A single HTML element can have multiple classes. 
+    We can do this by adding them in all separate with a space. 
+    For example: <code>&lt;li class="datapoint selected"&gt;</code>.
+</p>
 
-- `<a href="www.google.com">` defines the destination of a link, for example like http://www.google.com[this].
-- `<p style="color: blue">` sets the colour of that paragraph to blue
-- ...
-
-===== `id` and `class`
-We will use the special attributes `id` and `class` a lot later in this session.
-
-The `id` attribute gives an element a certain id (obviously), and that id needs to be unique within the document.
-
-The `class` attribute assigns that element to a certain class. We can use this to easily select different elements together. See for example the `unimportant` class that we add to two of the shopping list items below. A single HTML element can have multiple classes. We can do this by adding them in all separate with a
-space. For example: `<li class="datapoint selected">`.
-
-===== Some other examples
-[source,html, linenums]
-----
-<p>Shopping list:</p>
+<div class=code-half>
+    <Highlight language={xml} code=
+'<p>Shopping list:</p>
 <ul>
 <li class="unimportant">Eggs</li>
 <li class="unimportant">Milk</li>
 <li>Toothpaste</li>
-</ul>
-----
+</ul>'/>
+</div>
+<div class='view-half'>
+    <p>Shopping list:</p>
+    <ul>
+        <li class="unimportant">Eggs</li>
+        <li class="unimportant">Milk</li>
+        <li>Toothpaste</li>
+    </ul>
+</div>
 
-A button that does nothing, and a generic `div` element. But note that the generic `div` has an `id`.
 
-[source,html, linenums]
-----
-<button type="submit">Submit</button>
-<div id="my_new_div">... and a generic HTML block with an id</div>
-----
+<h3>Some other examples</h3> 
+<p>
+    A button that does nothing, and a generic <code>div</code> element. 
+    But note that the generic <code>div</code> has an <code>id</code>.
+</p>
+<div class=code-half>
+    <Highlight language={xml} code=
+'<button type="submit">Submit</button>
+<div id="my_new_div">... and a generic HTML block with an id</div>'/>
+</div>
+<div class=view-half>
+    <button type="submit">Submit</button>
+    <div id="my_new_div">... and a generic HTML block with an id</div>
+</div>
 
-=== Styling elements using CSS
-A typical website will not only contain HTML, but also CSS (cascading style sheets) and javascript.
+<h2>Styling elements using CSS</h2> 
+<p>
+    A typical website will not only contain HTML, but also CSS 
+    (cascading style sheets) and javascript.
 
-HTML:: provides the basic structure of the page, which can be enhanced using CSS and javascript
-CSS:: is used to control presentation, formatting and layout: what it _looks_ like.
-javascript:: is used to control the _behaviour_ of different elements and the page as a whole.
+    HTML:: provides the basic structure of the page, which can be enhanced using CSS and javascript
+    CSS:: is used to control presentation, formatting and layout: what it _looks_ like.
+    javascript:: is used to control the _behaviour_ of different elements and the page as a whole.
 
-There are different ways to add CSS to your webpage.
+    There are different ways to add CSS to your webpage.
+</p>
 
-==== Inline CSS
-We can add CSS directives using the `style` attribute on HTML elements. For example:
+<h3>Inline CSS</h3>
+<p>
+    We can add CSS directives using the `style` attribute on HTML elements. For example:
+</p>
 
-[source,html, linenums]
-----
-<html>
+<div class=code-half>
+    <Highlight language={xml} code=
+'<html>
     <head>
         <title>My HTML file</title>
     </head>
     <body>
-        <h1 style="color: red;">HTML, CSS and javascript</h1>
+        <h1 style="color: red;">HTML & CSS</h1>
         <p style="font-family: cursive;">Shopping list:</p>
         <ul>
             <li style="color: blue;">Eggs</li>
             <li style="color: blue; opacity: 0.5;">Milk</li>
             <li style="color: blue;">Toothpaste</li>
         </ul>
-        <p>Link to the VDA-lab website is <a style="font-weight: bold;" href="http://vda-lab.github.io">here</a>.</p>
+        <p>
+            Link to the VDA-lab website is 
+            <a style="font-weight: bold;" href="http://vda-lab.github.io">here</a>.
+        </p>
         <button type="submit">Submit</button>
         <div id="my_new_div">... and a generic HTML block with an id</div>
     </body>
-</html>
-----
+</html>'/>
+</div>
+<div class=view-half>
+    <h1 style="color: red;">HTML & CSS</h1>
+        <p style="font-family: cursive;">Shopping list:</p>
+        <ul>
+            <li style="color: blue;">Eggs</li>
+            <li style="color: blue; opacity: 0.5;">Milk</li>
+            <li style="color: blue;">Toothpaste</li>
+        </ul>
+        <p>
+            Link to the VDA-lab website is 
+            <a style="font-weight: bold;" href="http://vda-lab.github.io">here</a>.
+        </p>
+        <button type="submit">Submit</button>
+        <div id="my_new_div">... and a generic HTML block with an id</div>
+</div>
 
-What it looks like:
+<h3>CSS in the <code>head</code></h3>
+<p>
+    When we use CSS inline as above, we can set the style for individual elements. 
+    But if we want to make all headers bold, we'd need to add <code>font-weight: bold</code> 
+    to _every_ single <code>&lt;h1&gt;</code>. To set the style for whole groups of elements, 
+    we better define that once instead of for each element. 
+    We can do this in the <code>&lt;head&gt;</code> using the <code>&lt;style&gt;</code> element. 
+    In the example below, we make all headers of level 1 green, 
+    each list item should be blue, and links should be bold.
+</p>
 
-image:inline_css.png[width=50%,pdfwidth=50%]
-
-==== CSS in the head
-When we use CSS inline as above, we can set the style for individual elements. But if we want to make all headers bold, we'd need to add `font-weight: bold` to _every_ single `<h1>`. To set the style for whole groups of elements, we better define that once instead of for each element. We can do this in the `<head>` using the `<style>` element. In the example below, we make all headers of level 1 green, each list item should be blue, and links should be bold.
-
-[source,html, linenums]
-----
-<html>
+<div class=code-half>
+    <Highlight language={xml} code=
+'{`<html>
     <head>
         <title>My HTML file</title>
         <style>
@@ -169,66 +233,96 @@ When we use CSS inline as above, we can set the style for individual elements. B
     </head>
     <body>
         <h1>CSS in the head</h1>
-        <p>We have some text here with a <a href="www.google.com">link</a> to Google, and a list:</p>
+        <p>We have some text here with a <a href="www.google.com">
+            link</a> to Google, and a list:</p>
         <ul>
             <li>Eggs</li>
             <li style="opacity: 0.5;">Milk</li>
             <li>Toothpaste</li>
         </ul>
     </body>
-</html>
-----
+</html>`}'/>
+</div>
+<div class=view-half>
+    <ExHead/>
+</div>
 
-The result:
+<p>
+    As you can see in this example, you can combine CSS in the head with 
+    inline CSS in which case the inline CSS takes precedence: 
+    the second list item is partly transparent.
+</p>
 
-image:css_in_head.png[width=50%,pdfwidth=50%]
+<h3>Using CSS selectors</h3>
+<p>
+    In the last example, we set the color for every list item to blue, 
+    but wanted to have one specific item transparent as well. 
+    We did this by combining CSS directives at two different places. 
+    A better approach is to separate the HTML and CSS even more, 
+    instead of hard-coding this transparency. 
+    We can do this using <i>CSS selectors</i>. 
+    These are a very powerful way to <i>select</i> different elements. 
+    The <code>id</code> and <code>class</code> attributes we mentioned above are crucial.
+</p>
 
-As you can see in this example, you can combine CSS in the head with inline CSS in which case the inline CSS takes precedence: the second list item is partly transparent.
+<ul>
+    <li>
+        To select all elements of a certain _type_ 
+        (e.g. <code>&lt;h1&gt;</code> or <code>&lt;p&gt;</code>), 
+        use the name of that element.
+    </li>
+    <li>
+        To select all elements with a certain _class_ 
+        (e.g. <code>&lt;li class="important"&gt;</code>), 
+        prepend that class with a period <code>.</code>.
+    </li>
+    <li>
+        To select the element with a given _id_ 
+        (e.g. <code>&lt;p id="paragraph_5"&gt;</code>), 
+        prepend that id with a hash #.
+    </li>
+</ul>
 
-==== Using CSS selectors
-In the last example, we set the color for every list item to blue, but wanted to have one specific item transparent as well. We did this by combining CSS directives at two different places. A better approach is to separate the HTML and CSS even more, instead of hard-coding this transparency. We can do this using *CSS selectors*. These are a very powerful way to _select_ different elements. The `id` and `class` attributes we mentioned above are crucial.
+<Highlight language={css} code=
+'h1 &#123; color: red; &#125;
+a &#123; font-weight: bold; &#125;
+p &#123; max-width: 400px; &#125;
+.unimportant &#123; opacity: 0.5 &#125;
+#paragraph_5 &#123; font-family: cursive; &#125;
 
-- To select all elements of a certain _type_ (e.g. `<h1>` or `<p>`), use the name of that element.
-- To select all elements with a certain _class_ (e.g. `<li class="important">`), prepend that class with a period `.`.
-- To select the element with a given _id_ (e.g. `<p id="paragraph_5>`), prepend that id with a hash `#`.
-
-Your CSS can look like this:
-[source,css, linenums]
-----
-h1 { color: red; }
-a { font-weight: bold;}
-p {
-    max-width: 400px;
-}
-.unimportant {
-    opacity: 0.5
-}
-#paragraph_5 { font-family: cursive; }
-
-ul li { color: blue; }
-p:hover {
+ul li &#123; color: blue; &#125;
+p:hover &#123;
     background-color: aqua;
-}
-p::first-letter {
+&#125;
+p::first-letter &#123;
     font-size: larger;
     font-weight: bolder;
-}
-----
-In the above, we
+&#125;'/>
+<p>
+    In the above, we
+</p>
+<ul>
+    <li>make all <code>&lt;h1&gt;</code> red</li>
+    <li>make all links <code>&lt;a&gt;</code> bold</li>
+    <li>set the maximum with of all paragraphs <code>&lt;p&gt;</code> to 400 pixels</li>
+    <li>give all elements that have <code>unimportant</code> as a class an opacity of 50%</li>
+    <li>set the element with <code>id</code> of <code>paragraph_5</code> in italics</li>
+</ul>
+<p>
+    Those are the most basic selectors. But these can be combined and make much 
+    more complex. In the following line, we set the colour of a list item <code>&lt;li&gt;</code>
+    to blue, but only if it's preceded by a <code>&lt;ul&gt;</code>. This means that items in 
+    an _ordered_ list (<code>&lt;ol&gt;</code>) will _not_ be blue. We can also use _pseudo-classes_, 
+    like <code>:hover</code> (which matches the element your mouse is hovering on), or 
+    <code>::first-letter</code> (which speaks for itself).
+    For the full reference, see 
+    <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors'>
+    https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors</a>.
+</p>
 
-- make all `<h1>` red
-- make all links `<a>` bold
-- set the maximum with of all paragraphs (`<p>`) to 400 pixels
-- give all elements that have `unimportant` as a class an opacity of 50%
-- set the element with `id` of `paragraph_5` in italics
-
-Those are the most basic selectors. But these can be combined and make much more complex. In the following line, we set the colour of a list item `<li>` to blue, but only if it's preceded by a `<ul>`. This means that items in an _ordered_ list (`<ol>`) will _not_ be blue. We can also use _pseudo-classes_, like `:hover` (which matches the element your mouse is hovering on), or `::first-letter` (which speaks for itself).
-
-For the full reference, see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors].
-
-[source,html, linenums]
-----
-<html>
+<div class=code-half>
+    <Highlight language={xml} code=
+{`<html>
     <head>
         <title>My HTML file</title>
         <style>
@@ -262,8 +356,9 @@ For the full reference, see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS
         <p>Link to the VDA-lab website is <a href="http://vda-lab.github.io">here</a>.</p>
         <p id="paragraph_5">This is a handwritten paragraph.</p>
         <h2>Explanation</h2>
-        <p>In CSS (= Cascading Style Sheets) you define the style. There are 3 main ways (there are more)
-            to tell the css which elements should get that style, using <b>CSS selectors</b>:
+        <p>In CSS (= Cascading Style Sheets) you define the style. There are 3 main ways 
+        (there are more) to tell the css which elements should get that style, using 
+        <b>CSS selectors</b>:
         </p>
         <ol>
             <li><b>element</b>: e.g. <kbd>h1 {color: red}</kbd></li>
@@ -275,29 +370,26 @@ For the full reference, see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS
         </ol>
         You can also use <em>pseudo-classes</em>:
         <ol>
-            <li><b>:hover</b>: matches an elements that is being hovered over by the mouse, 
-                e.g. <kbd>p:hover</kbd></li>
+            <li><b>:hover</b>: matches an elements that is being hovered over 
+                by the mouse, e.g. <kbd>p:hover</kbd></li>
             <li><b>::first-letter</b>: first letter in an element</li>
             <li>...</li>
         </ol>
     </body>
-</html>
-----
+</html>`}/>
+</div>
+<div class=view-half>
+    <ExStyling/>
+</div>
 
-has this result:
-
-image:css_selectors.png[width=50%,pdfwidth=50%]
-
-Notice the brightly coloured paragraph...
-
-==== CSS in a separate file
-Instead of adding the complete css inline or in the head of a file, we can also put it in a separate file. We load this file in the head, using `<link rel="stylesheet" href="my_css_file.css">`.
-
-For example:
-
-[source,html, linenums]
-----
-<html>
+<h3>CSS in a separate file</h3>
+<p>
+    Instead of adding the complete css inline or in the head of a file, 
+    we can also put it in a separate file. We load this file in the head, 
+    using `<link rel="stylesheet" href="my_css_file.css">`. For example:
+</p>
+<Highlight language={xml} code=
+{`<html>
     <head>
         <title>My HTML file</title>
         <link rel="stylesheet" href="flashy_styles.css">
@@ -306,100 +398,109 @@ For example:
         <h1>HTML and CSS</h1>
         <p>Some text here...</p>
     </body>
-</html>
-----
+</html>`}/>
 
-.Developer tools and console
-****
-Whatever you write in the `.html` file, it gets _rendered_ in the browser so you do not see the tags anymore. However, each browser has _developer tools_ that allow you to get to the underlying HTML code. You can activate them here:
+<h3>Developer tools and console</h3>
+<p>
+    Whatever you write in the <code>.html</code> file, it gets <i>rendered</i> in the browser 
+    so you do not see the tags anymore. However, each browser has <i>developer 
+    tools</i> that allow you to get to the underlying HTML code. You can activate them here:
+</p>
+<ul>
+    <li>All browsers > Right Click anywhere > Inspect</li>
+    <li>Chrome: View > Developer > Developer Tools</li>
+    <li>Firefox: Tools > Browser Tools > Web Developer Tools</li>
+    <li>Safari: Develop > Show Web Inspector</li>
+</ul>
+<p>
+    You will also see a tab named <i>console</i> in the developer tools. 
+    You can add <code>console.log(your_variable)</code>. 
+    The value of that variable will then be visible in the console.
+</p>
 
-- Chrome: View > Developer > Developer Tools
-- Firefox: Tools > Browser Tools > Web Developer Tools
-- Safari: Develop > Show Web Inspector
-- Vivaldi: Tools > Developer Tools
+<h2>Adding behaviour using javascript</h2> 
+<p>We can use javascript to add additional functionality to a site.</p>
 
-image:developer_tools.png[]
 
-In the image above you see the rendered version of the page on the left, and the underlying source on the right.
+<h3>Inline javascript</h3>
+<p>
+    We can add the javascript within the `body` between `script` tags. 
+    If we want to reference existing elements (such as the `demo` element 
+    in our example below, we have to put the `script` at the _end_ of the `body`. 
+    In this example below, a counter is updated every time we push the button.
+</p>
 
-You will also see a tab named `console` in the developer tools.
+<div class=code-half>
+    <Highlight language={xml} code=
+{`<p>We can use javascript to add additional functionality to a site.</p>
+<button onclick="handleClick()">Increment the counter</button>
 
-TIP: To know what's going on in your javascript code, you can add `console.log(your_variable)`. The value of that variable will then be visible in the console.
-****
+<p id="demo"></p>
 
-=== Adding behaviour using javascript
-We can use javascript to add additional functionality to a site.
+<script>
+    let count = 0;
+    function handleClick() {
+        count += 1
+        document.getElementById("demo").innerHTML = 
+            "You clicked the button " + count + " times."
+    }
+</script>`} let:highlighted>
+    <LineNumbers {highlighted}/>
+</Highlight>
+</div>
+<div class=view-half>
+    <p>We can use javascript to add additional functionality to a site.</p>
+    <button onclick="handleClick()">Increment the counter</button>
+    <p id="demo"></p>
+    <script>
+        let count = 0;
+        function handleClick() {
+            count += 1
+            document.getElementById("demo").innerHTML = 
+            "You clicked the button " + count + " times."
+        }
+    </script>
+</div>
 
-==== Inline javascript
-We can add the javascript within the `body` between `script` tags. If we want to reference existing elements (such as the `demo` element in our example below, we have to put the `script` at the _end_ of the `body`. In this example below, a counter is updated every time we push the button.
+<p>Let's walk through this code:</p>
 
-[source,html,linenums]
-----
-<html>
-    <head>
-        <title>My HTML file</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <p>We can use javascript to add additional functionality to a site.</p>
-        <button onclick="handleClick()">Increment the counter</button>
+<ul>
+    <li>
+        In line 2, we create a <code>button</code> to which we attach an action 
+        whenever we click (<code>onclick</code>) on it. The action is called <code>handleClick</code> 
+        (but this might be any name that we give it).
+    </li>
+    <li>Lines 6 to 13 define the javascript</li>
+    <li>
+        The actual function is defined in lines 8 to 12. Whenever we click the button, 
+        these lines are executed.
+    </li>
+    <li>First we increment the counter with 1.</li>
+    <li>
+        Then we find the element with <code>id</code> of <code>demo</code> 
+        (<code>document.getElementById("demo")</code>) 
+        and set its contents (<code>innerHTML</code>) to the text "You clicked..."
+    </li>
+</ul>
+<p>The <code>document.getElementById()</code> might be overwhelming, but we will find 
+    easier ways to do this later.
+</p>
 
-        <p id="demo"></p>
-
-        <script>
-            let count = 0;
-            function handleClick() {
-                count += 1
-                document.getElementById("demo").innerHTML = "You clicked the button " + count + " times."
-            }
-        </script>
-    </body>
-</html>
-----
-
-Let's walk through this code:
-
-* In line 8, we create a `button` to which we attach an action whenever we click (`onclick`) on it. The action is called `handleClick` (but this might be any name that we give it).
-* Lines 343 to 349 define the javascript.
-** We set a counter to zero in line 344. This happens the moment that the page is opened or refreshed.
-** The actual function is defined in lines 345 to 348. Whenever we click the button, these lines are executed.
-** First we increment the counter with 1.
-** Then we find the element with `id` of `demo` (`document.getElementById("demo")`) and set its contents (`innerHTML`) to the text "You clicked..."
-
-The `document.getElementById()` might be overwhelming, but we will find easier ways to do this later.
-
-==== Loading javascript from a file
-If the code becomes a bit more involved, we can put it in a separate file, and reference it in the `<head>` like so, in line 5 below:
-
-[source,html,linenums]
-----
-<html>
-    <head>
-        <title>My HTML file</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="script1.js"></script>
-    </head>
-    <body>
-        <p>We can use javascript to add additional functionality to a site.</p>
-        <button onclick="handleClick()">Increment the counter</button>
-
-        <p id="demo"></p>
-    </body>
-</html>
-----
-
-.Intermezzo - The JSON format
-****
-From the next section onwards we will work with variables and data. At this point it is important to describe the JSON data format.
-
-The JSON ("JavaScript Object Notation") data representation format follows the same principle as XML, in that it describes the data in the object itself. This format is used in many Application Programming Interfaces (APIs) such as https://dummyjson.com/products, as well as the internal representation of complex data in javascript code.
-
-An example JSON object containing information about the BRCA2 gene, involved in breast cancer:
-
-[.small]
-[source,json,linenums]
-----
-{ id: 12345,
+<div class=intermezzo>
+    <h2>Intermezzo - The JSON format</h2>
+    <p>
+        From the next section onwards we will work with variables and data. 
+        At this point it is important to describe the JSON data format.
+        The JSON ("JavaScript Object Notation") data representation format 
+        follows the same principle as XML, in that it describes the data in the object itself. 
+        This format is used in many Application Programming Interfaces (APIs) such as 
+        https://dummyjson.com/products, as well as the internal representation of complex data 
+        in javascript code. An example JSON object containing information about the BRCA2 gene, 
+        involved in breast cancer:
+    </p>
+</div>
+<Highlight language={json} code=
+{`{ id: 12345,
   common_name: "BRCA2",
   names: ["BRCA2", "ENST00000544455.6", "FACD", "FANCD1"],
   description: "Breast cancer type 2 susceptibility protein",
@@ -420,9 +521,8 @@ An example JSON object containing information about the BRCA2 gene, involved in 
     name: "FANCD1",
     description: "Defects in BRCA2 are the cause of Fanconi anemia complementation group D type 1"
   }]
-}
-----
-
+}`}/>
+<!--
 Data in JSON format (or javascript objects) are presented in key/value pairs. To be completely JSON-compliant the key should be put in quotes, although those are often omitted for brevity (as in the example above). Different key/value pairs are separated by a comma. JSON values can be of different types. They can be:
 
 * **Scalars**: strings (in quotes; see e.g. `common_name` above), numbers (without quotes; see e.g. `start`), booleans (`true`/`false`), or `null`.
@@ -498,3 +598,26 @@ Here are some exercises related to this chapter:
 
 --
 -->
+
+<style>
+    .code-half {
+        margin: 0 0;
+        width: 70%;
+        display: inline-block;
+    }
+    .view-half {
+        width: 27%;
+        display: inline-block;
+        margin: auto;
+        margin-left: 1em;
+        vertical-align: top;
+    }
+
+    p {
+        margin: 13px 0;
+    }
+
+    code {
+        background-color: rgb(227, 227, 227);
+    }
+</style>
