@@ -1,38 +1,16 @@
-# create-svelte
+# About
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is an introduction course on interactive data visualization in the web. It is adapted from the [online course](https://vda-lab.gitlab.io/datavis-technologies/index.html) of Prof. Dr. Jan Aerts.
 
-## Creating a project
+# Interactive Learning Page
 
-If you're seeing this, you've probably already done this step. Congrats!
+[https://jan-to.github.io/WebDataVis/](https://jan-to.github.io/WebDataVis/)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+# Run on local
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
+git clone git@github.com:Jan-To/WebDataVis.git
+cd WebDataVis
+npm install
 npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
