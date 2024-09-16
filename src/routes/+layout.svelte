@@ -1,5 +1,6 @@
 <script>
 	import ashes from "svelte-highlight/styles/ashes";
+	import { base } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -9,8 +10,8 @@
 <div class="container">
 	<div class="nav-container">
 		<ul class="navbar">
-			<li class="nav-element"><a href="/">About</a></li>
-			<li class="nav-element"><a href="/htmlcssjs">HTML, CSS and Javascript</a></li>
+			<li class="nav-element"><a href="{base}/">About</a></li>
+			<li class="nav-element"><a href="{base}/htmlcssjs">HTML, CSS and Javascript</a></li>
 		</ul>
 	</div>
 	<div class='content-container'>
@@ -38,12 +39,6 @@
 		margin: 0;
 		position: fixed;
 		height: 100%;
-	}
-
-	.navbar {
-	}
-
-	.nav-element {
 	}
 
 	.content-container {

@@ -1,4 +1,5 @@
 <script>
+    import { base } from '$app/paths';
 </script>
 
 <h1>Implementing data visualisations using Svelte</h1>
@@ -9,5 +10,5 @@
 </p>
 
 <p>
-  <a href="/htmlcssjs">HTML, CSS and Javascript</a>
+  <a href="{base}/htmlcssjs">HTML, CSS and Javascript</a>
 </p>
