@@ -3,20 +3,23 @@
     import xml from "svelte-highlight/languages/xml";
     import css from "svelte-highlight/languages/css";
     import json from "svelte-highlight/languages/json";
+    import javascript from "svelte-highlight/languages/javascript";
     import ExStyling from "./ExStyling.svelte";
     import ExHead from "./ExHead.svelte";
 </script>
 
 <h1>HTML, CSS and Javascript</h1>
 <p>
-  Back in the 1990s, java was the programming language of choice if you wanted something visual and interactive on your screen. 
+  Back in the 1990s, java was the programming language of choice if you wanted something visual 
+  and interactive on your screen. 
   Over the years, this has shifted towards standard web technologies HTML, CSS and javascript.
 </p>
 
 <h2>General HTML file structure</h2>
 <p>
-    Any website you visit basically consists of the same components. The whole page is contained within a `html` section, 
-    which will contain a `body`, and possibly a `head` and `script`. Below is a minimal html page.
+    Any website you visit basically consists of the same components. 
+    The whole page is contained within a <code>html</code> section, 
+    which will contain a <code>body</code>, and possibly a <code>head</code> and <code>script</code>. Below is a minimal html page.
 </p>
 
 <Highlight language={xml} code=
@@ -52,16 +55,18 @@
 
 <h3>Create your first page</h3>
 <p>
-    If you want to experiment, create a file called with an `.html` extension with the contents shown above 
+    If you want to experiment, create a file called with an <code>html</code> extension 
+    with the contents shown above 
     (e.g. using vscode), and open it in any webbrowser. 
 </p>
 
 <h2>The Document Object Model (DOM)</h2>
 <p>
-    To give some structure to HTML we use _tags_ to indicate _elements_. The collection of all these 
-    (nested) elements is called the Document Object Model or _DOM_.
+    To give some structure to HTML we use <i>tags</i> to indicate <i>elements</i>. 
+    The collection of all these 
+    (nested) elements is called the Document Object Model or <i>DOM</i>.
     Tags exist to denote headers, lists, paragraphs, etc.
-    Most tags need to be _opened_ and then _closed_. For example:
+    Most tags need to be <i>opened</i> and then <i>closed</i>. For example:
 </p>
 
 <Highlight language={xml} code=
@@ -522,28 +527,46 @@ p::first-letter &#123;
     description: "Defects in BRCA2 are the cause of Fanconi anemia complementation group D type 1"
   }]
 }`}/>
-<!--
-Data in JSON format (or javascript objects) are presented in key/value pairs. To be completely JSON-compliant the key should be put in quotes, although those are often omitted for brevity (as in the example above). Different key/value pairs are separated by a comma. JSON values can be of different types. They can be:
 
-* **Scalars**: strings (in quotes; see e.g. `common_name` above), numbers (without quotes; see e.g. `start`), booleans (`true`/`false`), or `null`.
-* **Arrays** containing zero or more elements, surrounded by square brackets (`[]`). For example, see `names` in the example above.
-* Other **objects**, surrounded by curley brackets (`{}`; see e.g. `location`).
+<p>
+    Data in JSON format (or javascript objects) are presented in key/value pairs. 
+    To be completely JSON-compliant the key should be put in quotes, although those 
+    are often omitted for brevity (as in the example above). Different key/value pairs 
+    are separated by a comma. JSON values can be of different types. They can be:
+</p>
+<ul>
+    <li><b>Scalars</b>: strings (in quotes; see e.g. <code>common_name</code> above), numbers 
+        (without quotes; see e.g. <code>start</code>), booleans 
+        (<code>true</code>/<code>false</code>), or <code>null</code>.</li>
+    <li><b>Strings</b> containing zero or more elements, surrounded by square brackets (<code>[]</code>). 
+        For example, see <code>names</code> in the example above.</li>
+    <li>Other <b>objects</b>, surrounded by curley brackets <code>{`{}`}</code> (see e.g. <code>location</code>).</li>
+</ul>
 
-The values of arrays and objects can again be scalars, arrays or other objects. For example, the value for the `diseases` key is an array of objects.
+<p>
+    The values of arrays and objects can again be scalars, arrays or other objects. 
+    For example, the value for the <code>diseases</code> key is an array of objects.
+    The top-level element in a JSON-formatted file can be of any of the above types. 
+    In the example, this is an object.
+</p>
 
-The top-level element in a JSON-formatted file can be of any of the above types. In the example, this is an object.
-****
 
-==== Javascript basics
-===== Variables
-Variables in javascript are defined using the `var`, `let`, or `const` commands. For all purposes, `var` and `let` are exactly the same. There are slight differences in their scopes, but `let` was created because `var` 's scope was an important source for bugs in javascript. Ergo: use `let`. 
-
-_Declaring_ and _assigning_ variables are two different things: a variable _declaration_ means that you create the variable and give it a name; with variable _assignment_ you give it an actual value.
-
-For example:
-[source,javascript,linenums]
-----
-var first_variable;           // declaration of first_variable
+<h1>Javascript basics</h1>
+<h2>Variables</h2>
+<p>
+    Variables in javascript are defined using the <code>var</code>, <code>let</code>, 
+    or <code>const</code> commands. 
+    For all purposes, <code>var</code> and <code>let</code> are exactly the same. 
+    There are slight differences in their scopes, 
+    but <code>let</code> was created because <code>var</code> 's scope was an important source 
+    for bugs in javascript. Ergo: use <code>let</code>. 
+    <i>Declaring</i> and <i>assigning</i> variables are two different things: a variable 
+    <i>declaration</i> means that you create the variable and give it a name;
+    with variable <i>assignment</i> you give it an actual value. 
+    For example:
+</p>
+<Highlight language={javascript} code=
+{`var first_variable;           // declaration of first_variable
 first_variable = "a";         // assignment of value to first_variable
 let second_variable;          // declaration of second_variable
 second_variable = "b";        // assignment of value to second_variable
@@ -551,19 +574,24 @@ let third_variable = "c";     // declaration and assignment done in one go
 console.log(third_variable);  // value of third_value is printed to the console
 third_variable = "d";         // third_variable gets a new value
 console.log(third_variable);  // value of third_value is printed to the console
-----
+`}/>
+<p>
+    In contrast to <code>var</code> and <code>let</code>, 
+    a variable that is declared using <code>const</code> can <i>not</i> be assigned a new value.
+    Everything on a line after a double forward slash (<code>//</code>) 
+    in javascript is seen as a comment and not parsed. <br>
+    NOTE: We'll see later that in Svelte, you can also declare variables using 
+    <code>$:</code> instead of <code>let</code> or <code>const</code>.    
+</p>
 
-In contrast to `var` and `let`, a variable that is declared using `const` can _not_ be assigned a new value.
-
-Everything on a line after a double forward slash (`//`) in javascript is seen as a comment and not parsed.
-
-NOTE: We'll see later that in Svelte, you can also declare variables using `$:` instead of `let` or `const`.
-
-===== Functions
-There are several ways of creating functions in javascript. Below, we show three statements that do the same thing: take 2 arguments, add them, return the result.
-[source,javascript,linenums]
-----
-// First version
+<h2>Functions</h2>
+<g>
+    There are several ways of creating functions in javascript. 
+    Below, we show three statements that do the same thing: 
+    take 2 arguments, add them, return the result.
+</g>
+<Highlight language={javascript} code=
+{`// First version
 function function_1(a,b) { return a + b }
 
 // Second version
@@ -574,18 +602,33 @@ let function_3 = (a,b) => { return a + b }
 
 console.log(function_1(1,2))
 console.log(function_2(1,2))
-console.log(function_3(1,2))
-----
-For the second and third version, it might sometimes be useful to use `const` (or `$:`) depending on the use case. The difference between the first version on the one hand, and the second and third on the other is not relevant in the cases that we will use them.
+console.log(function_3(1,2))`}/>
 
-=== Exercises
-[#exercises_htmlcssjavascript,sidebar,role=assignment]
---
-Here are some exercises related to this chapter:
+<p>
+    For the second and third version, 
+    it might sometimes be useful to use <code>const</code> 
+    (or <code>$:</code>) depending on the use case. 
+    The difference between the first version on the one hand, 
+    and the second and third on the other is not relevant in the cases that we will use them.
+</p>
 
-* Headers: https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1
-* Lists: https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1
-* Text tags: https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1
+<h2>Exercises</h2>
+<p>Here are some exercises related to this chapter:</p>
+<ul>
+    <li>Headers: <a href='https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1'>
+        https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1</a></li>
+    <li>Lists: <a href='https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1'>
+        https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1</a></li>
+    <li>Text tags: </li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+* https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1
 * Styles (inline): https://svelte.dev/repl/e1f0c316e39c45cb97fbf1fe18126e4c?version=3.59.1
 * CSS classes: https://svelte.dev/repl/987e9e43eab74967912e83b302401291?version=3.59.1
 * Printing: https://svelte.dev/repl/f7fe97bc39ba4ecf8b9077bf5e497450?version=3.59.1
@@ -596,8 +639,6 @@ Here are some exercises related to this chapter:
 * Scope: https://svelte.dev/repl/7c44e0ca379c4e869aa37d6dceb1429d?version=3.59.1
 * Importing: https://svelte.dev/repl/424ccb07f0bf4a23a82ea4789f8ca25d?version=3.59.1
 
---
--->
 
 <style>
     .code-half {
