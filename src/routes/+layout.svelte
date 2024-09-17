@@ -12,6 +12,7 @@
 		<ul class="navbar">
 			<li class="nav-element"><a href="{base}/">About</a></li>
 			<li class="nav-element"><a href="{base}/htmlcssjs">HTML, CSS and Javascript</a></li>
+			<li class="nav-element"><a href="{base}/svg">Visualization in SVG</a></li>
 		</ul>
 	</div>
 	<div class='content-container'>
@@ -48,5 +49,27 @@
 	.content {
 		max-width: 1024px;
 		margin: 0 auto;
+	}
+
+	:global(.code-half) {
+			margin: 0 0;
+			width: 70%;
+			display: inline-block;
+	}
+	
+	:global(.view-half) {
+			width: 27%;
+			display: inline-block;
+			margin: auto;
+			margin-left: 1em;
+			vertical-align: top;
+	}
+
+  :global(p) {
+			margin: 13px 0;
+	}
+
+  :global(code) {
+			background-color: rgb(227, 227, 227);
 	}
 </style>

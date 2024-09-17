@@ -449,9 +449,7 @@ p::first-letter &#123;
         document.getElementById("demo").innerHTML = 
             "You clicked the button " + count + " times."
     }
-</script>`} let:highlighted>
-    <LineNumbers {highlighted}/>
-</Highlight>
+</script>`}/>
 </div>
 <div class=view-half>
     <p>We can use javascript to add additional functionality to a site.</p>
@@ -638,27 +636,3 @@ console.log(function_3(1,2))`}/>
 * Functions: https://svelte.dev/repl/b1e70f4349cc4a4ca8169f808794a099?version=3.59.1
 * Scope: https://svelte.dev/repl/7c44e0ca379c4e869aa37d6dceb1429d?version=3.59.1
 * Importing: https://svelte.dev/repl/424ccb07f0bf4a23a82ea4789f8ca25d?version=3.59.1
-
-
-<style>
-    .code-half {
-        margin: 0 0;
-        width: 70%;
-        display: inline-block;
-    }
-    .view-half {
-        width: 27%;
-        display: inline-block;
-        margin: auto;
-        margin-left: 1em;
-        vertical-align: top;
-    }
-
-    p {
-        margin: 13px 0;
-    }
-
-    code {
-        background-color: rgb(227, 227, 227);
-    }
-</style>
