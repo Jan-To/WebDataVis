@@ -21,9 +21,6 @@
   import Groups0 from './Groups0.svelte';
   import Translate from './Translate.svelte';
   import Scale from './Scale.svelte';
-  import Highlight from "svelte-highlight";
-  import javascript from "svelte-highlight/languages/javascript";
-  import xml from "svelte-highlight/languages/xml";
 </script>
 
 <h1>Basic data visualisation</h1>

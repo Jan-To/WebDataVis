@@ -12,7 +12,8 @@
 		<ul class="navbar">
 			<li class="nav-element"><a href="{base}/">About</a></li>
 			<li class="nav-element"><a href="{base}/htmlcssjs">HTML, CSS and Javascript</a></li>
-			<li class="nav-element"><a href="{base}/svg">Visualization in SVG</a></li>
+			<li class="nav-element"><a href="{base}/svg">Drawing an SVG</a></li>
+			<li class="nav-element"><a href="{base}/svelteintro">Visualization in Svelte</a></li>
 		</ul>
 	</div>
 	<div class='content-container'>
