@@ -8,6 +8,15 @@
   import domainrange from "$lib/assets/domainrange.png";
   import scalingformula from "$lib/assets/scalingformula.png";
   import Flights0 from "./flights0.svelte";
+  import Flights1 from "./flights1.svelte";
+  import Flights2 from "./flights2.svelte";
+  import d3gallery from "$lib/assets/d3-gallery.png";
+  import d3modules from "$lib/assets/d3-modules.png";
+    import Flights3 from "./flights3.svelte";
+    import Flights4 from "./flights4.svelte";
+    import Flights5 from "./Flights5.svelte";
+
+  export let data = [];
 </script>
 
 <h1> Basic data visualisation with svelte</h1>
@@ -483,19 +492,17 @@ To load that data, we'd write the following <code>{`+page.js`}</code>:
 
 <Highlight language={javascript} code=
 {`export const load = async ({ fetch }) => {
-  const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
-  const dataFlowers = await responseFlowers.json()
+  const response = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
+  const dataFlowers = await response.json()
 
-  return {
-    flowers: dataFlowers (4)
-  }
+  return { flowers: dataFlowers }
 }`}/>
 
 What happens here?
 
 <ol>
   <li>We create an asynchronous function <code>{`load`}</code>...</li>
-  <li>...that captures the HTTP response into a variable <code>{`responseFlowers`}</code>...</li>
+  <li>...that captures the HTTP response into a variable <code>{`response`}</code>...</li>
   <li>...from which we extract the <code>{`json`}</code> part which actually contains the data.</li>
   <li>We create the actual return value of the <code>{`+page.js`}</code> file: it is
     a <i>map</i> with a single key <code>{`flowers`}</code> and its value coming 
@@ -503,7 +510,7 @@ What happens here?
 </ol>
 
 <p>
-  It's interesting to add a <code>{`console.log(res)`}</code> after line 3 to see what that <code>{`res`}</code> looks like.
+  It's interesting to add a <code>{`console.log(response)`}</code> after line 3 to see what that <code>{`response`}</code> looks like.
 
   To use that data in the <code>{`+page.svelte`}</code> file, we need 
   to define a <code>{`data`}</code> variable and get the flowers from it. 
@@ -536,7 +543,7 @@ What happens here?
   </ul>
 </div>
 
-NOTE: The variable <i>must</i> be called <code>{`data`}</code>.
+NOTE: The variable <i>must</i> be called <code>{`data`}</code> and it <i>must</i> be defined in the corresponding <code>+page.svelte</code>.
 
 <div class=intermezzo>
   <h2>Synchronous vs asynchronous programming</h2>
@@ -576,9 +583,7 @@ NOTE: The variable <i>must</i> be called <code>{`data`}</code>.
     const dataFlowers = await responseFlowers.json()
     dataFlowers.forEach((d,i) => { d.id = i, d.species = "Iris " + d.species })
   
-    return {
-      flowers: dataFlowers
-    }
+    return { flowers: dataFlowers }
   }`}/>
 
 <p>The data that is now passed to <code>{`+page.svelte`}</code> looks like this:</p>
@@ -619,33 +624,23 @@ Domododevo,Moscow,Russia,38.51,55.681,Balandino,Chelyabinsk,Russia,61.838,55.509
 {`import Papa from 'papaparse'
 
 export const load = async ({ fetch }) => {
-    const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
-    const dataFlowers = await responseFlowers.json()
-    dataFlowers.forEach((d,i) => { d.id = i, d.species = "Iris " + d.species })
-
-
-    const responseFlights = await fetch('https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.csv', {
-      headers: {
-        'Content-Type': 'text/csv'
-    }})
+    const responseFlights = await fetch('https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.csv', 
+      { headers: { 'Content-Type': 'text/csv' } })
     let csvFlights = await responseFlights.text()
     let parsedCsvFlights = Papa.parse(csvFlights, {header: true})
 
-    return {
-      flowers: dataFlowers,
-      flights: parsedCsvFlights.data
-    }
+    return { flights: parsedCsvFlights.data }
 }`}/>
 
 <p>Let's walk over this code:</p>
 <ol>
   <li>Import the PapaParse package</li>
-  <li>We have to add the <code>{`'Content-Type': 'text/csv'`}</code> to what is returned 
+  <li>During <code>fetch</code>, we have to add the <code>{`'Content-Type': 'text/csv'`}</code> to what is returned, 
     because your browser would otherwise try to download the file instead of using it in our application</li>
   <li>In the JSON example before, we got the actual data through <code>{`response.json()`}</code>. 
     Here we need it as a text: <code>{`response.text()`}</code></li>
-  <li>Finally, we need to <i>parse</i> the text to actual values. This will return an object where those values 
-    are available under the <code>{`data`}</code> key, which we extract on line 12.</li>
+  <li>Finally, we need to <code>parse</code> the text to actual values. This will return an object where those values 
+    are available under the <code>{`data`}</code> key.</li>
 </ol>
 
 <p>You can always add a <code>{`console.log()`}</code> for <code>{`csvFlights`}</code> or
@@ -675,15 +670,29 @@ Pulkovo (St. Petersburg)
 Pulkovo (St. Petersburg)
 Franz Josef Strauss (Munich)`}/>
 
-<h3> From an local JSON or CSV file</h3>
-<p>The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? 
-  Actually, this is very simple as we are running our own server. If you put the data file in the <code>{`static`}</code>
-   directory of your svelte project, you can access it directly, e.g. with
+<h3> From a local JSON or CSV file</h3>
+<p>
+  The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? 
+  Actually, this is very simple as we are running our own server. <br/>If you put the data file in the <code>{`static`}</code>
+  directory of your svelte project, you can access it directly, e.g. with
 </p>
-<ul>
-  <li><code>{`Papa.parse('http://localhost:5173/airports.csv', { …​ })`}</code>, or</li>
-  <li><code>{`fetch('http://localhost:5173/airports.json')`}</code></li>
-</ul>
+
+<Highlight language={javascript} code=
+{`import Papa from 'papaparse'
+
+export const load = async ({ fetch }) => {
+  const responseJSON = await fetch('/flights_part.json')
+  const dataJSON = await responseJSON.json()
+
+  const responseCSV = await fetch('/flights_part.csv', {headers: {'Content-Type': 'text/csv'}})
+  let textCSV = await responseCSV.text()
+  let parsedCSV = Papa.parse(textCSV, {header: true})
+
+  return { 
+    flightsJSON: dataJSON,
+    flightsCSV: parsedCSV.data 
+  }
+}`}/>
 
 
 <!--
@@ -999,8 +1008,10 @@ In this code, we
 
 In the <code>{`+page.svelte`}</code> file we can then display or visualise only the information for that single flower.
 -->
+
+<h3>From other sources</h3>
 <p>
-  NOTE: For a tutorial on loading from an SQL database, see 
+  For a tutorial on loading from an SQL database, see 
   <a href=https://vda-lab.gitlab.io/datavis-technologies/_basic_data_visualisation_with_svelte.html#_from_an_sql_database>this tutorial</a>. 
   For the full documentation on how to load data in sveltekit, see <a href=https://kit.svelte.dev/docs/load>https://kit.svelte.dev/docs/load</a>.
 </p>
@@ -1015,14 +1026,14 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   Below we show the contents of the <code>{`+page.svelte`}</code> file.
 </p>
 
-<!--<Flights0/>-->
+<Flights0 {data}/>
 
 <p>
   This is clearly <i>not</i> what we expected. The reason is simple: the longitude in the data file ranges from -180 until 180 
   and the latitude is between -90 and 90. If we plot these directly as circles than 3/4 of all datapoints will be outside 
   of the SVG (because they have either a negative longitude or latitude). Instead of using <code>{`cx={datapoint.from_long}`}</code> 
-  we have to rescale that longitude from its original range (called its <i>domain</i>) to 
-  a new <i>range</i>.
+  we have to rescale that longitude from its original range (called its <b>domain</b>) to 
+  a new <b>range</b>.
 </p>
 <img src={domainrange} alt="" width=50%/>
 <p>The formula to do this is:</p>
@@ -1033,40 +1044,15 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   where we need to set <code>{`cx`}</code> and <code>{`cy`}</code>.
 </p>
 
-<div class=code-half>
-    <Highlight language={xml} code=
-{`<script>
-  export let data = [];
-
-  const rescale = function(x, domain_min, domain_max, range_min, range_max) {
-      return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
-  }
-</script>
-
-<style>
-  circle {
-      fill: steelblue;
-      fill-opacity: 0.5;
-  }
-</style>
-
-<svg width="800" height="400">
-  {#each data.flights as datapoint}
-      <circle cx={rescale(datapoint.from_long, -180, 180, 0, 800)}
-              cy={rescale(datapoint.from_lat, -90, 90, 0, 400)}
-              r=3 />
-  {/each}
-</svg>`}/>
-</div>
-<div class=view-half>
-
-</div>
+<Flights1 {data}/>
 
 <p>
   This is better, but the world is upside down. This is because the origin [0,0] in SVG is in the top left, not the bottom left. 
   We therefore have to flip the scale as well, and set the range to <code>{`400,0`}</code> instead of <code>{`0,400`}</code> for
    <code>{`cy`}</code>. If we do that we'll get the world the right side up.
 </p>
+
+<Flights2 {data}/>
 
 <h2> D3 scales</h2>
 <p>
@@ -1076,13 +1062,13 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 
 <div class=intermezzo>
 
-<h1>D3 - Data-Driven Documents</h1>
+<h2>D3 - Data-Driven Documents</h2>
 <p>
   D3 (Data-Driven Documents) has been the go-to library for data visualisation for many years. 
   It allows you to create very complex and interactive visuals like showcased in the <a href=https://observablehq.com/@d3/gallery>D3 gallery</a>.
 </p>
 
-image:d3-gallery.png[width=75%,pdfwidth=75%]
+<img src={d3gallery} alt="" width=75%/>
 
 <p>
   The functionality of D3 has been split in different modules (see <a href="https://github.com/orgs/d3/repositories?type=all">here</a>), 
@@ -1092,7 +1078,7 @@ image:d3-gallery.png[width=75%,pdfwidth=75%]
 </p>
 
 <div class=code-half>
-    <Highlight language={xml} code=
+    <Highlight language={javascript} code=
 {`d3.select("#my_svg")
   .append("g")
   .selectAll("circle")
@@ -1108,26 +1094,23 @@ image:d3-gallery.png[width=75%,pdfwidth=75%]
 </div>
 
 <p>
-  That is why we focus on using svelte in this tutorial for the main work, and use D3 modules when we need them for a specific tasks (e.g. scaling). 
-  For example, this blog post by Connor Rothshield also goes into why he switched from D3 to svelte+D3 for data visualisation:
-   https://www.connorrothschild.com/post/svelte-and-d3
-
-  D3 is organised as a group of modules (see https://github.com/d3/d3/blob/main/API.md), so we can choose to load only those functions 
-  that have to do with scaling (<code>{`d3-scale`}</code>), colour (<code>{`d3-color`}</code>), etc.
+  That is why we focus on using svelte in this tutorial for the main work, and use D3 modules where they simplify a specific task (e.g. scaling). 
+  For example, this <a href=https://www.connorrothschild.com/post/svelte-and-d3>blog post</a> by Connor Rothshield also goes into why he switched 
+  from D3 to svelte+D3 for data visualisation. D3 is organised as a group of <a href=https://github.com/d3/d3/blob/main/API.md>modules</a>, 
+  so we can choose to load only those functions that have to do with scaling (<code>{`d3-scale`}</code>), colour (<code>{`d3-color`}</code>), etc.
 
   Here is an overview of the different modules:
 </p>
 
-image:d3-modules.png[width=50%,pdfwidth=50%]
-
-(Source: https://wattenberger.com/blog/d3) For an interactive version, see https://wattenberger.com/blog/d3.
+<img src={d3modules} alt="" width=60%/>
+<p>
+  For an interactive version, see <a href=https://wattenberger.com/blog/d3>https://wattenberger.com/blog/d3</a>, which is the source of this image.
+</p>
 </div>
 
 <p>
   Let's replace our own rescaling function with a linear scale provided by D3. We will load the <code>{`scaleLinear`}</code> function 
-  from <code>{`d3-scale`}</code>.
-
-  IMPORTANT: We have to install the <code>{`d3-scale`}</code> module first. 
+  from <code>{`d3-scale`}</code>. Before we can start, we have to <b>install the <code>{`d3-scale`}</code> module</b> first. 
   Do this by running <code>{`npm install d3-scale`}</code> on the command line.
 </p>
 
@@ -1162,92 +1145,29 @@ image:d3-modules.png[width=50%,pdfwidth=50%]
 </div>
 
 <p>
-  In *(1)* we load <code>{`scaleLinear`}</code> and make the function available in our code. 
-  We define a <code>{`scaleX`}</code> and a <code>{`scaleY`}</code> function in *(2)*. 
+  We load <code>{`scaleLinear`}</code> and make the function available in our code. 
+  We define a <code>{`scaleX`}</code> and a <code>{`scaleY`}</code> function. 
   The <code>{`domain`}</code> refers to the actual data, and <code>{`range`}</code> to the projection (in this case: pixel position). 
-  In *(3)* we use <code>{`scaleX`}</code> and <code>{`scaleY`}</code>.
-  <br>
-  Note that the range does not have to be numeric: we can also use colours here. D3 is clever enough to interpolate colours across the range. In the example below, we let the colour of the points go from red to green along with the longitude. (If we had information on the altitude of the airports, this would be more useful.)
+  Then, we can use <code>{`scaleX`}</code> and <code>{`scaleY`}</code> to scale our <code>datapoint.from_long</code>.
 </p>
-
-<div class=code-half>
-    <Highlight language={xml} code=
-{`<script>
-  import { scaleLinear } from 'd3-scale';
-
-  export let data = [];
-
-  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
-  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
-  const scaleColour = scaleLinear().domain([-180,180]).range(["red","green"]) <1>
-</script>
-
-<style>
-  circle { <2>
-      fill-opacity: 0.5;
-  }
-</style>
-
-<svg width="800" height="400">
-  {#each data.flights as datapoint}
-      <circle cx={scaleX(datapoint.from_long)}
-              cy={scaleY(datapoint.from_lat)}
-              r=3
-              style={"fill:" + scaleColour(datapoint.from_long)} /> <3>
-  {/each}
-</svg>`}/>
-</div>
-<div class=view-half>
-
-</div>
 <p>
-  We added a scale with colours as the range in *(1)*, remove the default colour for a circle in *(2)*, and set the CSS colour dynamically in *(3)* using.
+  The range in <code>scaleLinear</code> does not have to be numeric: we can also use colours here. D3 is clever enough to interpolate colours across the range. 
+  In the example below, we let the colour of the points go from red to green along with the longitude.
 </p>
 
-image:domain-range-colours.png[width=50%,pdfwidth=50%]
+<Flights3 {data}/>
 
 <p>
-D3 provides a lot of other scales as well, including logarithmic, time, radial etc. Check out https://github.com/d3/d3-scale for more information.
+  We added a scale with colours as the range, removed the default colour for a circle, and set the CSS colour dynamically.
+</p>
+<p>
+  D3 provides a lot of other scales as well, including logarithmic, time, radial etc. Check out 
+  <a href=https://github.com/d3/d3-scale>https://github.com/d3/d3-scale</a> for more information.
 
-Let's add another scale: we can let the size of the point be dependent of the `distance` in the csv file
+  Let's add another scale: we can let the size of the point be dependent of the `distance` in the csv file
 </p>
 
-<div class=code-half>
-    <Highlight language={xml} code=
-{`<script>
-  import { scaleLinear } from 'd3-scale';
-
-  export let data = [];
-
-  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
-  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
-  const scaleRadius = scaleLinear().domain([1,15406]).range([2,10])
-  </script>
-
-<style>
-  svg {
-    border: 1px;
-    border-style: solid;
-  }
-  circle {
-    fill: steelblue;
-    fill-opacity: 0.5;
-  }
-</style>
-
-<svg width="800" height="400">
-  {#each data.flights as datapoint}
-    <circle cx={scaleX(datapoint.from_long)}
-        cy={scaleY(datapoint.from_lat)}
-        r={scaleRadius(datapoint.distance)} />
-  {/each}
-</svg>`}/>
-</div>
-<div class=view-half>
-
-</div>
-
-image:flights_radius.png[width=50%,pdfwidth=50%]
+<Flights4 {data}/>
 
 <h2> Classes</h2>
 <p>
@@ -1259,10 +1179,10 @@ image:flights_radius.png[width=50%,pdfwidth=50%]
 
 <p>
   If we change the code above by (a) adding a <code>{`circle.international`}</code> in the CSS that sets the fill colour to red, and 
-(b) add a <code>{`class="international"`}</code> as a property of 
-the <code>{`circle`}</code> element, all the airports will be red. But can we actually make this dependent on the actual data?
+  (b) add a <code>{`class="international"`}</code> as a property of the <code>{`circle`}</code> element, all the airports will be red. 
+  But can we actually make this dependent on the actual data?
 
-We give an HTML element one or more classes like so:
+  We give an HTML element one or more classes like so:
 </p>
 
 <Highlight language={xml} code=
@@ -1281,65 +1201,24 @@ We give an HTML element one or more classes like so:
 <Highlight language={xml} code=
 {`<circle class:international={datapoint.from_country != datapoint.to_country} />`}/>
 
-<div class=code-half>
-    <Highlight language={xml} code=
-{`<script>
-  import { scaleLinear } from 'd3-scale';
-
-  export let data = [];
-
-  const scaleX = scaleLinear().domain([-180,180]).range([0,800])
-  const scaleY = scaleLinear().domain([-90,90]).range([400,0])
-  const scaleRadius = scaleLinear().domain([1,15406]).range([2,10])
-  </script>
-
-<style>
-  svg {
-    border: 1px;
-    border-style: solid;
-  }
-  circle {
-    fill: steelblue;
-    fill-opacity: 0.5;
-  }
-  circle.international { (1)
-    fill: red;
-  }
-</style>
-
-<svg width="800" height="400">
-  {#each data.flights as datapoint}
-    <circle cx={scaleX(datapoint.from_long)}
-        cy={scaleY(datapoint.from_lat)}
-        r={scaleRadius(datapoint.distance)}
-        class:international={datapoint.from_country != datapoint.to_country}/> (2)
-  {/each}
-</svg>`}/>
-</div>
-<div class=view-half>
-
-</div>
-<p>
-  (1) is where we set the colour of international flights; (2) is where we apply it.
-</p>
-
-image:flights_colour.png[width=50%,pdfwidth=50%]
+<Flights5 {data}/>
 
 <h2> Exercises</h2>
-<p>Here are some exercises related to this chapter:</p>>
+<p>Here are some exercises related to this chapter:</p>
 
-
-* Svelte markup: https://svelte.dev/repl/724a8216d6c84491b7b04951718f0b0d?version=3.59.1
-* Foreach: https://svelte.dev/repl/161b76456d00443db6100f7d40e546b1?version=3.59.1
-* If-else-then: https://svelte.dev/repl/a603bddd25ed441e9680e2c93a1a1966?version=3.59.1
-* Scales: https://svelte.dev/repl/f2cdcb8400f2430f9134206798596a97?version=3.59.1
-* Colour scales: https://svelte.dev/repl/f555af12649a4d918db9f46c88ea72a0?version=3.59.1
-* Axes: https://svelte.dev/repl/a06224b0183c4f44b6de3f7a734e812e?version=3.59.1
-* Paths using d3.line: https://svelte.dev/repl/ec5b4a3992e7459086668fe4e03c011a?version=3.59.1
-* Hover: https://svelte.dev/repl/c602355ed2cf4398921f50f7746079ff?version=3.59.1
-* Working with objects: https://svelte.dev/repl/08e9e88a020244d5a7cd80b2e0befa3b?version=3.59.1
-* Extent: https://svelte.dev/repl/b31541e1dcfb439e818c639427e6db68?version=3.59.1
-* Make scales: https://svelte.dev/repl/c6eb38ca440a4dc5b8efa487f92b771d?version=3.59.1
-* Make scatterplot: https://svelte.dev/repl/4c447e06f79e4c478682b8476bf1833a?version=3.59.1
-* Add axes: https://svelte.dev/repl/3e6b6e947bdb480687d29392d944e15c?version=3.59.1
-* Set circle colour: https://svelte.dev/repl/87536213d7044ddc9ed2dfacb208086c?version=3.59.1
+<ul>
+  <li><a href="https://svelte.dev/repl/724a8216d6c84491b7b04951718f0b0d?version=3.59.1">Svelte markup</a></li>
+  <li><a href="https://svelte.dev/repl/161b76456d00443db6100f7d40e546b1?version=3.59.1">Foreach</a></li>
+  <li><a href="https://svelte.dev/repl/a603bddd25ed441e9680e2c93a1a1966?version=3.59.1">If-else-then</a></li>
+  <li><a href="https://svelte.dev/repl/f2cdcb8400f2430f9134206798596a97?version=3.59.1">Scales</a></li>
+  <li><a href="https://svelte.dev/repl/f555af12649a4d918db9f46c88ea72a0?version=3.59.1">Colour scales</a></li>
+  <li><a href="https://svelte.dev/repl/a06224b0183c4f44b6de3f7a734e812e?version=3.59.1">Axes</a></li>
+  <li><a href="https://svelte.dev/repl/ec5b4a3992e7459086668fe4e03c011a?version=3.59.1">Paths using d3.line</a></li>
+  <li><a href="https://svelte.dev/repl/c602355ed2cf4398921f50f7746079ff?version=3.59.1">Hover</a></li>
+  <li><a href="https://svelte.dev/repl/08e9e88a020244d5a7cd80b2e0befa3b?version=3.59.1">Working with objects</a></li>
+  <li><a href="https://svelte.dev/repl/b31541e1dcfb439e818c639427e6db68?version=3.59.1">Extent</a></li>
+  <li><a href="https://svelte.dev/repl/c6eb38ca440a4dc5b8efa487f92b771d?version=3.59.1">Make scales</a></li>
+  <li><a href="https://svelte.dev/repl/4c447e06f79e4c478682b8476bf1833a?version=3.59.1">Make scatterplot</a></li>
+  <li><a href="https://svelte.dev/repl/3e6b6e947bdb480687d29392d944e15c?version=3.59.1">Add axes</a></li>
+  <li><a href="https://svelte.dev/repl/87536213d7044ddc9ed2dfacb208086c?version=3.59.1">Set circle colour</a></li>
+</ul>
