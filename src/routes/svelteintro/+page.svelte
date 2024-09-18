@@ -1083,8 +1083,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   Although very powerful, this library does have a steep learning curve. For example, creating a scatterplot like the one above using D3, you'd write
 </p>
 
-<div class=code-half>
-    <Highlight language={javascript} code=
+<Highlight language={javascript} code=
 {`d3.select("#my_svg")
   .append("g")
   .selectAll("circle")
@@ -1094,10 +1093,6 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
     .attr("cx", function(d) { return rescale(datapoint.from_long, -180, 180, 0, 800) })
     .attr("cy", function(d) { return rescale(datapoint.from_lat, -90, 90, 400, 0) })
     .attr("r", 3)`}/>
-</div>
-<div class=view-half>
-
-</div>
 
 <p>
   That is why we focus on using svelte in this tutorial for the main work, and use D3 modules where they simplify a specific task (e.g. scaling). 
@@ -1120,8 +1115,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   Do this by running <code>{`npm install d3-scale`}</code> on the command line.
 </p>
 
-<div class=code-half>
-    <Highlight language={xml} code=
+<Highlight language={xml} code=
 {`<script>
   import { scaleLinear } from 'd3-scale'; (1)
 
@@ -1145,10 +1139,6 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
       fill-opacity: 0.5;
   }
 </style>`}/>
-</div>
-<div class=view-half>
-
-</div>
 
 <p>
   We load <code>{`scaleLinear`}</code> and make the function available in our code. 
