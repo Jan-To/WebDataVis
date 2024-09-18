@@ -15,6 +15,7 @@
 			<li class="nav-element"><a href="{base}/svg">Drawing an SVG</a></li>
 			<li class="nav-element"><a href="{base}/svelteintro">Visualization in Svelte</a></li>
 			<li class="nav-element"><a href="{base}/components">Custom Components</a></li>
+			<li class="nav-element"><a href="{base}/svelteadvanced">Advanced Vis in Svelte</a></li>
 		</ul>
 	</div>
 	<div class='content-container'>
