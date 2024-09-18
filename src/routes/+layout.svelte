@@ -14,6 +14,7 @@
 			<li class="nav-element"><a href="{base}/htmlcssjs">HTML, CSS and Javascript</a></li>
 			<li class="nav-element"><a href="{base}/svg">Drawing an SVG</a></li>
 			<li class="nav-element"><a href="{base}/svelteintro">Visualization in Svelte</a></li>
+			<li class="nav-element"><a href="{base}/components">Custom Components</a></li>
 		</ul>
 	</div>
 	<div class='content-container'>
