@@ -1,20 +1,20 @@
 <script>
   import Highlight from "svelte-highlight";
-  import javascript from "svelte-highlight/languages/javascript";
   import xml from "svelte-highlight/languages/xml";
   import bash from "svelte-highlight/languages/bash";
   import json from "svelte-highlight/languages/json";
+  import javascript from "svelte-highlight/languages/javascript";
   import Slider from "./Slider.svelte";
+  import d3gallery from "$lib/assets/d3-gallery.png";
+  import d3modules from "$lib/assets/d3-modules.png";
   import domainrange from "$lib/assets/domainrange.png";
   import scalingformula from "$lib/assets/scalingformula.png";
   import Flights0 from "./flights0.svelte";
   import Flights1 from "./flights1.svelte";
   import Flights2 from "./flights2.svelte";
-  import d3gallery from "$lib/assets/d3-gallery.png";
-  import d3modules from "$lib/assets/d3-modules.png";
-    import Flights3 from "./flights3.svelte";
-    import Flights4 from "./flights4.svelte";
-    import Flights5 from "./Flights5.svelte";
+  import Flights3 from "./flights3.svelte";
+  import Flights4 from "./flights4.svelte";
+  import Flights5 from "./Flights5.svelte";
 
   export let data = [];
 </script>
