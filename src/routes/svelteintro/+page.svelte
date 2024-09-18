@@ -674,17 +674,18 @@ Franz Josef Strauss (Munich)`}/>
 <p>
   The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? 
   Actually, this is very simple as we are running our own server. <br/>If you put the data file in the <code>{`static`}</code>
-  directory of your svelte project, you can access it directly, e.g. with
+  directory of your svelte project, you can access it directly with
 </p>
 
 <Highlight language={javascript} code=
-{`import Papa from 'papaparse'
+{`import Papa from 'papaparse';
+import { base } from '$app/paths';
 
 export const load = async ({ fetch }) => {
-  const responseJSON = await fetch('/flights_part.json')
+  const responseJSON = await fetch(base + '/flights_part.json')
   const dataJSON = await responseJSON.json()
 
-  const responseCSV = await fetch('/flights_part.csv', {headers: {'Content-Type': 'text/csv'}})
+  const responseCSV = await fetch(base + '/flights_part.csv', {headers: {'Content-Type': 'text/csv'}})
   let textCSV = await responseCSV.text()
   let parsedCSV = Papa.parse(textCSV, {header: true})
 
@@ -694,6 +695,11 @@ export const load = async ({ fetch }) => {
   }
 }`}/>
 
+<p>
+  Note that we prepend the <code>base</code> path to the url. As long as the base path is on default (<code>""</code>), this is redundant. 
+  However, in case you want to deploy to a specific url (e.g. a remote server like Github-Pages), your <i>deployment</i> base path may differ
+  from your <i>development</i> base path. Hence, we suggest to add the base path from the beginning.
+</p>
 
 <!--
 <h3> From an SQL database</h3>

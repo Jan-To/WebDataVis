@@ -1,7 +1,7 @@
-import Papa from 'papaparse'
+import { base } from '$app/paths';
 
 export const load = async ({ fetch }) => {
-  const responseJSON = await fetch('/flights_part.json')
+  const responseJSON = await fetch(base + "/flights_part.json")
   const data = await responseJSON.json()
 
   return { flights: data }

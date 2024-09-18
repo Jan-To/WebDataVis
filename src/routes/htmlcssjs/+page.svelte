@@ -391,7 +391,7 @@ p::first-letter &#123;
 <p>
     Instead of adding the complete css inline or in the head of a file, 
     we can also put it in a separate file. We load this file in the head, 
-    using `<link rel="stylesheet" href="my_css_file.css">`. For example:
+    using <code>{`<link rel="stylesheet" href="my_css_file.css">`}</code>. For example:
 </p>
 <Highlight language={xml} code=
 {`<html>
