@@ -11,7 +11,7 @@
   import BrushLink from './BrushLink.svelte';
 </script>
 
-<h1> Advanced visualisation using svelte</h1>
+<h1> Advanced visualisation using SvelteKit</h1>
 
 <h2> Slider</h2>
 <p>Let's add a slider to the iris visualisation from the previous section that allows us to change the number of flowers displayed in a row instead of the hard-coded 20.</p>

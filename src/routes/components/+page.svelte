@@ -33,14 +33,14 @@
   {/each}
 </svg>`}/>
 
-<p>It would be nicer if we could something like this instead:</p>
+<p>Oof... It would be a lot nicer if we could something like this instead:</p>
 
 <Highlight language={xml} code=
 {`<Scatterplot which="from"/>
 <Scatterplot which="to"/>`}/>
 
 <p>
-  This is where we really start to get into the strengths of svelte, 
+  This is where we really start to get into the strengths of Svelte, 
   because it is a framework to create <i>custom HTML components</i>; in this case, a <code>{`Scatterplot`}</code> component.
 </p>
 
@@ -230,7 +230,7 @@
   (i.e. different <code>{`+page.svelte`}</code> pages). Mainly, these are:</p>
 
 <ul>
-  <li>to use a svelte <i>store</i>, but we won't go into this here.</li>
+  <li>to use a Svelte <i>store</i>, but we won't go into this here.</li>
   <li>to pass them as arguments between components.</li>
 </ul>
 
@@ -372,7 +372,7 @@
 <p>We create a function that returns an x and y offset for a given index to form a uniform grid. 
   There are better ways of doing this (e.g. using <a href=https://getbootstrap.com>Bootstrap</a>), 
   but we just code our own here, creating rows of 20 flowers. We use <code>{`console.log`}</code> 
-  to make sure that the datapoints we load are actually what we expect. This is a typical way in svelte 
+  to make sure that the datapoints we load are actually what we expect. This is a typical way in Svelte 
   to check what's going on: because we start the command with a <code>{`$:`}</code>, this will run every time the value 
   for <code>{`datapoints`}</code> changes (in our case once, after loading). We loop over all datapoints, but we return both the single datapoint
   <i>and</i> its index (which we call <code>{`idx`}</code>). This index is what will be used by 

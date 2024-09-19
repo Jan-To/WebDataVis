@@ -115,12 +115,12 @@
 
 	:global(.code-half) {
 			margin: 0 0;
-			width: 70%;
+			width: 65%;
 			display: inline-block;
 	}
 	
 	:global(.view-half) {
-			width: 27%;
+			width: 32%;
 			display: inline-block;
 			margin: auto;
 			margin-left: 1em;
@@ -148,5 +148,11 @@
 
 	:global(a:visited) {
 		color: #0056b3;
+	}
+
+	:global(.intermezzo) {
+		background-color: antiquewhite;
+		border: solid 1px;
+		padding: 5px;
 	}
 </style>

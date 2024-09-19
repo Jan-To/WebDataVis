@@ -19,15 +19,15 @@
   export let data = [];
 </script>
 
-<h1> Basic data visualisation with svelte</h1>
+<h1> Basic data visualisation with Svelte</h1>
 
 <p>
   The code in the previous section with <code>getElementById</code>, <code>setAttribute</code>, <code>appendChild</code>, 
   etc gets the job done, but it's very verbose. But there are easier ways of doing this. In this tutorial, 
   we will use http://svelte.dev[svelte] and http://kit.svelte.dev[sveltekit] as our main approach. 
-  Sveltekit is a programming framework like React or Vue that provides us with some tools to build websites 
+  SvelteKit is a programming framework like React or Vue that provides us with some tools to build websites 
   (and therefore visualisations) more easily. Svelte is a preprocessor that converts code that we write into vanilla javascript. 
-  You can compare sveltekit to a restaurant, and svelte to its kitchen. The magic happens in the kitchen, 
+  You can compare SvelteKit to a restaurant, and Svelte to its kitchen. The magic happens in the kitchen, 
   but customers interact with it through the restaurant. *Svelte* is a language and compiler that allows you to create reusable components; 
   <b>SvelteKit</b> is a full-stack web application framework built <i>on top of</i> Svelte.
 </p>
@@ -36,15 +36,15 @@
   "Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks like React and 
   Vue do the bulk of their work in the browser, Svelte shifts that work into a compile step that happens when you build your app. 
   Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically updates the DOM when the state of your app changes."
-  -- svelte.dev
+  -- Svelte.dev
 </p>
 
-<p>Below, we'll first go over the basics of svelte, and then integrate that into sveltekit.</p>
+<p>Below, we'll first go over the basics of Svelte, and then integrate that into SvelteKit.</p>
 
-<h2> HTML, CSS and javascript in svelte</h2>
+<h2> HTML, CSS and javascript in Svelte</h2>
 <p>
   In the previous sections, we generally kept HTML, CSS and javascript in separate files. 
-  In svelte, we do not do this. A svelte file therefore consists of 3 parts:
+  In Svelte, we do not do this. A Svelte file therefore consists of 3 parts:
 </p>
 
 <ol>
@@ -60,12 +60,12 @@
   This means that different <i>components</i> (i.e. files) can be styled independently.
 </p>
 
-<h2> Using the svelte REPL</h2>
+<h2> Using the Svelte REPL</h2>
 <p>To get a quick feel of what Svelte looks like, go to the online <a href=http://svelte.dev/repl>REPL</a> (Read-Eval-Print-Loop).</p>
 
 You can write regular HTML in the "App.svelte" tab, but don't need the <code>{`<html>`}</code>, <code>{`<head>`}</code> and <code>{`<body>`}</code> tags.
 
-A svelte file can have three parts:
+A Svelte file can have three parts:
 
 <ul>
   <li><code>{`<script>`}</code></li>
@@ -73,27 +73,27 @@ A svelte file can have three parts:
   <li>the rest is HTML</li>
 </ul>
 
-<p>Change the code in the editor with the code below, and you should see 2 circles and 1 rectangle:</p>
+<p>Copy the code below in the <a href=http://svelte.dev/repl>REPL</a>, and you should see 2 circles and 1 rectangle:</p>
 
 <div class=code-half>
     <Highlight language={xml} code=
-{`<svg width=400 height=400>
-  <circle cx=100 cy=100 r=15 />
-  <circle cx=150 cy=75 r=20 />
-  <rect x=250 y=300 width=30 height=20 />
+{`<svg width=200 height=150>
+  <circle cx=50 cy=50 r=15 />
+  <circle cx=100 cy=70 r=20 />
+  <rect x=150 y=100 width=30 height=20 />
 </svg>
 `}/>
 </div>
 <div class=view-half>
-  <svg width=400 height=400>
-    <circle cx=100 cy=100 r=15 />
-    <circle cx=150 cy=75 r=20 />
-    <rect x=250 y=300 width=30 height=20 />
+  <svg width=200 height=150>
+    <circle cx=50 cy=50 r=15 />
+    <circle cx=100 cy=70 r=20 />
+    <rect x=150 y=100 width=30 height=20 />
   </svg>
 </div>
 
-<h2> Basics of svelte</h2>
-The svelte website has a very good tutorial at http://svelte.dev/tutorial. You should definitely go over it and refer back to it when you have questions. We'll highlight loops, conditionals and reactivity in this document, but these are only a small part of svelte's strengths.
+<h2> Basics of Svelte</h2>
+The Svelte website has a very good tutorial at http://svelte.dev/tutorial. You should definitely go over it and refer back to it when you have questions. We'll highlight loops, conditionals and reactivity in this document, but these are only a small part of Svelte's strengths.
 
 <h3> Looping over datapoints: <code>{`{#each}`}</code></h3>
 Svelte helps us to loop over lists in a declarative way. The following code in html gives a bulleted list:
@@ -115,14 +115,13 @@ Svelte helps us to loop over lists in a declarative way. The following code in h
 </div>
 
 <p>  
-  In svelte, we can create an array in the <code>{`script`}</code> section, 
-  and use the <code>{`#each`}</code> pragma to loop over all items. First, we'll create an array called 
-  <code>{`names`}</code> (denoted with the 
-  square brackets <code>{`[]`}</code>) 
-  in the <code>{`script`}</code> section. 
-  In the HTML itself, we can loop over them, using the <code>{`{#each}`}</code> directive 
-  (which is closed using <code>{`{/each}`}</code>). In that loop, each value is put in the 
-  temporary variable <code>{`name`}</code>:
+  In Svelte, we can create an array in the <code>{`script`}</code> section, 
+  and use the <code>{`{#each}`}</code> pragma to loop over all items. First, we'll create an array called 
+  <code>{`names`}</code> in the <code>{`script`}</code> section. 
+  In the HTML itself, we can loop over <code>{`names`}</code>, using the <code>{`{#each}`}</code> directive 
+  (which is closed using <code>{`{/each}`}</code>). 
+  Note that the <code>{`{#each}`}</code> syntax works only in the HTML part of a Svelte file, 
+  not for the script part which is regular javascript.
 </p>
 
 <div class=code-half>
@@ -146,19 +145,19 @@ Svelte helps us to loop over lists in a declarative way. The following code in h
 </div>
 
 <p>
-  NOTE: You can refer to javascript variables that were defined in the <code>{`<script>`}</code> section or in 
-  the <code>{`#each`}</code> pragma by putting between curly 
-  brackets, e.g. <code>{`{name}`}</code>.
+  In the loop, each value is put in the temporary variable <code>{`name`}</code>.
+  You can refer to the value of javascript variables that were defined in the <code>{`<script>`}</code> section or in 
+  the <code>{`{#each}`}</code> pragma by putting between curly brackets, e.g. <code>{`{name}`}</code>. 
 </p>
 
 <p>
-  IMPORTANT: The <code>{`{#each}`}</code> syntax works only in the HTML part of a svelte file, not for the script part which is regular javascript.
+  
 </p>
 
 <p>
   Similarly, instead of hard-coding the datapoints in the SVG, or using the <code>{`getElementById`}</code>, 
   <code>{`appendChild`}</code> etc as in the previous section, 
-  we have an easier way of looping over datapoints in svelte. First, we'll create an array called <code>{`datapoints`}</code>, 
+  we have an easier way of looping over datapoints in Svelte. First, we'll create an array called <code>{`datapoints`}</code>, 
   each containing an <code>{`x`}</code> and
   <code>{`y`}</code> value in 
   the <code>{`script`}</code> section. In the HTML itself, we can loop over them, 
@@ -318,12 +317,12 @@ Svelte helps us to loop over lists in a declarative way. The following code in h
 
 <h3> Reactivity</h3>
 <p>
-  This is one of the major features of svelte which has an immense effect on programming experience, its <i>reactivity</i>. 
+  This is one of the major features of Svelte which has an immense effect on programming experience, its <i>reactivity</i>. 
   Reactivity means that when some variable <code>{`a`}</code> depends on a variable <code>{`b`}</code>, and 
   <code>{`b`}</code> is changed, that the value of <code>{`a`}</code> is automatically updated as well. 
   This is what makes a tool like Excel so strong: if you have a cell in a spreadsheet with a formula <code>{`=A1*2`}</code>, 
   it will have the value of cell A1 multiplied by 2. If you change the value of A1, the value in the derived cell is <i>automatically</i> updated as well. 
-  Most programming languages do not have this baked in, but with svelte you do have that functionality.
+  Most programming languages do not have this baked in, but with Svelte you do have that functionality.
 
   We do this using the <code>{`$:`}</code> pragma. For example:
 </p>
@@ -336,15 +335,15 @@ Svelte helps us to loop over lists in a declarative way. The following code in h
   Sliding left and right will now update the multiplied value as well. You can try it below.
 </p>
 
-<h2> About sveltekit</h2>
+<h2> About SvelteKit</h2>
 
 <h3> Local installation</h3>
 
 <p>
   Although it is extremely useful for quickly checking things, we can't use the REPL for <i>real</i> work. Still, you might go back to it regularly to test something out. 
 
-  Instead, we can develop sveltekit applications (i.c. visualisations) locally, on our own machine. 
-  See <a href=https://kit.svelte.dev>the sveltekit website</a> on how to get set up. 
+  Instead, we can develop SvelteKit applications (i.c. visualisations) locally, on our own machine. 
+  See the <a href=https://kit.svelte.dev>SvelteKit website</a> on how to get set up. 
   These are the commands you need:
 </p>
 
@@ -359,24 +358,25 @@ npm run dev -- --open
   The first step will create a new directory (called <code>{`my-app`}</code>) with your application. It will ask you for some information 
   like if you'd want to have an empty (skeleton) setup, or already have demo code included. The <code>{`npm run install`}</code> installs 
   all dependencies (which are listed in the <code>{`package.json`}</code> file). 
+</p>
+<p>
   Finally, <code>{`npm run dev`}</code> will start a local webserver so 
   that you can access your application. The output will list which port the application is running on. This will most probably 
   be port 5173, so you should open the website <code>{`http://localhost:5173`}</code>. If you 
-  use <code>{`npm run dev -- --open`}</code> it will automatically open that website for you.
-  <br/>
-  NOTE: Using <code>{`npm run dev`}</code> without the <code>{`-- --open`}</code> works as well. You will however need to open the webpage yourself. 
+  use <code>{`npm run dev -- --open`}</code> it will automatically open that website for you. 
+  Using <code>{`npm run dev`}</code> without the <code>{`-- --open`}</code> works as well. You will however need to open the webpage yourself. 
   This is often the better option if you want to restart the server.
 </p>
 
 <h3> Directory structure and routing</h3>
-<p>To understand how data can be loaded in sveltekit, we need to understand how routing works. <i>Routing</i> maps a file to a URL and vice versa. 
-  The directory structure in sveltekit is important: each URL points to a subdirectory of <code>{`src/routes`}</code>. For example:
+<p>To understand how data can be loaded in SvelteKit, we need to understand how routing works. <i>Routing</i> maps a file to a URL and vice versa. 
+  The directory structure in SvelteKit is important: each URL points to a subdirectory of <code>{`src/routes`}</code>. For example:
 </p>
 
 <ul>
-  <li>http://localhost:5173 points to the <code>{`src/routes/`}</code> directory</li>
-  <li>http://localhost:5173/about points to the <code>{`src/routes/about/`}</code> directory</li>
-  <li>http://localhost:5173/contact points to the <code>{`src/routes/contact/`}</code> directory</li>
+  <li><i>http://localhost:5173</i> points to the <code>{`src/routes/`}</code> directory</li>
+  <li><i>http://localhost:5173/about</i> points to the <code>{`src/routes/about/`}</code> directory</li>
+  <li><i>http://localhost:5173/contact</i> points to the <code>{`src/routes/contact/`}</code> directory</li>
   <li>...</li>
 </ul>
 
@@ -400,7 +400,7 @@ npm run dev -- --open
 
 See <a href=https://kit.svelte.dev/docs/routing>https://kit.svelte.dev/docs/routing</a> for more information.
 
-<h2> Loading data in sveltekit</h2>
+<h2> Loading data in SvelteKit</h2>
 <p>
   As we have a <code>{`<script>`}</code> section in 
   a <code>{`.svelte`}</code> file, we can define variables and data there, like this:  
@@ -543,7 +543,7 @@ What happens here?
   </ul>
 </div>
 
-NOTE: The variable <i>must</i> be called <code>{`data`}</code> and it <i>must</i> be defined in the corresponding <code>+page.svelte</code>.
+<p>The variable <i>must</i> be called <code>{`data`}</code> and it <i>must</i> be defined in the corresponding <code>+page.svelte</code>.</p>
 
 <div class=intermezzo>
   <h2>Synchronous vs asynchronous programming</h2>
@@ -607,7 +607,8 @@ NOTE: The variable <i>must</i> be called <code>{`data`}</code> and it <i>must</i
 
 <ul>
   <li>Stop the <code>{`npm run dev`}</code> server.</li>
-  <li>Run <code>{`npm install papaparse`}</code> in the root folder of your svelte application.</li>
+  <li>Run <code>{`npm i -d papaparse`}</code> in the root folder of your Svelte application. 
+    This will <code>i</code> (install) the package also for <code>-d</code> (development).</li>
   <li>Restart <code>{`npm run dev`}</code>.</li>
 </ul>
 <p>Here's a working example using data about flights. The file <code>flights_part.csv</code> looks like this:</p>
@@ -674,7 +675,7 @@ Franz Josef Strauss (Munich)`}/>
 <p>
   The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? 
   Actually, this is very simple as we are running our own server. <br/>If you put the data file in the <code>{`static`}</code>
-  directory of your svelte project, you can access it directly with
+  directory of your Svelte project, you can access it directly with
 </p>
 
 <Highlight language={javascript} code=
@@ -731,7 +732,7 @@ export default knex({
     },
   })`}/>
 <p>
-  The path is relative to the main directory in sveltekit.
+  The path is relative to the main directory in SvelteKit.
 
   Above, we have used the <code>{`+page.js`}</code> file to load our data from CSV sources. For loading SQL data, we will however need 
   to name our file <code>{`+page.server.js`}</code> 
@@ -1019,7 +1020,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 <p>
   For a tutorial on loading from an SQL database, see 
   <a href=https://vda-lab.gitlab.io/datavis-technologies/_basic_data_visualisation_with_svelte.html#_from_an_sql_database>this tutorial</a>. 
-  For the full documentation on how to load data in sveltekit, see <a href=https://kit.svelte.dev/docs/load>https://kit.svelte.dev/docs/load</a>.
+  For the full documentation on how to load data in SvelteKit, see <a href=https://kit.svelte.dev/docs/load>https://kit.svelte.dev/docs/load</a>.
 </p>
 
 <h2> Our first real scatterplot</h2>
@@ -1046,7 +1047,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 <img src={scalingformula} alt="" width=50%/>
 <p>
   Let's put that in a function that we can use. Add the <code>{`rescale`}</code> function to 
-  the <code>{`script`}</code> section of your svelte file, and call it 
+  the <code>{`script`}</code> section of your Svelte file, and call it 
   where we need to set <code>{`cx`}</code> and <code>{`cy`}</code>.
 </p>
 
@@ -1095,9 +1096,9 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
     .attr("r", 3)`}/>
 
 <p>
-  That is why we focus on using svelte in this tutorial for the main work, and use D3 modules where they simplify a specific task (e.g. scaling). 
+  That is why we focus on using Svelte in this tutorial for the main work, and use D3 modules where they simplify a specific task (e.g. scaling). 
   For example, this <a href=https://www.connorrothschild.com/post/svelte-and-d3>blog post</a> by Connor Rothshield also goes into why he switched 
-  from D3 to svelte+D3 for data visualisation. D3 is organised as a group of <a href=https://github.com/d3/d3/blob/main/API.md>modules</a>, 
+  from D3 to Svelte+D3 for data visualisation. D3 is organised as a group of <a href=https://github.com/d3/d3/blob/main/API.md>modules</a>, 
   so we can choose to load only those functions that have to do with scaling (<code>{`d3-scale`}</code>), colour (<code>{`d3-color`}</code>), etc.
 
   Here is an overview of the different modules:
@@ -1112,7 +1113,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 <p>
   Let's replace our own rescaling function with a linear scale provided by D3. We will load the <code>{`scaleLinear`}</code> function 
   from <code>{`d3-scale`}</code>. Before we can start, we have to <b>install the <code>{`d3-scale`}</code> module</b> first. 
-  Do this by running <code>{`npm install d3-scale`}</code> on the command line.
+  Do this by running <code>{`npm i -d d3-scale`}</code> on the command line.
 </p>
 
 <Highlight language={xml} code=
@@ -1185,7 +1186,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 {`<circle class="first_class second_class third_class" />`}/>
 
 <p>
-  Using svelte, we can do this dynamically. To know if a flight is international, we can check if its <code>{`from_country`}</code> is different 
+  Using Svelte, we can do this dynamically. To know if a flight is international, we can check if its <code>{`from_country`}</code> is different 
   from its <code>{`to_country`}</code>.
 </p>
 
