@@ -79,13 +79,13 @@
 
 	@media (max-width: 768px) {
 		.container {
-			padding: 0 15px; /* Reduce padding on smaller screens */
+			padding: 0 10px; /* Reduce padding on smaller screens */
 		}
 	}
 
 	@media (max-width: 480px) {
 		.container {
-			padding: 0 10px; /* Even smaller padding for mobile */
+			padding: 0 5px; /* Even smaller padding for mobile */
 		}
 	}
 
@@ -134,5 +134,20 @@
 
   :global(code) {
 			background-color: rgb(227, 227, 227);
+	}
+
+	:global(a) {
+		color: #0056b3; /* A modern shade of blue */
+		text-decoration: none; /* No default underline */
+		border-bottom: 2px solid transparent; /* Invisible border for animation */
+		transition: color 0.3s ease, border-color 0.3s ease; /* Smooth color and border transition */
+	}
+
+	:global(a:hover, a:focus) {
+		border-bottom-color: #0056b3; /* Animate the underline */
+	}
+
+	:global(a:visited) {
+		color: #0056b3;
 	}
 </style>
