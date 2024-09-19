@@ -67,7 +67,6 @@
 	}
 
 	.content-container {
-		margin-left: 20px;
 		padding: 20px;
 	}
 
@@ -78,14 +77,14 @@
 	}
 
 	@media (max-width: 768px) {
-		.container {
-			padding: 0 10px; /* Reduce padding on smaller screens */
+		.content-container {
+			padding: 0 15px; /* Reduce padding on smaller screens */
 		}
 	}
 
 	@media (max-width: 480px) {
-		.container {
-			padding: 0 5px; /* Even smaller padding for mobile */
+		.content-container {
+			padding: 0 10px; /* Even smaller padding for mobile */
 		}
 	}
 
