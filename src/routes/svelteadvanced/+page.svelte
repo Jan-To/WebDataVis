@@ -1,6 +1,12 @@
 <script>
+    import Axes from './Axes.svelte';
+
   import Highlight from "svelte-highlight";
   import xml from "svelte-highlight/languages/xml";
+  import FlowersSlider from './FlowersSlider.svelte';
+  import scatterflowers from '$lib/assets/scatterplot-flowers.png';
+    import Flightsslider from "./Flightsslider.svelte";
+    import ScatterplotWithTooltip from "./ScatterplotWithTooltip.svelte";
 </script>
 
 <h1> Advanced visualisation using svelte</h1>
@@ -8,236 +14,92 @@
 <h2> Slider</h2>
 <p>Let's add a slider to the iris visualisation from the previous section that allows us to change the number of flowers displayed in a row instead of the hard-coded 20.</p>
 
-<Highlight language={xml} code=
-{`<script>
-    import Flower from './Flower.svelte';
-
-    export let data;
-    let slider_value = 20; <1>
-    $: get_xy = function(idx) { <2>
-        let y = 25 + (Math.floor(idx / slider_value) * 50) <3>
-        let x = 25 + ((idx % slider_value) * 50) <3>
-        return [x,y]
-    }
-</script>
-
-Number of flowers per line: {slider_value}<br/>
-<input type="range" min="10" max="20" bind:value={slider_value} /><br/> <4>
-<svg width=1000 height=1000>
-    {#each data.flowers as datapoint,idx}
-        <g transform="translate({get_xy(idx)[0]}, {get_xy(idx)[1]})">
-            <Flower datapoint={datapoint} />
-        </g>
-    {/each}
-</svg>`}/>
+<FlowersSlider/>
 
 <p>We combined what we saw earlier in this section on adding sliders. What changed in our code?</p>
 
 <ul>
-  <li>We create a new variable that holds the value for the slider and set its default to 20.</li>
-  <li>
-    Our function itself will now change as we change the slider. 
-    This means that we need to make the function reactive, 
-    and replace <code>{`const`}</code> with <code>{`$:`}</code>.
-  </li>
-  <li>We replace the hard-coded value of <code>{`20`}</code> with the value from the slider.</li>
-  <li>And we add the actual slider.</li>
+  <li>We create a new variable that holds the value for the slider and set its default to 3.</li>
+  <li>We add the actual slider.</li>
+  <li>We want to replace the hard-coded value of <code>{`3`}</code> with the dynamic value from the slider. Hence, we pass it as an argument to <code>{`<Flower/>`}</code></li>
+  <li>We accept the argument in <code>{`<Flower/>`}</code> via <code>export let</code>. Due to the <code>$:</code> declaration, the draw variables are already reactive.</li>
+  <li>Finally, we let the circle radius also react to the flower scaling with the addition of <code>{`{scale*3.5}`}</code></li>
 </ul>
 
 <div id="svelte-flowers-with-slider"></div>
 <h3>Practice</h3>
 
-<p>Add a second slider that allows you to change the size of the flowers themselves.</p>
-
 <p>Change this example so that, instead of a grid of flowers, these flowers are presented as a scatterplot based on the length and width of their sepals, like so:</p>
 
-image:scatterplot-flowers.png[width=50%,pdfwidth=50%]
+<img src={scatterflowers} alt="" width=50%/>
+
+
 
 <p>Getting back to our airport data, let's create a version with a slider that highlights only those airports serving flights with a given distance:</p>
 
-<div style="width=400px" id="svelte-flights-with-slider"></div>
-
-<p>The code:</p>
-
-<Highlight language={xml} code=
-{`<script>
-  let slider_value = 5000;
-  export let data = []
-
-  const rescale = function(x, domain_min, domain_max, range_min, range_max) {
-    return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
-  }
-</script>
-
-<style>
-  circle {
-    opacity: 0.5;
-    fill: blue;
-  }
-  circle.international {
-    fill: red;
-  }
-  circle.hidden {
-    opacity: 0.05;
-  }
-</style>
-
-<h1>Airport flights data</h1>
-Airports serving flights in this range (km): {slider_value - 1000} - {slider_value + 1000} <br/>
-<input type="range" min="1" max="15406" bind:value={slider_value} class="slider" id="myRange" />
-<svg width=1000 height=500>
-  {#each data.flights as datapoint}
-    <circle cx={rescale(datapoint.from_long, -180, 180, 0, 800)}
-            cy={rescale(datapoint.from_lat, -90, 90, 400, 0)}
-            r={rescale(datapoint.distance, 1, 15406, 2,10)}
-            class:international="{datapoint.from_country != datapoint.to_country}"
-            class:hidden="{Math.abs(datapoint.distance - slider_value) > 1000}">
-      <title>{datapoint.from_airport}</title>
-    </circle>
-  {/each}
-</svg>`}/>
+<Flightsslider/>
 
 <h2> Tooltips</h2>
 <p>Following the "overview first, zoom and filter, and details on demand" mantra, we want to be able to show details when we hover over a datapoint.</p>
 
 <p>A quick and dirty way to do this, is by using a <code>{`title`}</code> element embedded within the visual element. For example: instead of</p>
 
-<Highlight language={xml} code=
-{`<circle cx=50 cy=50 r=10 />`}/>
+<div class=code-half>
+  <Highlight language={xml} code=
+  {`<circle cx=50 cy=50 r=10/>`}/>
+</div>
+<div class=view-half>
+  <svg width=50 height=50>
+    <circle cx=30 cy=30 r=10/>
+  </svg>
+</div>
 
 <p>we can write</p>
 
-<Highlight language={xml} code=
-{`<circle cx=50 cy=50 r=10>
+<div class=code-half>
+  <Highlight language={xml} code=
+  {`<circle cx=50 cy=50 r=10>
   <title>My tooltip</title>
 </circle>`}/>
-
-<p>When we hover over that circle, the text "My tooltip" will be shown after a couple of seconds. You can replace that hard-coded text with, for example, <code>{`{datapoint.species}`}</code>. The result:</p>
-
-image:tooltip-title.png[width=33%,pdfwidth=33%]
-
-<p>But we can take this much further, and show the glyph of the flower and additional information as the tooltip, like in the examples below.</p>
-
-image:tooltip-1.png[width=33%,pdfwidth=33%]
-image:tooltip-2.png[width=33%,pdfwidth=33%]
-
-<p>To make this happen, we create a <code>{`div`}</code> that is only shown if 
-  <code>{`selected_datapoint`}</code> is defined.</p>
-
-<p>Our <code>{`Flower.svelte`}</code> is the same as we had above. 
-  <code>{`+page.svelte`}</code> becomes:</p>
-
-<Highlight language={xml} code=
-{`<script>
-    import Scatterplot from './Scatterplot.svelte'
-    export let data = [];
-    $: console.log(data.flowers)
-</script>
-
-<style>
-    circle {
-        fill: steelblue;
-        fill-opacity: 0.5;
-    }
-</style>
-
-<Scatterplot datapoints={data.flowers} x="sepalLength" y="sepalWidth"/>`}/>
-
-<p>We adapt <code>{`Scatterplot.svelte`}</code> like so:</p>
-
-<Highlight language={xml} code=
-{`<script>
-  import { scaleLinear } from 'd3-scale';
-  import { extent } from 'd3-array';
-  import Flower from './Flower.svelte'
-
-  export let datapoints = [];
-  export let x;
-  export let y;
-
-  export let selected_datapoint = undefined;
-
-  $: xScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400])
-  $: yScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400])
-
-  let mouse_x, mouse_y; <1>
-  const setMousePosition = function(event) { <2>
-    mouse_x = event.clientX;
-    mouse_y = event.clientY;
-  }
-</script>
-
-<style>
-  svg {
-    background-color: whitesmoke;
-    margin: 5px;
-    padding: 20px;
-  }
-  circle {
-    fill: steelblue;
-    fill-opacity: 0.3;
-  }
-  circle.selected {
-    fill: red;
-    fill-opacity: 1;
-  }
-  #tooltip { <3>
-    position: fixed;
-    background-color: white;
-    padding: 3px;
-    border: solid 1px;
-  }
-  svg.tooltip { <4>
-    margin: 0px;
-    padding: 0px;
-  }
-</style>
-
-<p>{x} by {y}</p>
-<svg width=400 height=400>
-  {#each datapoints as datapoint}
-    <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
-            r=5
-            class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}"</h1>
-            on:mouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}} <5>
-            on:mouseout={function() {selected_datapoint = undefined}}/>
-  {/each}
-</svg>
-
-{#if selected_datapoint != undefined} <6>
-<div id="tooltip" style="left: {mouse_x + 10}px; top: {mouse_y - 10}px">
-<svg class="tooltip" width=20 height=20>
-  <g transform="translate(10,10)">
-  <Flower datapoint={selected_datapoint} />
-  </g>
-</svg><br/>
-Species: {selected_datapoint.species}
 </div>
-{/if}`}/>
+<div class=view-half>
+  <svg width=50 height=50>
+    <circle cx=30 cy=30 r=10>
+      <title>My tooltip</title>
+    </circle>
+  </svg>
+</div>
 
 <p>
-  The main magic happens in *(6)*, where we only show this <code>{`div`}</code> when 
-  <code>{`selected_datapoint`}</code> is defined. The 
-  <code>{`div`}</code> gets an id of 
-  <code>{`tooltip`}</code> and we set its position next to the location of the mouse (more on that below). The div itself contains an SVG with the flower, 
+  When we hover over that circle, the text "My tooltip" will be shown after a couple of seconds. 
+  You can replace that hard-coded text with, for example, <code>{`{datapoint.species}`}</code>. 
+  But we can take this much further, and show a proper tooltip with full control. 
+  In our example, let's show the glyph of the flower and the species name.
+</p>
+
+<ScatterplotWithTooltip/>
+
+<p>
+  The main magic happens through the Svelte conditional <code>{`{#if ...}`}</code>, where we only show this <code>{`div`}</code> when 
+  <code>{`selected_datapoint`}</code> is defined. The <code>{`div`}</code> gets an id of 
+  <code>{`tooltip`}</code> and we set its position next to the location of the mouse. The div itself contains an SVG with the flower, 
   and a line of text stating the species. If <code>{`Flower`}</code> would be an SVG itself, we wouldn't have to define the 
-  <code>{`<svg>`}</code> here, but looking at the 
-    <code>{`Flower.svelte`}</code> file, it returns a 
-    <code>{`<g>`}</code> which should be <i>part</i> of an SVG.
+  <code>{`<svg>`}</code> here, but looking at the <code>{`Flower.svelte`}</code> file, it returns a 
+  <code>{`<g>`}</code> which should be <i>part</i> of an SVG.
 </p>
 
 <p>
-  The <code>{`div`}</code> gets a position that depends on 
-  <code>{`mouse_x`}</code> and 
-  <code>{`mouse_y`}</code>. These are set in *(5)* when we hover over a circle, using the 
-  <code>{`setMousePosition(event)`}</code> defined in *(2)*. 
-  Such mouse event are automatically passed the event that triggers them. Check what is in these events by adding a <code>{`console.log(event)`}</code> 
-  in the <code>{`setMousePosition`}</code> function.
+  The <code>{`div`}</code> gets a position (<code>{`style="left: ...`}</code>) that depends on <code>{`mouse_x`}</code> and 
+  <code>{`mouse_y`}</code>. These are set <code>on:mouseover</code> when we hover over a circle, using the 
+  <code>{`setMousePosition(event)`}</code>. 
+  The <code>event</code> that is automatically passed is the event that triggered the <code>mouseover</code>. 
+  Check what is in these events by adding a <code>{`console.log(event)`}</code> in the <code>{`setMousePosition`}</code> function.
 </p>
 
 <p>
-  Normally a new <code>{`div`}</code> is positioned <i>after</i> the previous one. This means that the tooltip would be displayed to the right of or below the scatterplot, 
-  whether or not we define that <code>{`style`}</code> attribute in *(6)*. To fix this, we need to set 
+  Normally a new <code>{`div`}</code> is positioned <i>after</i> the previous one. 
+  This means that the tooltip would be displayed to the right of or below the scatterplot, 
+  whether or not we define that <code>{`style`}</code> attribute. To fix this, we need to set 
   <code>{`position: fixed;`}</code> in the CSS. Finally, as we have <i>two</i> SVGs (one for the scatterplot, and one contained within the tooltip), 
   we might have to give each a different style. In our case, we set the padding and margin to 0 for the SVG in the tooltip.
 </p>
@@ -245,57 +107,14 @@ Species: {selected_datapoint.species}
 <div id="svelte-tooltip"></div>
 
 <h2> Axes</h2>
-<p>There are different ways to draw axes on plots. Looking again at the iris dataset, we can follow the do-it-yourself approach, or use the <code>{`d3-axis`}</code> library. In the first option, we draw a long line with small lines and text for each tick. As this approach is very simple it is often used.</p>
+<p>
+  There are different ways to draw axes on plots. Looking again at the iris dataset, we can follow the do-it-yourself approach, 
+  or use the <code>{`d3-axis`}</code> library. The do-it-yourself approach lets you design more yourself, 
+  while the <a href=https://d3js.org/d3-axis>d3 axes</a> already solve many problems, but may lack your desired design. 
+  Here we choose to do a simple axis by drawing a long line with small lines and text for each tick. 
+</p>
 
-<Highlight language={xml} code=
-{`<script>
-  import { scaleLinear } from 'd3-scale';
-  import { extent } from 'd3-array';
-  export let datapoints = [];
-  let margins = {"left": 30, "top": 30, "bottom": 30, "right": 30}
-  
-  $: xDomain = extent(datapoints, (d) => d.sepalLength)
-  $: yDomain = extent(datapoints, (d) => d.sepalWidth)
-  $: xScale = scaleLinear().domain(xDomain).range([margins.left,300-margins.right])
-  $: yScale = scaleLinear().domain(yDomain).range([margins.top,300-margins.bottom])
-  
-  $: console.log(xDomain)
-  $: xTicks = [4.5,5,5.5,6,6.5,7,7.5]
-  $: yTicks = [2,2.5,3,3.5,4]
-  </script>
-  
-  <style>
-  svg { background-color: whitesmoke }
-  circle { opacity: 0.5; }
-  line { stroke: black; }
-  text { font-size: 12px; }
-  text.x { text-anchor: middle; }
-  text.y { text-anchor: end; }
-  </style>
-  
-  <svg width=300 height=300>
-  {#each datapoints as datapoint}
-    <circle cx={xScale(datapoint.sepalLength)} cy={yScale(datapoint.sepalWidth)} r=5 />
-  {/each}
-  
-  <!-- x axis -->
-  <line x1={margins.left} y1={300-margins.bottom} x2={300-margins.right} y2={300-margins.bottom} />
-  {#each xTicks as tick}
-    <line x1={xScale(tick)} y1={300-margins.bottom-3} x2={xScale(tick)} y2={300-margins.bottom+3} />
-    <text class="x" alignment-baseline="hanging" x={xScale(tick)} y={300-margins.bottom+5}>{tick}</text>
-  {/each}
-  
-  <!-- y axis -->
-  <line x1={margins.left} y1={margins.top} x2={margins.left} y2={300-margins.bottom} />
-  {#each yTicks as tick}
-    <line x1={margins.left-3} y1={yScale(tick)} x2={margins.left+3} y2={yScale(tick)} />
-    <text class="y" alignment-baseline="middle" x={margins.left-5} y={yScale(tick)}>{tick}</text>
-  {/each}
-</svg>`}/>
-
-<p>The result:</p>
-
-image:axes_diy.png[width=30%,pdfwidth=30%]
+<Axes/>
 
 <h2> Brush</h2>
 <h3>Using hover</h3>
@@ -410,21 +229,18 @@ endif::[]
 </p>
 
 <h3>Using a brush</h3>
-<p>The above is a poor-man's version, and we'd like to have a more useful brush where you can select a <i>region</i> of the plot. D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. In the example below, we only create a proof-of-concept for brushing; in a real setting you would create separate components which would solve some of the issue of the brush going outside the plot, etc.</p>
+<p>
+  The above is a poor-man's version, and we'd like to have a more useful brush where you can select a <i>region</i> of the plot. 
+  D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. 
+  In the example below, we only create a proof-of-concept for brushing; in a real setting you would create separate components 
+  which would solve some of the issue of the brush going outside the plot, etc.
+</p>
 
-<p>The plots below show the iris dataset: the left part shows sepal length (x-axis) vs sepal width (y-axis); the right part sepal length (x-axis) vs petal length (y-axis). Brushing on the left part selects flowers that are then highlighted on the right one.</p>
-
-ifndef::backend-pdf[]
-*_INTERACTIVE_*
-++++
-<div id="svelte-realbrushlink"></div>
-++++
-endif::[]
-
-ifdef::backend-pdf[]
-image:svelte-brush2.png[width=75%,pdfwidth=75%]
-endif::[]
-
+<p>
+  The plots below show the iris dataset: the left part shows sepal length (x-axis) vs sepal width (y-axis); 
+  the right part sepal length (x-axis) vs petal length (y-axis). Brushing on the left part selects flowers 
+  that are then highlighted on the right one.
+</p>
 
 <p><code>{`src/routes/+page.svelte`}</code>:</p>
 

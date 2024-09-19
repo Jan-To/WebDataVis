@@ -21,24 +21,24 @@
                     "C " + pl + ",-" + pw +
                     " " + pl + "," + pw +
                     " 0,0 Z"
-    </script>
-    
-    <style>
-    circle.setosa {
-        fill: #7570b3;
-        fill-opacity: 0.3;
-    }
-    circle.virginica {
-        fill: #1b9e77;
-        fill-opacity: 0.3;
-    }
-    circle.versicolor {
-        fill: #d95f02;
-        fill-opacity: 0.3;
-    }
-    </style>
-    
-    <g>
+</script>
+
+<style>
+circle.setosa {
+    fill: #7570b3;
+    fill-opacity: 0.3;
+}
+circle.virginica {
+    fill: #1b9e77;
+    fill-opacity: 0.3;
+}
+circle.versicolor {
+    fill: #d95f02;
+    fill-opacity: 0.3;
+}
+</style>
+
+<g>
     <circle cx=0 cy=0 r=10 class={datapoint.species} />
     <path style="transform: rotate(270deg)" d={sepal_path} />
     <path style="transform: rotate(30deg)" d={sepal_path} />
@@ -46,4 +46,4 @@
     <path style="transform: rotate(325deg)" d={petal_path} />
     <path style="transform: rotate(90deg)" d={petal_path} />
     <path style="transform: rotate(210deg)" d={petal_path} />
-    </g>
+</g>
