@@ -19,10 +19,6 @@
         download: true,
         complete: function(results) {
             datapoints = results.data.slice(0,-1)
-            datapoints.map((d) => d.sepal_length = +d.sepal_length)
-            datapoints.map((d) => d.sepal_width = +d.sepal_width)
-            datapoints.map((d) => d.petal_length = +d.petal_length)
-            datapoints.map((d) => d.petal_width = +d.petal_width)
         }
     })
   })

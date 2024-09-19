@@ -1,12 +1,14 @@
 <script>
-    import Axes from './Axes.svelte';
-
   import Highlight from "svelte-highlight";
   import xml from "svelte-highlight/languages/xml";
+  import Map from './Map.svelte';
+  import Axes from './Axes.svelte';
+  import Force from './Force.svelte';
   import FlowersSlider from './FlowersSlider.svelte';
   import scatterflowers from '$lib/assets/scatterplot-flowers.png';
-    import Flightsslider from "./Flightsslider.svelte";
-    import ScatterplotWithTooltip from "./ScatterplotWithTooltip.svelte";
+  import Flightsslider from "./Flightsslider.svelte";
+  import ScatterplotWithTooltip from "./ScatterplotWithTooltip.svelte";
+  import BrushLink from './BrushLink.svelte';
 </script>
 
 <h1> Advanced visualisation using svelte</h1>
@@ -116,22 +118,28 @@
 
 <Axes/>
 
-<h2> Brush</h2>
-<h3>Using hover</h3>
+<p>
+  Notice how we left some space for the axes within the <code>svg</code> via reducing the <code>scaleLinear.range</code> by some <code>margins</code>.
+  As this axes definition is very simple, a few extensions come to mind:
+</p>
+
+<ul>
+  <li>Add axes labels.</li>
+  <li>Add grid lines within the tick loop.</li>
+  <li>Swap the hard-coded tick positions through automatically determined ones, e.g. <a href=https://d3js.org/d3-array/ticks>d3 ticks()</a>.</li>
+  <li>Moving an axes within the plot, when there is a positive & negative side.</li>
+  <li>Play around with muted colors</li>
+</ul>
+
+<p>
+  As you have seen some things within Svelte already, you are probably able to implement these yourself. Before getting lost in design details, 
+  it is helpful to remember that minimal axes often help focussing on the data, as long as they convey the necessary frame of reference.
+</p>
+
+<h2>Linking</h2>
 <p>Being able to link different visuals together can have a <i>big</i> impact on how much insight you can gain from them. Below, we will look into how to make this happen. We'll create two scatterplots on the iris data, and link these together. The final result will be as below. Notice that when you hover over a point, there will also be a point in the other scatterplot that becomes red.</p>
 
-ifndef::backend-pdf[]
-*_INTERACTIVE_*
-++++
-<div style="width=400px" id="svelte-brushlink"></div>
-++++
-endif::[]
-
-ifdef::backend-pdf[]
-image:svelte-brush1.png[width=75%,pdfwidth=75%]
-endif::[]
-
-<p>Note that there are multiple ways of achieving this, and definitely look into "svelte stores" as well. Here's we'll go bare bones and do the minimum possible.</p>
+<BrushLink/>
 
 <p><code>{`Scatterplot.svelte`}</code>:</p>
 
@@ -154,6 +162,17 @@ endif::[]
                 .range([0,400])
 </script>
 
+<svg width=400 height=400>
+  {#each datapoints as datapoint}
+    <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
+            r=5
+            on:mouseover={function() {selected_datapoint = datapoint}} <3>
+            on:mouseout={function() {selected_datapoint = undefined}} <4>
+            class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}" <5></h1>
+    />
+  {/each}
+</svg>
+
 <style>
   svg {
     background-color: whitesmoke;
@@ -168,41 +187,46 @@ endif::[]
     fill: red;
     fill-opacity: 1;
   }
-</style>
-
-<p>{x} by {y}</p>
-<svg width=400 height=400>
-  {#each datapoints as datapoint}
-    <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
-            r=5
-            on:mouseover={function() {selected_datapoint = datapoint}} <3>
-            on:mouseout={function() {selected_datapoint = undefined}} <4>
-            class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}" <5></h1>
-    />
-  {/each}
-</svg>`}/>
+</style>`}/>
 
 <p>What happens here?</p>
 
 <ul>
   <li>We'll need to have a <code>{`selected_datapoint`}</code> variable to keep track of which datapoint is the selected one.</li>
-  <li>Instead of using <code>{`circle:hover`}</code>, we will set the class of our datapoint to <code>{`selected`}</code> and apply styles like that.</li>
   <li>Using <code>{`on:mouseover`}</code> we can set the <code>{`selected_datapoint`}</code>...</li>
   <li>... which is unset on <code>{`on:mouseout`}</code>.</li>
   <li>
     Finally, we can set the class of our circle to <code>{`selected`}</code> 
     if <code>{`selected_datapoint`}</code> is defined and the id of our datapoint is the same as the selected datapoint.
   </li>
+  <li>We <code>export</code> the variable <code>selected_datapoint</code> to make it visible from outside.</li>
 </ul>
 
 <p><code>{`src/routes/+page.svelte`}</code>:</p>
 
 <Highlight language={xml} code=
 {`<script>
-    import Scatterplot from "./Scatterplot.svelte";
+  import Papa from 'papaparse';
+  import { onMount } from 'svelte';
+  import Scatterplot from './Scatterplot.svelte';
 
-    export let data = [];
-    let selected_datapoint = undefined;
+  let datapoints = []
+  let selected_datapoint = undefined
+
+  onMount(() => {
+      Papa.parse("https://vda-lab.github.io/assets/iris.csv", {
+          header: true,
+          download: true,
+          complete: function(results) {
+              datapoints = results.data.slice(0,-1)
+              let counter = 0;
+              datapoints.forEach((d) => {
+                  d["id"] = counter
+                  counter++;
+              })
+          }
+      })
+  })
 </script>
 
 <table>
@@ -221,14 +245,26 @@ endif::[]
 </table>`}/>
 
 <p>
-  We define a variable <code>{`selected_datapoint`}</code> *(1)* that will contain a copy of any datapoint 
-  that we hover over in any of the scatterplots. Next, we way of checking if a circle is selected. 
-  We can do this by adding a unique ID to all datapoints *(2)*. Finally, we pass the selected datapoint 
+  We define a variable <code>{`selected_datapoint`}</code> that will contain a copy of any datapoint 
+  that we hover over in any of the scatterplots. Next, we need a way of checking which circle is selected. 
+  We can do this by adding a unique ID to all datapoints. Finally, we pass the selected datapoint 
   to the scatterplots themselves, but do this using the <code>{`bind`}</code> operator, so that these scatterplots can pass 
-  that info back into the main code (from where it then can be passed to the other scatterplot).
+  that info back into the main code, from where it then can be passed to the other scatterplot.
 </p>
 
-<h3>Using a brush</h3>
+<h3>Stores</h3>
+
+<p>
+  Note that there are multiple ways of achieving this linking. Passing around data through the application hierarchy like above is feasible in this small example.
+  However, if there are more components that need to access (and possibly write) certain variables, Svelte provides so called <code>stores</code>.
+  Stores are variables that are declared in an extra file <code>stores.js</code> and are, after an <code>import x from "./store"</code>, accessible in all components.
+  Since <codes>stores</codes> are objects with a <code>subscribe</code> method, dependent components are responsive to changes of the store's value, 
+  which is accessible with <code>$storevariable</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores>exercises</a> or 
+  <a href=https://svelte.dev/examples/writable-stores>examples</a> of stores.
+</p>
+
+<!--
+<h2>Brushing</h2>
 <p>
   The above is a poor-man's version, and we'd like to have a more useful brush where you can select a <i>region</i> of the plot. 
   D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. 
@@ -355,197 +391,41 @@ endif::[]
     rect.brush { fill: black; fill-opacity: 0.3; }
 </style>
 `}/>
+-->
 
-
-<h2> Specific visuals</h2>
+<h1> Specific visuals</h1>
 <p>Below, we will just post example code that can be used as a starting point for more complex visuals. We won't go in depth into explaining this code, though.</p>
 
-<h3>Map</h3>
-<p>We have shown airports by just plotting their longitude and latitude as a scatterplot, but it'd be nice to plot them on top of an actual map. There are different libraries for doing this, including D3 (see https://www.pluralsight.com/guides/maps-made-easy-with-d3) and https://leafletjs.com[leaflet.js], developed by Vladimir Agafonkin.</p>
+<h2>Map</h2>
+<p>We have shown airports by just plotting their longitude and latitude as a scatterplot, but it'd be nice to plot them on top of an actual map. 
+  There are different libraries for doing this, including D3 as explained in <a href=https://www.pluralsight.com/guides/maps-made-easy-with-d3> this tutorial</a>
+  and the <a href=https://leafletjs.com>leaflet-package</a> developed by Vladimir Agafonkin.
+</p>
 
 <p>
-  You'll first have to install the leaflet library with <code>{`npm install leaflet`}</code>. 
+  You'll first have to install the leaflet library with <code>{`npm i -d leaflet`}</code>. 
   You will also have to add the following line to your <code>{`+page.js`}</code>: 
   <code>{`export const ssr = false;`}</code>
 </p>
 
 <p>A minimal, basic map:</p>
 
-<Highlight language={xml} code=
-{`<script>
-  import { onMount } from "svelte";
-  import L from "leaflet";
+<Map/>
 
-  export let data = [];
-  let map;
+<h2>Force-directed graph</h2>
+<p>
+  D3 has a very solid library for drawing node-link diagrams, available at <a href=https://github.com/d3/d3-force>d3-force</a>. 
+  Install the library with <code>{`npm i -d d3-force`}</code>.
+  Data for a network consists of nodes and links, and should be formatted like this:</p>
 
-  onMount(async () => {
-    map = L.map("map", { preferCanvas: true }).setView(
-      [50.8476, 4.3572],
-      2,
-    );
-    L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-      {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-        maxZoom: 18,
-      },
-    ).addTo(map);
-    let real_brussels = L.marker([50.901, 4.4856]).addTo(map);
-    real_brussels.bindTooltip("Real Brussels airport").openTooltip();
-    let brussels_in_datafile = L.marker([51.502, 4.807], {
-      markerColor: "red",
-    }).addTo(map);
-    brussels_in_datafile
-      .bindTooltip("Brussels airport in datafile")
-      .openTooltip();
-
-    data.flights.forEach((d) => {
-      L.circle(
-        [+d.from_lat, +d.from_long],
-        {
-          stroke: false,
-          color: "black",
-          radius: 50000  // is radius in meters
-        },
-      ).addTo(map);
-    });
-  });
-</script>
-
-<svelte:head>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-    crossorigin=""
-  />
-
-  <script
-    src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    crossorigin=""
-  >
-  </script>
-</svelte:head>
-
-<div id="map" />
-
-<style>
-  #map {
-      height: 480px;
-  }
-</style>
-`}/>
-
-image:world-map.png[width=50%,pdfwidth=50%]
-
-<p>You might see that some of the airports are in the ocean. Indeed, if we look at Brussels airport, the latitude and longitude in the input file are not exactly the same as the real ones.</p>
-
-image:brussels_airport.png[width=50%,pdfwidth=50%]
-
-<h3>Force-directed graph</h3>
-<p>D3 has a very solid library for drawing node-link diagrams, available at https://github.com/d3/d3-force. Data for a network consists of nodes and links, and should be formatted like this:</p>
-
-* Nodes must have an ID, e.g. <code>{`{"id": 1,"name": "A"}`}</code>.
-* Links must have a <code>{`source`}</code> and a 
-<code>{`target`}</code>, e.g. 
-<code>{`{"source": 1,"target": 2}`}</code>.
-
-<p>Again, first install the necessary library: <code>{`npm install d3-force`}</code>.</p>
+<ul>
+  <li>Nodes must have an ID, e.g. <code>{`{"id": 1,"name": "A"}`}</code>.</li>
+  <li>Links must have a <code>{`source`}</code> and a <code>{`target`}</code> that reference these IDs, e.g. <code>{`{"source": 1,"target": 2}`}</code>.</li>
+</ul>
 
 <p>A simple node-link diagram which allows for dragging nodes around:</p>
 
-<Highlight language={xml} code=
-{`<script>
-  import { onMount } from 'svelte';
-  import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force'
-
-  let nodes = [
-    {"id": 1,"name": "A"}, {"id": 2,"name": "B"},
-    {"id": 3,"name": "C"}, {"id": 4,"name": "D"},
-    {"id": 5,"name": "E"}, {"id": 6,"name": "F"},
-    {"id": 7,"name": "G"}, {"id": 8,"name": "H"},
-    {"id": 9,"name": "I"}, {"id": 10,"name": "J"}
-  ]
-  let links = [
-    {"source": 1,"target": 2}, {"source": 1,"target": 5},
-    {"source": 2,"target": 6}, {"source": 2,"target": 4},
-    {"source": 2,"target": 7}, {"source": 3,"target": 4},
-    {"source": 8,"target": 3}, {"source": 4,"target": 5},
-    {"source": 4,"target": 9}, {"source": 5,"target": 10}
-  ]
-
-  let draggedNode = null;
-  let simulation;
-
-  function dragNode(event) {
-    if ( draggedNode ) {
-      draggedNode.x = event.offsetX;
-      draggedNode.y = event.offsetY;
-      draggedNode.cx = draggedNode.x
-      draggedNode.cy = draggedNode.y
-      ticked()
-    }
-  }
-
-  onMount(runSimulation);
-
-  function ticked() {
-      nodes = nodes
-      links = links
-  }
-
-  function runSimulation() {
-      simulation = forceSimulation(nodes)
-          .force("link", forceLink(links).id(d => d.id))
-          .force("charge", forceManyBody().strength(-50))
-          .force("center", forceCenter(200,200))
-          .on('tick', ticked)
-  }
-</script>
-
-<style>
-  circle {
-  fill: steelblue;
-      visibility:visible;
-  }
-  circle:hover {
-      fill: red;
-  }
-  line {
-      stroke: #999;
-      stroke-opacity: 0.6;
-  }
-  .selected {
-      fill: red;
-      r: 7;
-  }
-</style>
-
-<svg
-  width="400"
-  height="400"
-  on:mousemove={dragNode}
-  on:mouseup={() => { if ( draggedNode ) { runSimulation() }; draggedNode = null; }}>
-  {#each links as link}
-  <line x1='{link.source.x}' y1='{link.source.y}'
-        x2='{link.target.x}' y2='{link.target.y}' >
-  </line>
-  {/each}
-
-  {#each nodes as point}
-      <circle
-          class:selected={point.selected}
-          cx={point.x}
-          cy={point.y}
-          r="8"
-          on:mousedown={() => { draggedNode = point ; runSimulation() } }
-          >
-        <title>{point.id}</title>
-      </circle>
-  {/each}
-</svg>`}/>
-
+<Force/>
 
 <div id="svelte-nodelink"></div>
 
