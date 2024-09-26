@@ -9,11 +9,6 @@
 </script>
 
 <h1>HTML, CSS and Javascript</h1>
-<p>
-  Back in the 1990s, java was the programming language of choice if you wanted something visual 
-  and interactive on your screen. 
-  Over the years, this has shifted towards standard web technologies HTML, CSS and javascript.
-</p>
 
 <h2>General HTML file structure</h2>
 <p>
