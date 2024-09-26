@@ -15,6 +15,7 @@
   import Flights3 from "./flights3.svelte";
   import Flights4 from "./flights4.svelte";
   import Flights5 from "./Flights5.svelte";
+    import Arcs from "../svg/Arcs.svelte";
 
   export let data = [];
 </script>
@@ -1022,6 +1023,40 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   <a href=https://vda-lab.gitlab.io/datavis-technologies/_basic_data_visualisation_with_svelte.html#_from_an_sql_database>this tutorial</a>. 
   For the full documentation on how to load data in SvelteKit, see <a href=https://kit.svelte.dev/docs/load>https://kit.svelte.dev/docs/load</a>.
 </p>
+
+<h3>Blocking vs. Non-blocking data loading</h3>
+<p>
+  Loading data via <code>+page.js</code> will load the data on the server and then render the page. 
+  If the data loads slowly this can delay the display of the page significantly. In a sense, this is <i>blocking</i> data loading.
+  However, svelte does offer multiple options for <i>non-blocking</i> data loading. One of them is the <code>onMount()</code> function.
+  The function will run on the client after the page is already rendered. 
+  <code>onMount()</code> does not block the user experience for data loading, contrary to loading with <code>+page.js</code>.
+  This chapter/page is using the <code>+page.js</code> loading, while the advanced chapter is using <code>onMount()</code>. 
+  Try it out, you will notice the difference.
+</p>
+
+<Highlight language={xml} code=
+{`<script>
+  import { base } from '$app/paths';
+  import { onMount } from 'svelte';
+
+  let flights = [];
+
+  onMount(async () => {
+    const response = await fetch(base + "/flights_part.json")
+    flights = await response.json()
+  });
+</script>`}/>
+
+<p>
+  So why not always use <code>onMount()</code>? There are arguments for both techniques. 
+  Data loaded with <code>onMount()</code> is defined as the default value (often <code>undefined</code>) on the first rendering pass
+  and only get defined later. There are plenty of cases, where this can break your code. Also some data might be so <i>essential</i>
+  to your page that a display without is not sensible. Other times, loading from the server is significantly faster than loading from the client. 
+  So <code>+page.js</code> has valid use cases.
+</p>
+
+
 
 <h2> Our first real scatterplot</h2>
 <p>
