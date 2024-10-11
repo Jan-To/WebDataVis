@@ -1,35 +1,18 @@
 <script>
-	import ashes from "svelte-highlight/styles/ashes";
-	import { base } from '$app/paths';
+  import atomOneLight from "svelte-highlight/styles/atom-one-light";
+	import Sidebar from "./Sidebar.svelte";
+	import './styles.css';
 
-	let sidebarVisible = true;
-	function closeSidebar() {
-		sidebarVisible = false;
-	}
-	function openSidebar() {
-		sidebarVisible = true;
-	}
+	let isOpen = true;
 </script>
 
 <svelte:head>
-  {@html ashes}
+  {@html atomOneLight}
 </svelte:head>
 
 <div class="container">
-	<div class="sidebar {sidebarVisible ? "active" : ""}">
-    <button class="close-btn" id="closeBtn" on:click={closeSidebar}>×</button>
-		<h1>Content</h1>
-		<ul class="navbar">
-			<li class="nav-element"><a href="{base}/">About</a></li>
-			<li class="nav-element"><a href="{base}/htmlcssjs">HTML, CSS and Javascript</a></li>
-			<li class="nav-element"><a href="{base}/svg">Drawing an SVG</a></li>
-			<li class="nav-element"><a href="{base}/svelteintro">Visualization in Svelte</a></li>
-			<li class="nav-element"><a href="{base}/components">Custom Components</a></li>
-			<li class="nav-element"><a href="{base}/svelteadvanced">Advanced Vis in Svelte</a></li>
-		</ul>
-	</div>
-	<div class='content-container {sidebarVisible ? '' : 'hidden-sidebar'}'>
-		<button class="open-btn" id="openBtn" on:click={openSidebar}>☰</button>
+	<Sidebar bind:isOpen/>
+	<div class='content-container {isOpen ? 'open' : 'closed'}'>
 		<div class='content'>
 			<slot></slot>
 		</div>
@@ -37,41 +20,30 @@
 </div>
 
 <style>
-	:global(body) {
-		margin: 0;
-	}
-
 	.container {
 		margin: 0;
 		position: relative;
 	}
 
-	.sidebar {
-		position: fixed;
-		left: -240px;
-		width: 240px;
-		height: 100%;
-		background-color: #f8f8f7;
-		border-right: 1px solid #efefed;
-		float: left;
-		margin: 0;
-		transition: 0.3s ease;
-	}
-	
-	.sidebar.active {
-  	left: 0; /* When active, bring it to the screen */
+	.content-container.open {
+		margin-left: 256px;
+		transition: margin-left 0.3s ease;
 	}
 
-	.sidebar h1 {
-		margin-left: 20px;
+	.content-container.closed {
+		margin-left: 0;
+		transition: margin-left 0.3s ease;
 	}
 
-	.content-container {
-		padding: 20px;
+	@media (max-width: 1300px) {
+		.content-container.open {
+			margin-left: 0px;
+		}
 	}
 
 	.content {
-		max-width: 1024px;
+		padding: 20px;
+		max-width: 984px;
 		margin: 0 auto;
 		width: 100%;
 	}
@@ -88,31 +60,6 @@
 		}
 	}
 
-  .open-btn,
-  .close-btn {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 18px;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-  }
-
-  .open-btn {
-    display: none;
-  }
-
-  /* When the sidebar is hidden, show the "Open" button */
-  .hidden-sidebar .open-btn {
-    display: inline-block;
-  }
-
 	:global(.code-half) {
 			margin: 0 0;
 			width: 65%;
@@ -125,34 +72,5 @@
 			margin: auto;
 			margin-left: 1em;
 			vertical-align: top;
-	}
-
-  :global(p) {
-			margin: 13px 0;
-	}
-
-  :global(code) {
-			background-color: rgb(227, 227, 227);
-	}
-
-	:global(a) {
-		color: #0056b3; /* A modern shade of blue */
-		text-decoration: none; /* No default underline */
-		border-bottom: 2px solid transparent; /* Invisible border for animation */
-		transition: color 0.3s ease, border-color 0.3s ease; /* Smooth color and border transition */
-	}
-
-	:global(a:hover, a:focus) {
-		border-bottom-color: #0056b3; /* Animate the underline */
-	}
-
-	:global(a:visited) {
-		color: #0056b3;
-	}
-
-	:global(.intermezzo) {
-		background-color: antiquewhite;
-		border: solid 1px;
-		padding: 5px;
 	}
 </style>

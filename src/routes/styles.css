@@ -1,0 +1,110 @@
+/* Typography */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+p, li, code {
+  font-size: 18px;
+}
+
+p {
+  margin-bottom: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  p, li {
+    font-size: 16px;
+  }
+
+}
+
+/* Links */
+a {
+  color: #0056b3; /* A modern shade of blue */
+  text-decoration: none; /* No default underline */
+  border-bottom: 2px solid #0056b3; /* Invisible border for animation */
+  transition: color 0.2s ease, border-color 0.2s ease; /* Smooth color and border transition */
+}
+  
+  a:hover, a:focus {
+  border-bottom-color: transparent; /* Animate the underline */
+}
+  
+  a:visited {
+  color: #0056b3;
+}
+
+/* Code blocks */
+pre, code {
+  border-radius: 13px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+pre {
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 1.5em;
+}
+
+code {
+  background-color: #fafafa;
+  padding: 0.2em 0.4em;
+}
+
+pre code {
+  font-size: 15px;
+}
+
+/* other */
+.intermezzo {
+  background-color: #f0f0f0;
+  border-radius: 13px;
+  padding: 1.5em;
+}
+
+.intermezzo h1, .intermezzo h2, .intermezzo h3 {
+  margin-top: 0.5em;
+}
