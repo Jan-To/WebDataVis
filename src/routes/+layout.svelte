@@ -22,20 +22,24 @@
 <style>
 	.container {
 		margin: 0;
+		padding: 0;
 		position: relative;
+	}
+
+	.content-container {
+		padding: 0;
+		transition: margin-left 0.3s ease;
 	}
 
 	.content-container.open {
 		margin-left: 256px;
-		transition: margin-left 0.3s ease;
 	}
 
 	.content-container.closed {
 		margin-left: 0;
-		transition: margin-left 0.3s ease;
 	}
 
-	@media (max-width: 1300px) {
+	@media (max-width: 1280px) {
 		.content-container.open {
 			margin-left: 0px;
 		}
@@ -45,7 +49,6 @@
 		padding: 20px;
 		max-width: 984px;
 		margin: 0 auto;
-		width: 100%;
 	}
 
 	@media (max-width: 768px) {
