@@ -86,11 +86,14 @@
 
 <p>
   The scoping works both ways. Play around with the minimal example in the 
-  <a href=https://svelte.dev/examples/nested-components>Svelte REPL</a>
+  <a href=https://svelte.dev/examples/nested-components>Svelte REPL</a>.
+</p>
+<p>
   You will notice that the parent <code>{`script`}</code> and <code>{`style`}</code> 
   is not available within the child-component. If you need to transfer variables from parent to child, 
   add <code>export let x</code> to the child to declare an attribute <code>x</code> that can be accessed
-  upon creation in the parent. In the example above, this is <code>which="from/to"</code>.
+  upon creation in the parent. In the scatterplot example above, this is <code>which="from/to"</code>, 
+  where <code>which</code> is the variable name.
 </p>
 
 <h2>Converting our airports map to a component</h2>
@@ -370,7 +373,7 @@
 `}/>
 
 <p>We create a function that returns an x and y offset for a given index to form a uniform grid. 
-  There are better ways of doing this (e.g. using <a href=https://getbootstrap.com>Bootstrap</a>), 
+  There are better ways of doing this (later in the <a href="{base}/sveltecss">chapter about Svelte CSS</a>), 
   but we just code our own here, creating rows of 20 flowers. We use <code>{`console.log`}</code> 
   to make sure that the datapoints we load are actually what we expect. This is a typical way in Svelte 
   to check what's going on: because we start the command with a <code>{`$:`}</code>, this will run every time the value 

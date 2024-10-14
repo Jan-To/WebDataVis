@@ -496,7 +496,6 @@ p::first-letter &#123;
         in javascript code. An example JSON object containing information about the BRCA2 gene, 
         involved in breast cancer:
     </p>
-</div>
 <Highlight language={json} code=
 {`{ id: 12345,
   common_name: "BRCA2",
@@ -542,7 +541,7 @@ p::first-letter &#123;
     The top-level element in a JSON-formatted file can be of any of the above types. 
     In the example, this is an object.
 </p>
-
+</div>
 
 <h1>Javascript basics</h1>
 <h2>Variables</h2>
@@ -574,7 +573,8 @@ console.log(third_variable);  // value of third_value is printed to the console
     Everything on a line after a double forward slash (<code>//</code>) 
     in javascript is seen as a comment and not parsed. <br>
     NOTE: We'll see later that in Svelte, you can also declare variables using 
-    <code>$:</code> instead of <code>let</code> or <code>const</code>.    
+    <code>$:</code> instead of <code>let</code> or <code>const</code>, 
+    which makes the variable reactive to changes of its definition's values. More on that later.
 </p>
 
 <h2>Functions</h2>
@@ -612,7 +612,8 @@ console.log(function_3(1,2))`}/>
         https://svelte.dev/repl/1d295420874d42818954da8fcb50ad7d?version=3.59.1</a></li>
     <li>Lists: <a href='https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1'>
         https://svelte.dev/repl/d4a024f5e6794abfa2ccc213d41c7e18?version=3.59.1</a></li>
-    <li>Text tags: </li>
+    <li>Text tags: <a href='https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1'>
+        https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1</a></li>
     <li></li>
     <li></li>
     <li></li>
@@ -621,7 +622,6 @@ console.log(function_3(1,2))`}/>
     <li></li>
     <li></li>
 </ul>
-* https://svelte.dev/repl/f1a9ed0ed9444c12a1684a00166619e3?version=3.59.1
 * Styles (inline): https://svelte.dev/repl/e1f0c316e39c45cb97fbf1fe18126e4c?version=3.59.1
 * CSS classes: https://svelte.dev/repl/987e9e43eab74967912e83b302401291?version=3.59.1
 * Printing: https://svelte.dev/repl/f7fe97bc39ba4ecf8b9077bf5e497450?version=3.59.1
