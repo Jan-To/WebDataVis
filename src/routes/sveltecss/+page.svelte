@@ -11,9 +11,9 @@
   But how far should you take this approach, especially for more complex projects like data visualization?
 </p>
 <p>
-  Indeed, the scoped styling can come in really handy for our data visualization projects. The CSS will be right next to the component it applies to, 
+  Indeed, the scoped styling can come in really handy for data visualization. The CSS will be right next to the component (plot) it applies to, 
   findable and relatable. However, we should only use this for CSS that is relevant <b>only</b> in this component and still rely on a consistent global styling.
-  That is possible because there are ways to declare global CSS, which can be overwritten by locally scoped CSS, if necessary.
+  That is possible because there are ways to declare global CSS (a theme), which can be overwritten by locally scoped CSS, if necessary.
 </p>
 
 <ul>
@@ -73,8 +73,11 @@
 
 <h2>Styling with a library</h2>
 <p>
-  When working with Svelte, several UI/component libraries can help streamline development and enhance styling. 
-  Here is a list, from minimalistic and utility-focused to fully-featured, component-rich libraries:
+  When working in web development nowadays, there is a plethora of UI/component libraries that speed up development and streamline styling. 
+  However, there is no definite answer to which one is best, as web development is a rapidly changing environment. 
+  Both design preferences and development frameworks are outdated quickly. Most libraries are open source, 
+  hence stop reveiving updates as soon as they fall out of trend.
+  Here is an incomplete list, from minimalistic to fully-featured, component-rich libraries:
 </p>
 
 <ul>
@@ -113,7 +116,7 @@
 </p>
 <p>
   We don't force you to use one particular (or one at all), but you may consider one down the line of your project.
-  If you don't have previous experience in web development, we encourage you to start out without one.
+  If you don't have previous experience in web development, we encourage you to start out without these libraries initally and adapting one later as you need.
   Ultimately, the choice depends on your preference and scope of your data visualization needs.
 </p>
 
