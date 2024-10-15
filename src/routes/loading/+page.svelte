@@ -4,10 +4,11 @@
   import bash from "svelte-highlight/languages/bash";
   import json from "svelte-highlight/languages/json";
   import javascript from "svelte-highlight/languages/javascript";
+    import { androidstudio } from "svelte-highlight/styles";
 </script>
 
 
-<h2> Loading data in SvelteKit</h2>
+<h1> Loading Data in SvelteKit</h1>
 <p>
   As we have a <code>{`<script>`}</code> section in 
   a <code>{`.svelte`}</code> file, we can define variables and data there, like this:  
@@ -49,7 +50,7 @@
 |
 ...`}/>
 
-<h3> Hard-coding our data</h3>
+<h2> Hard-coding our data</h2>
 <p>
   Let's start with the proof-of-principle setup: we hard-code the data to be loaded.
 
@@ -77,7 +78,7 @@
   {JSON.stringify({values: [1,2,3,"a string"]})}
 </div>
 
-<h3> From an online JSON file</h3>
+<h2> From an online JSON file</h2>
 <p>
   Imagine we need to load the iris dataset, available from a public url. 
   The data file looks like this:
@@ -205,7 +206,7 @@ What happens here?
   ...
 ]`}/>
 
-<h3> From an online CSV file</h3>
+<h2> From an online CSV file</h2>
 <p>
   In contrast to JSON, <code>{`fetch`}</code> is not able to automatically parse a CSV file. 
   We'll have to do that ourselves. We have to install the PapaParse npm package. To do so:
@@ -219,7 +220,7 @@ What happens here?
 </ul>
 <p>Here's a working example using data about flights. The file <code>flights_part.csv</code> looks like this:</p>
 
-<Highlight language={javascript} code=
+<Highlight language={json} code=
 {`from_airport,from_city,from_country,from_long,from_lat,to_airport,to_city,to_country,to_long,to_lat,airline,airline_country,distance
 Balandino,Chelyabinsk,Russia,61.838,55.509,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,1458
 Balandino,Chelyabinsk,Russia,61.838,55.509,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,775
@@ -277,7 +278,7 @@ Pulkovo (St. Petersburg)
 Pulkovo (St. Petersburg)
 Franz Josef Strauss (Munich)`}/>
 
-<h3> From a local JSON or CSV file</h3>
+<h2> From a local JSON or CSV file</h2>
 <p>
   The above CSV and JSON files are on a remote server. But what if we have the data on our own machine? 
   Actually, this is very simple as we are running our own server. <br/>If you put the data file in the <code>{`static`}</code>
@@ -309,8 +310,8 @@ export const load = async ({ fetch }) => {
 </p>
 
 <!--
-<h3> From an SQL database</h3>
-<h3> Data stored in local SQLite3 database</h3>
+<h2> From an SQL database</h2>
+<h2> Data stored in local SQLite3 database</h2>
 <p>
   Let's say we have a small database with employee data. It only has one table, <code>{`employees`}</code>, with the following
   columns: <code>{`name`}</code> and 
@@ -389,7 +390,7 @@ export const load = () => {
 </div>
 
 
-<h3>= Data stored in mysql database</h3>
+<h2>= Data stored in mysql database</h2>
 Loading data from a mysql database is very similar, although we will run into a small bump here.
 
 Say we want to access data from <code>{`knownGene`}</code> table of the UCSC Genome database (http://genome-euro.ucsc.edu/).
@@ -512,7 +513,7 @@ export const load = () => {
 
 </div>
 
-<h3> Loading multiple datasets</h3>
+<h2> Loading multiple datasets</h2>
 Above we only loaded a single dataset, but obviously we will sometimes need multiple datasets in our application. To do this we just add an additional variable to the <code>{`load`}</code> function
  in our <code>{`+page.js`}</code>. For example:
 
@@ -622,21 +623,23 @@ In this code, we
 In the <code>{`+page.svelte`}</code> file we can then display or visualise only the information for that single flower.
 -->
 
-<h3>From other sources</h3>
+<h2>From other sources</h2>
 <p>
   For a tutorial on loading from an SQL database, see 
   <a href=https://vda-lab.gitlab.io/datavis-technologies/_basic_data_visualisation_with_svelte.html#_from_an_sql_database>this tutorial</a>. 
   For the full documentation on how to load data in SvelteKit, see <a href=https://kit.svelte.dev/docs/load target="_blank">https://kit.svelte.dev/docs/load</a>.
 </p>
 
-<h3>Blocking vs. Non-blocking data loading</h3>
+<div class=intermezzo>
+  <h2>Blocking vs. Non-blocking data loading</h2>
 <p>
   Loading data via <code>+page.js</code> will load the data on the server and then render the page. 
   If the data loads slowly this can delay the display of the page significantly. In a sense, this is <i>blocking</i> data loading.
   However, svelte does offer multiple options for <i>non-blocking</i> data loading. One of them is the <code>onMount()</code> function.
   The function will run on the client after the page is already rendered. 
   <code>onMount()</code> does not block the user experience for data loading, contrary to loading with <code>+page.js</code>.
-  This chapter/page is using the <code>+page.js</code> loading, while the advanced chapter is using <code>onMount()</code>. 
+  The <i>Basic Plots</i> and the <i>Components</i> pages are using the <code>+page.js</code> loading, while the <i>Interaction</i> and
+  <i>Maps & Graphs</i> pages are using <code>onMount()</code>. 
   Try it out, you will notice the difference.
 </p>
 
@@ -660,3 +663,4 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   to your page that a display without is not sensible. Other times, loading from the server is significantly faster than loading from the client. 
   So <code>+page.js</code> has valid use cases.
 </p>
+</div>
