@@ -3,26 +3,21 @@
 	import { base } from '$app/paths';
 
   const navItems = [
-    { href: '/', label: 'Intro' },
-    { href: '/htmlcssjs', label: 'HTML, CSS and Javascript' },
-    { href: '/svg', label: 'Drawing an SVG' },
-    { href: '/svelteintro', label: 'Visualization in Svelte' },
-    { href: '/components', label: 'Custom Components' },
-    { href: '/svelteadvanced', label: 'Advanced Vis in Svelte'  },
-    { href: 'sveltecss', label: 'Styling in Svelte'}
+    { href: base+'/', label: 'Intro' },
+    { href: base+'/htmlcssjs', label: 'HTML, CSS and Javascript' },
+    { href: base+'/svg', label: 'Drawing an SVG' },
+    { href: base+'/svelteintro', label: 'Visualization in Svelte' },
+    { href: base+'/components', label: 'Custom Components' },
+    { href: base+'/svelteadvanced', label: 'Advanced Vis in Svelte'  },
+    { href: base+'sveltecss', label: 'Styling in Svelte'}
   ];
 
   export let isOpen = false;
   function toggleSidebar() {
     isOpen = !isOpen;
   }
+  $: console.log($page.url.pathname)
 </script>
-
-<!--
-{#each navItems as item}
-  <li>
-    <a href={item.href} class:active={$page.url.pathname === item.href}>
--->
 
 <div class="sidebar-container">
   <button on:click={toggleSidebar} class="toggle-btn" aria-label="Toggle Sidebar">
@@ -37,7 +32,7 @@
     <ul class="navbar">
       {#each navItems as item}
         <li>
-          <a href="{base}{item.href}" class:active={$page.url.pathname === item.href}>
+          <a href="{item.href}" class:active={$page.url.pathname === item.href}>
             {#if isOpen}
                 <span>{item.label}</span>
             {/if}
