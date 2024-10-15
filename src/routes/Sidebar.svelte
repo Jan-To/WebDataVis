@@ -3,7 +3,7 @@
 	import { base } from '$app/paths';
 
   const navItems = [
-    { href: '/', label: 'Home' },
+    { href: '/', label: 'Intro' },
     { href: '/htmlcssjs', label: 'HTML, CSS and Javascript' },
     { href: '/svg', label: 'Drawing an SVG' },
     { href: '/svelteintro', label: 'Visualization in Svelte' },

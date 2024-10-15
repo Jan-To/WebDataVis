@@ -98,6 +98,15 @@ pre code {
   font-size: 15px;
 }
 
+/* images --- Please define an individual max-width on each image  */
+img {
+  width: 100%;
+  height: auto;
+  max-width: 984px;
+  display: block;
+  margin: 0 auto;
+}
+
 /* other */
 .intermezzo {
   background-color: #f0f0f0;

@@ -239,7 +239,7 @@
 
 <p>It's the second solution that we are using. Here's an overview:</p>
 
-<img src={passing_data} alt="" width=75%/>
+<img src={passing_data} alt="" style="max-width: 800px"/>
 
 <h2>Custom visuals</h2>
 <p>
@@ -248,7 +248,7 @@
   These flowers have quite distinct sepals and petals, as you can see in this picture:
 </p>
 
-<img src={iris} alt="" width=20% title="Source: www.plant-world-seeds.com"/>
+<img src={iris} alt="" style="max-width: 200px" title="Source: www.plant-world-seeds.com"/>
 
 <p>The data is available from <a href=https://jan-to.github.io/WebDataVis/iris.csv>https://jan-to.github.io/WebDataVis/iris.csv</a> and looks like this:</p>
 
@@ -269,7 +269,7 @@
   We'll go further here, and create a small multiple view like the one below:
 </p>
 
-<img src={flowers} alt="" width=75%/>
+<img src={flowers} alt=""/>
 
 <p>The sepals and petals are the big and small parts of the flower, respectively. We also add a circle behind it with a colour that corresponds to the species.</p>
 

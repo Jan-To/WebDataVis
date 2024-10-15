@@ -38,7 +38,7 @@
   The image below shows the difference between vector- and pixel-based circle after zooming:
 </p>
 
-<img src={canvas_vs_svg} alt="" width=40%/>
+<img src={canvas_vs_svg} alt="" style="max-width: 650px"/>
 
 <p>
   We will be using SVG (scalable vector graphics) for this tutorial. 
@@ -145,7 +145,7 @@
   to get the bezier curve itself.
 </p>
 
-<img src={bezier_quad} alt="" width=40% title=https://en.wikipedia.org/wiki/Bézier_curve#/>
+<img src={bezier_quad} alt="" style="max-width: 550px" title=https://en.wikipedia.org/wiki/Bézier_curve#/>
 
 <p>In an SVG <code>path</code>, the \(P_0\) is the last point in the path, followed by the control point \(P_1\), and second anchor point \(P_2\). In the example below, \(P_0\) is <code>20,100</code>, \(P_1\) is <code>100,20</code>, and \(P_2\) is <code>180,100</code>. We also draw the points themselves as a reference (control point is in red).</p>
 
@@ -153,7 +153,7 @@
 
 <p>A <b>cubic bezier curve</b> takes this one level higher, and therefore uses two control points.</p>
 
-<img src={bezier_cub} alt="" width=40% title=https://en.wikipedia.org/wiki/Bézier_curve#/>
+<img src={bezier_cub} alt="" style="max-width: 550px" title=https://en.wikipedia.org/wiki/Bézier_curve#/>
 
 <p>An example:</p>
 
@@ -189,7 +189,7 @@
   For an explanation of the <code>large-arc-flag</code> and <code>sweep-flag</code>, 
   please see the tutorial mentioned above. The image below shows their effect on an arc:
 </p>
-<img src={arc_flags} alt="" width=30%/>
+<img src={arc_flags} alt="" style="max-width: 450px"/>
 
 <h2>Groups and transformations</h2>
 <p>

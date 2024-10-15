@@ -2,15 +2,18 @@
     import { base } from '$app/paths';
     import vaworkflow from '$lib/assets/VisualAnalyticsWorkflow.svg';
     import tradeoff from '$lib/assets/frameworkstradeoff.png';
-    import schemes from '$lib/assets/frameworksschemes.png';
+    import schemes from '$lib/assets/frameworkschemes.png';
 </script>
 
 <h1>Implementing data visualizations using Svelte</h1>
+<p>
+  This is a tutorial for the course <i>Visual Analytics Project</i> at RPTU Kaiserslautern-Landau.
+</p>
 
 <div class=intermezzo>
   <h2>Disclaimer</h2>
   <p>
-    This course is adapted from the course material of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
+    The course is adapted from the material of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
     The original material can be found at <a href="http://vda-lab.gitlab.io/datavis-technologies">http://vda-lab.gitlab.io/datavis-technologies</a>.
   </p>
 </div>
@@ -28,11 +31,11 @@
   or even a data-model. So you visualize your data in the language that offers you the most libraries, modules, functions and amenities.
 </p>
 
-<figure>
-  <img src={vaworkflow} width=50% alt=""/>
-  <figcaption>Source: D. A. Keim, J. Kohlhammer, G. P. Ellis, F. Mansmann: 
-    <i>Mastering The Information Age - Solving Problems with Visual Analytics</i>. Eurographics, 2010.</figcaption>
-</figure>
+<img src={vaworkflow} alt="" style="max-width: 650px"/>
+<p>
+  Source: D. A. Keim, J. Kohlhammer, G. P. Ellis, F. Mansmann: 
+  <i>Mastering The Information Age - Solving Problems with Visual Analytics</i>. Eurographics, 2010.
+</p>
 
 <h2>Visualization depending on the field</h2>
 <p>
@@ -68,7 +71,7 @@
   Choosing between speed and customization depends on the project’s complexity and the need for tailored visual representation.
 </p>
 
-<img src={tradeoff} alt="" width=70%/>
+<img src={tradeoff} alt="" style="max-width: 750px"/>
 
 <p>
   We chose sensible representatives for the four categories along this spectrum. 
@@ -101,10 +104,10 @@
   </li>
 </ul>
 
-<img src={schemes} alt="" width=100%/>
+<img src={schemes} alt=""/>
 
 <p>
-  The architectures of each step is sketched above.
+  The architecture of each option is sketched above.
 </p>
 
 <p>

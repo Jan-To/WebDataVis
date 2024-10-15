@@ -1077,9 +1077,9 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   we have to rescale that longitude from its original range (called its <b>domain</b>) to 
   a new <b>range</b>.
 </p>
-<img src={domainrange} alt="" width=50%/>
+<img src={domainrange} alt="" style="max-width: 500px"/>
 <p>The formula to do this is:</p>
-<img src={scalingformula} alt="" width=50%/>
+<img src={scalingformula} alt="" style="max-width: 600px"/>
 <p>
   Let's put that in a function that we can use. Add the <code>{`rescale`}</code> function to 
   the <code>{`script`}</code> section of your Svelte file, and call it 
