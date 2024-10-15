@@ -214,7 +214,7 @@
   let selected_datapoint = undefined
 
   onMount(() => {
-      Papa.parse("https://vda-lab.github.io/assets/iris.csv", {
+      Papa.parse("https://jan-to.github.io/WebDataVis/iris.csv", {
           header: true,
           download: true,
           complete: function(results) {
@@ -252,7 +252,7 @@
   that info back into the main code, from where it then can be passed to the other scatterplot.
 </p>
 
-<h3>Stores</h3>
+<h2>Stores</h2>
 
 <p>
   Note that there are multiple ways of achieving this linking. Passing around data through the application hierarchy like above is feasible in this small example.

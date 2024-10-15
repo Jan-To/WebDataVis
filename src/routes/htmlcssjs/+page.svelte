@@ -43,8 +43,8 @@
 
         <h2>Images and external links</h2>
         <p>These pages can contain images and links, for example:</p>
-        <img src="http://vda-lab.github.io/assets/stad_airquality.png" width=200 />
-        <a href="http://vda-lab.github.io">Link to VDA-lab website</a>
+        <img src="https://vis.cs.rptu.de/assets/img/VIA-Logo.svg" width=200 />
+        <a href="https://vis.cs.rptu.de/">Link to Vis-Team website</a>
     </body>
 </html>'/>
 
@@ -86,7 +86,9 @@
 <svg>: an svg
 ...'/>
 <p>
-    You can find a complete list of HTML elements at <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element'>https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>.
+    You can find a complete list of HTML elements at 
+    <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element'>https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>.
+    Note that there are not only static elements like <code>h1</code>, but also interactive ones like <code>{`<button>`}</code> or <code>{`<select>`}</code>.
 </p>
 
 <h3>Attributes</h3>
@@ -159,7 +161,7 @@
     (cascading style sheets) and javascript.
 
     HTML:: provides the basic structure of the page, which can be enhanced using CSS and javascript
-    CSS:: is used to control presentation, formatting and layout: what it _looks_ like.
+    CSS:: is used to control presentation, formatting and layout: what it <i>looks</i> like.
     javascript:: is used to control the _behaviour_ of different elements and the page as a whole.
 
     There are different ways to add CSS to your webpage.
@@ -185,8 +187,8 @@
             <li style="color: blue;">Toothpaste</li>
         </ul>
         <p>
-            Link to the VDA-lab website is 
-            <a style="font-weight: bold;" href="http://vda-lab.github.io">here</a>.
+            Link to the Vis-Team website is 
+            <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
         <button type="submit">Submit</button>
         <div id="my_new_div">... and a generic HTML block with an id</div>
@@ -202,8 +204,8 @@
             <li style="color: blue;">Toothpaste</li>
         </ul>
         <p>
-            Link to the VDA-lab website is 
-            <a style="font-weight: bold;" href="http://vda-lab.github.io">here</a>.
+            Link to the Vis-Team website is 
+            <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
         <button type="submit">Submit</button>
         <div id="my_new_div">... and a generic HTML block with an id</div>
@@ -353,7 +355,7 @@ p::first-letter &#123;
             <li class="unimportant">Milk</li>
             <li>Toothpaste</li>
         </ul>
-        <p>Link to the VDA-lab website is <a href="http://vda-lab.github.io">here</a>.</p>
+        <p>Link to the Vis-Team website is <a href="https://vis.cs.rptu.de/">here</a>.</p>
         <p id="paragraph_5">This is a handwritten paragraph.</p>
         <h2>Explanation</h2>
         <p>In CSS (= Cascading Style Sheets) you define the style. There are 3 main ways 

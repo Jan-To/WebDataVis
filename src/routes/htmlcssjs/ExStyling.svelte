@@ -5,7 +5,7 @@
     <li class="unimportant">Milk</li>
     <li>Toothpaste</li>
 </ul>
-<p>Link to the VDA-lab website is <a href="http://vda-lab.github.io">here</a>.</p>
+<p>Link to the Vis-Team website is <a href="https://vis.cs.rptu.de/">here</a>.</p>
 <p id="paragraph_5">This is a handwritten paragraph.</p>
 <h2>Explanation</h2>
 <p>In CSS (= Cascading Style Sheets) you define the style. There are 3 main ways 

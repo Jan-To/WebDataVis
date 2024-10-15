@@ -30,10 +30,12 @@ p, li, code {
 
 p {
   margin-bottom: 1.5em;
+  text-align: justify;
 }
 
 li {
   margin-bottom: 0.5em;
+  text-align: justify;
 }
 
 /* Responsive design */

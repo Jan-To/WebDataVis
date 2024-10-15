@@ -626,7 +626,7 @@ Domododevo,Moscow,Russia,38.51,55.681,Balandino,Chelyabinsk,Russia,61.838,55.509
 {`import Papa from 'papaparse'
 
 export const load = async ({ fetch }) => {
-    const responseFlights = await fetch('https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.csv', 
+    const responseFlights = await fetch('https://jan-to.github.io/WebDataVis/flights_part.csv', 
       { headers: { 'Content-Type': 'text/csv' } })
     let csvFlights = await responseFlights.text()
     let parsedCsvFlights = Papa.parse(csvFlights, {header: true})
@@ -1060,9 +1060,10 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 
 <h2> Our first real scatterplot</h2>
 <p>
-  Now - finally - we can start working on the real thing and create a data visualisation. Let's plot the longitude and latitude (present as <code>{`long`}</code> and
+  Now - finally - we can start working on the real thing and create a data visualisation. 
+  Let's plot the longitude and latitude (present as <code>{`long`}</code> and
   <code>{`lat`}</code> in the datafile) of all departure airports in 
-  http://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.json. 
+  <a href='https://jan-to.github.io/WebDataVis/flights_part.csv'>flights_part.json</a>. 
   If we do this, we should get something that looks like a map of the world.
   Load the data using <code>{`+page.js`}</code> as described above. 
   Below we show the contents of the <code>{`+page.svelte`}</code> file.
@@ -1110,7 +1111,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   It allows you to create very complex and interactive visuals like showcased in the <a href=https://observablehq.com/@d3/gallery>D3 gallery</a>.
 </p>
 
-<img src={d3gallery} alt="" width=75%/>
+<img src={d3gallery} alt="" style="max-width: 850px"/>
 
 <p>
   The functionality of D3 has been split in different modules (see <a href="https://github.com/orgs/d3/repositories?type=all">here</a>), 
@@ -1139,7 +1140,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
   Here is an overview of the different modules:
 </p>
 
-<img src={d3modules} alt="" width=60%/>
+<img src={d3modules} alt="" style="max-width: 800px"/>
 <p>
   For an interactive version, see <a href=https://wattenberger.com/blog/d3>https://wattenberger.com/blog/d3</a>, which is the source of this image.
 </p>
