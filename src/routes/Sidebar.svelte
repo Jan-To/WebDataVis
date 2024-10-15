@@ -3,13 +3,18 @@
 	import { base } from '$app/paths';
 
   const navItems = [
-    { href: base+'/', label: 'Intro' },
-    { href: base+'/htmlcssjs', label: 'HTML, CSS and Javascript' },
-    { href: base+'/svg', label: 'Drawing an SVG' },
-    { href: base+'/svelteintro', label: 'Visualization in Svelte' },
-    { href: base+'/components', label: 'Custom Components' },
-    { href: base+'/svelteadvanced', label: 'Advanced Vis in Svelte'  },
-    { href: base+'sveltecss', label: 'Styling in Svelte'}
+    { href: base+'/', label: 'Coding Vis' },
+    { href: base+'/html', label: 'HTML' },
+    { href: base+'/css', label: 'CSS' },
+    { href: base+'/javascript', label: 'Javascript' },
+    { href: base+'/svg', label: 'SVG' },
+    { href: base+'/svelte', label: 'Svelte & SvelteKit' },
+    { href: base+'/loading', label: 'Loading Data' },
+    { href: base+'/plots', label: 'Basic Plots' },
+    { href: base+'/components', label: 'Components' },
+    { href: base+'/interaction', label: 'Interaction' },
+    { href: base+'/mapsgraphs', label: 'Maps & Graphs' },
+    { href: base+'/styling', label: 'Styling Svelte'}
   ];
 
   export let isOpen = false;

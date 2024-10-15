@@ -1,9 +1,6 @@
 <script>
   import Highlight from "svelte-highlight";
   import xml from "svelte-highlight/languages/xml";
-  import Map from './Map.svelte';
-  import Axes from './Axes.svelte';
-  import Force from './Force.svelte';
   import FlowersSlider from './FlowersSlider.svelte';
   import scatterflowers from '$lib/assets/scatterplot-flowers.png';
   import Flightsslider from "./Flightsslider.svelte";
@@ -11,10 +8,10 @@
   import BrushLink from './BrushLink.svelte';
 </script>
 
-<h1> Advanced visualisation using SvelteKit</h1>
+<h1> Interactions in Svelte</h1>
 
-<h2> Slider</h2>
-<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the number of flowers displayed in a row instead of the hard-coded 20.</p>
+<h2> Sliders</h2>
+<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the size of each flower in teh encoding.</p>
 
 <FlowersSlider/>
 
@@ -107,34 +104,6 @@
 </p>
 
 <div id="svelte-tooltip"></div>
-
-<h2> Axes</h2>
-<p>
-  There are different ways to draw axes on plots. Looking again at the iris dataset, we can follow the do-it-yourself approach, 
-  or use the <code>{`d3-axis`}</code> library. The do-it-yourself approach lets you design more yourself, 
-  while the <a href=https://d3js.org/d3-axis>d3 axes</a> already solve many problems, but may lack your desired design. 
-  Here we choose to do a simple axis by drawing a long line with small lines and text for each tick. 
-</p>
-
-<Axes/>
-
-<p>
-  Notice how we left some space for the axes within the <code>svg</code> via reducing the <code>scaleLinear.range</code> by some <code>margins</code>.
-  As this axes definition is very simple, a few extensions come to mind:
-</p>
-
-<ul>
-  <li>Add axes labels.</li>
-  <li>Add grid lines within the tick loop.</li>
-  <li>Swap the hard-coded tick positions through automatically determined ones, e.g. <a href=https://d3js.org/d3-array/ticks>d3 ticks()</a>.</li>
-  <li>Moving an axes within the plot, when there is a positive & negative side.</li>
-  <li>Play around with muted colors</li>
-</ul>
-
-<p>
-  As you have seen some things within Svelte already, you are probably able to implement these yourself. Before getting lost in design details, 
-  it is helpful to remember that minimal axes often help focussing on the data, as long as they convey the necessary frame of reference.
-</p>
 
 <h2>Linking</h2>
 <p>Being able to link different visuals together can have a <i>big</i> impact on how much insight you can gain from them. Below, we will look into how to make this happen. We'll create two scatterplots on the iris data, and link these together. The final result will be as below. Notice that when you hover over a point, there will also be a point in the other scatterplot that becomes red.</p>
@@ -259,8 +228,8 @@
   However, if there are more components that need to access (and possibly write) certain variables, Svelte provides so called <code>stores</code>.
   Stores are variables that are declared in an extra file <code>stores.js</code> and are, after an <code>import x from "./store"</code>, accessible in all components.
   Since <codes>stores</codes> are objects with a <code>subscribe</code> method, dependent components are responsive to changes of the store's value, 
-  which is accessible with <code>$storevariable</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores>exercises</a> or 
-  <a href=https://svelte.dev/examples/writable-stores>examples</a> of stores.
+  which is accessible with <code>$storevariable</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores target="_blank">exercises</a> or 
+  <a href=https://svelte.dev/examples/writable-stores target="_blank">examples</a> of stores.
 </p>
 
 <!--
@@ -392,43 +361,3 @@
 </style>
 `}/>
 -->
-
-<h1> Specific visuals</h1>
-<p>Below, we will just post example code that can be used as a starting point for more complex visuals. We won't go in depth into explaining this code, though.</p>
-
-<h2>Map</h2>
-<p>We have shown airports by just plotting their longitude and latitude as a scatterplot, but it'd be nice to plot them on top of an actual map. 
-  There are different libraries for doing this, including D3 as explained in <a href=https://www.pluralsight.com/guides/maps-made-easy-with-d3> this tutorial</a>
-  and the <a href=https://leafletjs.com>leaflet-package</a> developed by Vladimir Agafonkin.
-</p>
-
-<p>
-  You'll first have to install the leaflet library with <code>{`npm i -d leaflet`}</code>. 
-  You will also have to add the following line to your <code>{`+page.js`}</code>: 
-  <code>{`export const ssr = false;`}</code>
-</p>
-
-<p>A minimal, basic map:</p>
-
-<Map/>
-
-<h2>Force-directed graph</h2>
-<p>
-  D3 has a very solid library for drawing node-link diagrams, available at <a href=https://github.com/d3/d3-force>d3-force</a>. 
-  Install the library with <code>{`npm i -d d3-force`}</code>.
-  Data for a network consists of nodes and links, and should be formatted like this:</p>
-
-<ul>
-  <li>Nodes must have an ID, e.g. <code>{`{"id": 1,"name": "A"}`}</code>.</li>
-  <li>Links must have a <code>{`source`}</code> and a <code>{`target`}</code> that reference these IDs, e.g. <code>{`{"source": 1,"target": 2}`}</code>.</li>
-</ul>
-
-<p>A simple node-link diagram which allows for dragging nodes around:</p>
-
-<Force/>
-
-<div id="svelte-nodelink"></div>
-
-<h3>Practice</h3>
-
-<p>Create a network graph where the nodes are not just circles, but a glyph like we did for the iris flowers.</p>

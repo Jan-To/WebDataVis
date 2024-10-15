@@ -103,7 +103,7 @@
 <h3>Paths</h3>
 <p>
   Any of the marks shown above can also be created using a <code>path</code>. 
-  The Mozilla MDN Docs have pretty good <a href=https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>tutorial</a> on them.
+  The Mozilla MDN Docs have pretty good <a href=https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths target="_blank">tutorial</a> on them.
   A path has one argument, <code>d</code> which is a string that describes the path. At its most basic, 
   we can move (<code>M</code> or <code>m</code>) the mouse (without drawing), and draw a lines (<code>L</code> or <code>l</code>). 
   We can recreate the polyline from above like so:

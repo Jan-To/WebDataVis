@@ -52,7 +52,7 @@
     <b>Time Consuming:</b>
     Writing your own code will be more time consuming than just using the code that is already available, 
     as long as you are happy with what is available. Especially reponsive design 
-    (e.g. <a href=https://www.w3schools.com/css/css_rwd_mediaqueries.asp>media queries</a>) can be quite challenging.
+    (e.g. <a href=https://www.w3schools.com/css/css_rwd_mediaqueries.asp target="_blank">media queries</a>) can be quite challenging.
   </li>
   <li>
     <b>Potential for Inconsistency:</b>
@@ -82,31 +82,31 @@
 
 <ul>
   <li>
-    <a href="https://picocss.com/">Pico</a> – A minimal, lightweight CSS framework with accessible default styles, 
+    <a href="https://picocss.com/" target="_blank">Pico</a> – A minimal, lightweight CSS framework with accessible default styles, 
     ideal for small projects when you need basic styling with minimal overhead.
   </li>
   <li>
-    <a href="https://bulma.io/">Bulma</a> – A simple, yet comprehensive framework for responsive design, 
+    <a href="https://bulma.io/" target="_blank">Bulma</a> – A simple, yet comprehensive framework for responsive design, 
     perfect for building clean layouts, if you don't want to focus on customization yourself.
   </li>
   <li>
-    <a href="https://svelte-headlessui.goss.io/">HeadlessUI</a> – Provides unstyled, accessible components for building 
+    <a href="https://svelte-headlessui.goss.io/" target="_blank">HeadlessUI</a> – Provides unstyled, accessible components for building 
     fully custom designs, ideal for developers who want control over their UI while ensuring accessibility.
   </li>
   <li>
-    <a href="https://skeleton.dev/">SkeletonUI</a> – A Svelte-specific utility library, great for modern, 
+    <a href="https://skeleton.dev/" target="_blank">SkeletonUI</a> – A Svelte-specific utility library, great for modern, 
     responsive designs with flexibility and customization in mind.
   </li>
   <li>
-    <a href="https://www.shadcn-svelte.com/">Shadcn-svelte</a> – Tailwind UI primitives and styled components 
+    <a href="https://www.shadcn-svelte.com/" target="_blank">Shadcn-svelte</a> – Tailwind UI primitives and styled components 
     for highly customizable and accessible interfaces, perfect for complex, tailored applications.
   </li>
   <li>
-    <a href="https://flowbite-svelte.com/">Flowbite-Svelte</a> – Offers pre-designed, tailwind-based components, 
+    <a href="https://flowbite-svelte.com/" target="_blank">Flowbite-Svelte</a> – Offers pre-designed, tailwind-based components, 
     useful when you need a rich component set.
   </li>
   <li>
-    <a href="https://getbootstrap.com/">Bootstrap</a> – A comprehensive, responsive framework with numerous pre-built components, 
+    <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a> – A comprehensive, responsive framework with numerous pre-built components, 
     great for enterprise-level applications.
   </li>
 </ul>

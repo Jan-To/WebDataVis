@@ -86,7 +86,7 @@
 
 <p>
   The scoping works both ways. Play around with the minimal example in the 
-  <a href=https://svelte.dev/examples/nested-components>Svelte REPL</a>.
+  <a href=https://svelte.dev/examples/nested-components target="_blank">Svelte REPL</a>.
 </p>
 <p>
   You will notice that the parent <code>{`script`}</code> and <code>{`style`}</code> 
@@ -158,17 +158,21 @@
   <code>{`datapoints`}</code> attribute. 
   This attribute exists because we defined the <code>{`export let datapoints`}</code> in the component.</p>
 
-<p>CAUTION: Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
+<p>
+  CAUTION: Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
   <code>{`scatterplot`}</code> will not work. This in contrast to the regular HTML elements
    (<code>{`h1`}</code>,
-   <code>{`div`}</code>,...).</p>
+   <code>{`div`}</code>,...).
+</p>
 
-<p>In our new <code>{`Scatterplot`}</code> component, the fact that we use the departure airports 
+<p>
+  In our new <code>{`Scatterplot`}</code> component, the fact that we use the departure airports 
   (<code>{`from_long`}</code> and 
   <code>{`from_lat`}</code>) is hard-coded. We can change our code so that we can pass this as an argument. 
   In the code below, we <code>{`export`}</code> two new variables
    (<code>{`long`}</code> and
-    <code>{`lat`}</code>) that we default to the departure airport.</p>
+    <code>{`lat`}</code>) that we default to the departure airport.
+</p>
 
 <code>{`src/routes/Scatterplot.svelte`}</code>:
 <Highlight language={xml} code=
@@ -221,7 +225,7 @@
   It looks like this:
 </p>
 
-<h1>Airports</h1>
+<h2>Airports</h2>
 <Scatterplot datapoints={data.flights} long="from_long" lat="from_lat"/>
 <Scatterplot datapoints={data.flights} long="to_long" lat="to_lat"/>
 
@@ -241,7 +245,7 @@
 
 <img src={passing_data} alt="" style="max-width: 800px"/>
 
-<h2>Custom visuals</h2>
+<h1>Custom visuals</h1>
 <p>
   We can take this further and create real custom visuals. Here, we'll use the well-known iris dataset, 
   listing the size of sepals and petals as well as the species for 150 flowers. 
@@ -250,7 +254,11 @@
 
 <img src={iris} alt="" style="max-width: 200px" title="Source: www.plant-world-seeds.com"/>
 
-<p>The data is available from <a href=https://jan-to.github.io/WebDataVis/iris.csv>https://jan-to.github.io/WebDataVis/iris.csv</a> and looks like this:</p>
+<p>
+  The data is available from 
+  <a href=https://jan-to.github.io/WebDataVis/iris.csv target="_blank">https://jan-to.github.io/WebDataVis/iris.csv</a> 
+  and looks like this:
+</p>
 
 <Highlight language={xml} code=
 {`sepal_length,sepal_width,petal_length,petal_width,species
@@ -373,7 +381,7 @@
 `}/>
 
 <p>We create a function that returns an x and y offset for a given index to form a uniform grid. 
-  There are better ways of doing this (later in the <a href="{base}/sveltecss">chapter about Svelte CSS</a>), 
+  There are better ways of doing this (later in the <a href="{base}/styling">chapter about Svelte CSS</a>), 
   but we just code our own here, creating rows of 20 flowers. We use <code>{`console.log`}</code> 
   to make sure that the datapoints we load are actually what we expect. This is a typical way in Svelte 
   to check what's going on: because we start the command with a <code>{`$:`}</code>, this will run every time the value 
@@ -382,8 +390,9 @@
   <code>{`get_xy`}</code> to calculate the position on the screen. Finally, we transform the flower that is 
   drawn in to put it in the correct position.</p>
 
+
 <h2>Exercises</h2>
 <ul>
-  <li><a href="https://svelte.dev/repl/fce70af77dd44da7a568576e1d02eb40?version=3.59.1">Components</a></li>
-  <li><a href="https://svelte.dev/repl/2ccb36183e504526b3c3c8df5a3310f6?version=3.59.1">Communication between components</a></li>
+  <li><a href="https://svelte.dev/repl/fce70af77dd44da7a568576e1d02eb40?version=3.59.1" target="_blank">Components</a></li>
+  <li><a href="https://svelte.dev/repl/2ccb36183e504526b3c3c8df5a3310f6?version=3.59.1" target="_blank">Communication between components</a></li>
 </ul>
