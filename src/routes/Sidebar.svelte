@@ -10,6 +10,7 @@
     { href: base+'/svg', label: 'SVG' },
     { href: base+'/svelte', label: 'Svelte' },
     { href: base+'/setup', label: 'Setup' },
+    { href: base+'/publish', label: 'Publish'},
     { href: base+'/loading', label: 'Loading Data' },
     { href: base+'/plots', label: 'Basic Plots' },
     { href: base+'/components', label: 'Components' },

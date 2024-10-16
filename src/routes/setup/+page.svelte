@@ -7,7 +7,6 @@
 </script>
 
 <h1>Setup A SvelteKit Application</h1>
-
 <p>
   Although it is extremely useful for quickly checking things, we can't use the <a href=https://svelte.dev/repl/hello-world target="_blank">REPL</a> for <i>real</i> work. 
   Still, you might go back to it regularly to test something out. Instead, we can develop SvelteKit applications (i.c. visualisations) locally, on our own machine. 
@@ -26,7 +25,6 @@
   Choose your preferred install option <a href=https://nodejs.org/en/download/prebuilt-installer target=_blank>here</a>.
 </p>
 
-
 <h2 style="display: inline-block">Code Editor</h2>
 <img src={vscode} alt="" style="max-width: 100px; display: inline-block; vertical-align: middle; margin-left: 16px;"/>
 <p>
@@ -44,7 +42,6 @@
   See the <a href=https://kit.svelte.dev target="_blank">SvelteKit website</a> on how to get set up. 
   These are the commands you need:
 </p>
-
 
 <Highlight language={bash} code=
 {`npm create svelte@latest my-app
