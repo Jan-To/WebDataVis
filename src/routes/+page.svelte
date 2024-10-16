@@ -1,5 +1,4 @@
 <script>
-    import { base } from '$app/paths';
     import vaworkflow from '$lib/assets/VisualAnalyticsWorkflow.svg';
     import tradeoff from '$lib/assets/frameworkstradeoff.png';
     import schemes from '$lib/assets/frameworkschemes.png';
@@ -14,7 +13,7 @@
   <h2>Disclaimer</h2>
   <p>
     The course is adapted from the material of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
-    The original material can be found at <a href="http://vda-lab.gitlab.io/datavis-technologies">http://vda-lab.gitlab.io/datavis-technologies</a>.
+    The original material can be found at <a href="http://vda-lab.gitlab.io/datavis-technologies" target="_blank">http://vda-lab.gitlab.io/datavis-technologies</a>.
   </p>
 </div>
 <h2>History of Programming Visualizations</h2>

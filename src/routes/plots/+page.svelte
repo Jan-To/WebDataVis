@@ -110,8 +110,8 @@
 
 <p>
   Let's replace our own rescaling function with a linear scale provided by D3. We will load the <code>{`scaleLinear`}</code> function 
-  from <code>{`d3-scale`}</code>. Before we can start, we have to <b>install the <code>{`d3-scale`}</code> module</b> first. 
-  Do this by running <code>{`npm i -d d3-scale`}</code> on the command line.
+  from <code>{`d3-scale`}</code>. Before we can start, we have to <b>install the <code>{`d3-scale`}</code> module</b> first 
+  by running <code>{`npm i -d d3-scale`}</code> on the command line.
 </p>
 
 <Highlight language={xml} code=
