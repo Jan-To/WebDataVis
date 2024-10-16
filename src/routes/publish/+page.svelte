@@ -41,16 +41,9 @@
 </p>
 <ol>
   <li>
-    There is a dropdown under <i>Settings &#8594; Pages &#8594;</i> enables the page.
-    For SvelteKit, we can not just <i>Deploy from a branch</i>, but instead, we will use <i>Github Actions</i>. 
-    Set the dropdown to <i>GitHub Actions</i>, but do no further settings for now.
-  </li>
-  <li>
     We want to deploy a <i>static site</i>, so we configure the corresponding 
     <a href=https://kit.svelte.dev/docs/adapter-static#github-pages target=_blank>Svelte adapter</a> to <i>static</i>. 
-    Therefore, we change the file <code>svelte.config.js</code> like below. We set our base path for all of our links according to our build path.
-    Our local development directory from <code>npm run dev</code> runs on <code>localhost:5173<b>/</b></code>, 
-    but GitHub Pages will run on <code>your-username.github.io<b>/your-repository-name/</b></code>. 
+    Therefore, we change the file <code>svelte.config.js</code> like below. 
 
 <Highlight language={javascript} code=
 {`import adapter from '@sveltejs/adapter-static';
@@ -68,16 +61,25 @@ const config = {
 };
 
 export default config;`}/>
+    We set our base path for all of our links according to our build path.
+    Our local development directory from <code>npm run dev</code> runs on <code>localhost:5173<b>/</b></code>, 
+    but GitHub Pages will run on <code>your-username.github.io<b>/your-repository-name/</b></code>. 
   </li>
   <li>
-    We need to define the <i>action</i>. Create the folder structure <code>.github/workflows/</code> in your project directory 
-    and put <a href=https://jan-to.github.io/WebDataVis/deploy.yml target=_blank>this file</a> in there. Both files can also be found
+    We need to define a <i>Github Action</i> to build our app online. 
+    Create the folder structure <code>.github/workflows/</code> in your project directory 
+    and put <a href=https://jan-to.github.io/WebDataVis/deploy.yml target=_blank>this file</a> in there. Both files can be found
     on the <a href=https://kit.svelte.dev/docs/adapter-static#github-pages target=_blank>Svelte Website</a>, 
     but our versions should be better explained.
   </li>
   <li>
-    Push your changes to GitHub. You can check your build-action status online in the <i>Actions</i>-Tab. Find the link to your site under 
-    <i>Code &#8594; About</i> or under <i>Settings &#8594; Pages</i>.
+    A dropdown under <i>Settings &#8594; Pages &#8594;</i> enables the page.
+    For SvelteKit, we can not just <i>Deploy from a branch</i>, but instead, we will use <i>Github Actions</i>. 
+    Set the dropdown to <i>GitHub Actions</i>.
+  </li>
+  <li>
+    Push your changes to GitHub. You can check your build-action status and potential errors online in the <i>Actions</i>-Tab. 
+    Find the link to your site under <i>Code &#8594; About</i> or under <i>Settings &#8594; Pages</i>.
   </li>
 </ol>
 
