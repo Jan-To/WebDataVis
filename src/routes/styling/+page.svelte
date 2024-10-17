@@ -61,8 +61,8 @@
   </li>
 </ul>
 
-<p>
-  HINT: There is a solution for the second point though:
+<p class=hint>
+  There is a solution for the second point though:
   Use CSS variables to maintain a consistent color scheme, font sizes, and spacing across components. Define them in your <code>styles.css</code> 
   with <code>--primary-color: red;</code> and use them with <code>color: var(--primary-color)</code>.</p>
 <p>

@@ -3,7 +3,7 @@
     import xml from "svelte-highlight/languages/xml";
 </script>
 
-<h1>HTML, CSS and Javascript</h1>
+<h1>The HTML Format</h1>
 
 <h2>General HTML file structure</h2>
 <p>
@@ -46,8 +46,7 @@
 <h3>Create your first page</h3>
 <p>
     If you want to experiment, create a file called with an <code>html</code> extension 
-    with the contents shown above 
-    (e.g. using vscode), and open it in any webbrowser. 
+    with the contents shown above, and open it in any webbrowser. 
 </p>
 
 <h2>The Document Object Model (DOM)</h2>

@@ -41,12 +41,12 @@
 +- src/
 |  +- routes/
 |      +- +page.svelte
-|      +- +page.js            <1>
+|      +- +page.js
 |      +- about/
 |      |   +- +page.svelte
 |      +- contact/
 |          +- +page.svelte
-|          +- +page.js        <1>
+|          +- +page.js
 |
 ...`}/>
 
@@ -94,8 +94,9 @@
   {"sepalLength": 5.4, "sepalWidth": 3.9, "petalLength": 1.7, "petalWidth": 0.4, "species": "setosa"},
   ...
 ]`}/>
-
-To load that data, we'd write the following <code>{`+page.js`}</code>:
+<p>
+  To load that data, we'd write the following <code>{`+page.js`}</code>:
+</p>
 
 <Highlight language={javascript} code=
 {`export const load = async ({ fetch }) => {
@@ -105,7 +106,7 @@ To load that data, we'd write the following <code>{`+page.js`}</code>:
   return { flowers: dataFlowers }
 }`}/>
 
-What happens here?
+<p>What happens here?</p>
 
 <ol>
   <li>We create an asynchronous function <code>{`load`}</code>...</li>

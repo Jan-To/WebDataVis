@@ -50,30 +50,45 @@
 
 <SimpleSvg/>
 
-<p>
-  IMPORTANT: The <b>origin</b> <code>(0,0)</code> of an SVG image is at the <b>top left</b>, not the bottom left. 
+<p class=hint>
+  The <b>origin</b> <code>(0,0)</code> of an SVG image is at the <b>top left</b>, not the bottom left. 
   This means that higher values for <code>y</code> will give you marks that are lower in the graphic, 
   as you can see with the circle and the rectangle below. When plotting actual data, 
   make sure that you flip that orientation.
+</p>
+<p>
   As these are regular HTML elements, we can style them using CSS as well:
 </p>
 
 <StyledSvg1/>
 
-<p>We give the SVG itself a border. Any circle should be blue and 50% transparent, except when we hover over it when it should become red and fully opaque. Rectangles should be green with a red outline. This is the resulting graphic (see what happens when you hover over the circle):</p>
+<p>
+  We give the SVG itself a border. Any circle should be blue and 50% transparent, except when we hover over it when it should become red and fully opaque. 
+  Rectangles should be green with a red outline. This is the resulting graphic (see what happens when you hover over the circle):
+</p>
 
-<p>There are a large number of elements that can be used within an SVG element. These include <code>circle</code>, <code>rect</code>, <code>line</code>, <code>path</code>, etc. Each has their own list of possible attributes. For a full overview, see https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg[https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg]. Definitely check out that resource.</p>
+<p>
+  There are a large number of elements that can be used within an SVG element. 
+  These include <code>circle</code>, <code>rect</code>, <code>line</code>, <code>path</code>, etc. 
+  Each has their own list of possible attributes. For a full overview, 
+  see <a href=https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg target=_blank>the Mozilla MDN Docs</a>. 
+</p>
 
 <h3>A simple scatterplot</h3>
 
-<p>Let's say we have 5 datapoints that we want ot put into a scatterplot: <code>[[20,100],[60,140],[80,20],[160,40],[180,160]]</code>. We can make a plot like this:</p>
+<p>Let's say we have 5 datapoints that we want ot put into a scatterplot: <code>[[20,100],[60,140],[80,20],[160,40],[180,160]]</code>. 
+  We can make a plot like this:
+</p>
 
 <StyledSvg2/>
 
 <h3>Rectangle, ellipse, line</h3>
 <p>
   Other straightforward marks available to you in SVG are rectangles, ellipses, and lines.
-  TIP: Make sure to bookmark the Mozilla MDN Docs at https://developer.mozilla.org/en-US/docs/Web/SVG. 
+</p>
+
+<p class=hint>
+  Make sure to bookmark <a href=https://developer.mozilla.org/en-US/docs/Web/SVG target=_blank>the Mozilla MDN Docs</a>. 
   You can find information there on what parameters are available for which shapes, how to draw text, 
   transformations and coordinate systems, etc.
 </p>
@@ -111,7 +126,10 @@
 
 <Paths/>
 
-<p>We can close the path (and change the polyline to a polygon) by adding a <code>Z</code> at the end of the string: <code><path d="M 0,200 L 100,50 L 100,150 L 200,0 Z" /></code>.</p>
+<p>
+  We can close the path (and change the polyline to a polygon) by adding a <code>Z</code> at the end of the string: 
+  <code><path d="M 0,200 L 100,50 L 100,150 L 200,0 Z" /></code>.
+</p>
 
 <PathsZ/>
 
@@ -161,8 +179,8 @@
 
 <h3>Arcs</h3>
 <p>
-  Arcs are tricky in SVG, so definitely check out the <code>path</code> tutorial at 
-  https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths if you need them.
+  Arcs are tricky in SVG, so definitely check out the <code>path</code> 
+  <a href=https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths target="_blank">tutorials</a> if you need them.
   As with the bezier curves, a curve starts from a certain point that is already defined 
   in the <code>path</code>. So you will need for example a <code>M</code> or <code>L</code>
    directive before the arc itself. The arc is drawing using the <code>A</code> directive, 

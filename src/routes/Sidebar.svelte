@@ -64,18 +64,9 @@
     position: fixed;
     top: 1rem;
     left: 1rem;
-    background-color: #494949;
-    color: white;
-    border: none;
     padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 0.375rem;
     z-index: 1001;
   }
-
-  .toggle-btn:hover {
-      background-color: #333;
-    }
 
   .toggle-btn svg {
     width: 1.5rem;
@@ -87,15 +78,15 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: #ffffffee;
-    color: rgb(0, 0, 0);
+    background-color: var(--sidebar-color);
+    color: var(--third-color);
     transition: all 0.3s ease-in-out;
     width: 0;
     overflow: hidden;
   }
 
   nav.open {
-    width: 16rem;
+    width: var(--sidebar-width);
   }
 
   .sidebar-header {
@@ -124,17 +115,17 @@
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    color: #000000;
+    color: var(--contrast-color);
     text-decoration: none;
     transition: background-color 0.2s;
 		border-bottom-color: transparent;
   }
 
   li a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: color-mix(in srgb, var(--primary-color), var(--secondary-color));
   }
 
   li a.active {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--secondary-color);
   }
 </style>

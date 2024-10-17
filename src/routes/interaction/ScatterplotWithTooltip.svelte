@@ -176,7 +176,7 @@ Species: {selected_datapoint.species}
     padding: 3px;
     border: solid 1px;
   }
-  svg.tooltip { <4>
+  svg.tooltip {
     margin: 0px;
     padding: 0px;
   }

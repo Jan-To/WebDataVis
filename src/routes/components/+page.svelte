@@ -103,7 +103,7 @@
 
 <Highlight language={xml} code=
 {`<script>
-  export let datapoints = []; <1>
+  export let datapoints = [];
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
@@ -158,8 +158,8 @@
   <code>{`datapoints`}</code> attribute. 
   This attribute exists because we defined the <code>{`export let datapoints`}</code> in the component.</p>
 
-<p>
-  CAUTION: Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
+<p class=hint>
+  Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
   <code>{`scatterplot`}</code> will not work. This in contrast to the regular HTML elements
    (<code>{`h1`}</code>,
    <code>{`div`}</code>,...).
@@ -305,7 +305,7 @@
         "M 0,0 " + "C " + pl + ",-" + pw + " " + pl + "," + pw + " 0,0 Z";
 </script>
 
-<g> <3>
+<g>
     <circle cx="0" cy="0" r="10" class={datapoint.species} />
     <path style="transform: rotate(270deg)" d={sepal_path} />
     <path style="transform: rotate(30deg)" d={sepal_path} />

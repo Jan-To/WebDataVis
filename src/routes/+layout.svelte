@@ -29,10 +29,12 @@
 	.content-container {
 		padding: 0;
 		transition: margin-left 0.3s ease;
+		background-color: var(--background-color);
+		color: var(--text-color);
 	}
 
 	.content-container.open {
-		margin-left: 256px;
+		margin-left: var(--sidebar-width);
 	}
 
 	.content-container.closed {

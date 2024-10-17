@@ -25,7 +25,7 @@
 
 <h3>Inline CSS</h3>
 <p>
-    We can add CSS directives using the `style` attribute on HTML elements. For example:
+    We can add CSS directives using the <code>style</code> attribute on HTML elements. For example:
 </p>
 
 <div class=code-half>

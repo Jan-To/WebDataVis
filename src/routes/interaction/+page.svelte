@@ -121,7 +121,7 @@
   export let x;
   export let y;
 
-  export let selected_datapoint = undefined; <1>
+  export let selected_datapoint = undefined;
 
   $: xScale = scaleLinear()
                 .domain(extent(datapoints.map((d) => { return d[x]})))
@@ -135,9 +135,9 @@
   {#each datapoints as datapoint}
     <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
             r=5
-            on:mouseover={function() {selected_datapoint = datapoint}} <3>
-            on:mouseout={function() {selected_datapoint = undefined}} <4>
-            class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}" <5></h1>
+            on:mouseover={function() {selected_datapoint = datapoint}}
+            on:mouseout={function() {selected_datapoint = undefined}}
+            class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}"</h1>
     />
   {/each}
 </svg>
@@ -152,7 +152,7 @@
     fill: steelblue;
     fill-opacity: 0.3;
   }
-  circle.selected { <2>
+  circle.selected {
     fill: red;
     fill-opacity: 1;
   }

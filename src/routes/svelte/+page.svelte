@@ -37,17 +37,19 @@
 
 <p>
   Any of these can be omitted if you don't need them.
-
-  IMPORTANT: The javascript and CSS only apply to the HTML written in this specific file. 
+</p>
+<p class=hint>
+  The javascript and CSS only apply to the HTML written in this specific file. 
   This means that different <i>components</i> (i.e. files) can be styled independently.
 </p>
 
 <h2> Using the Svelte REPL</h2>
 <p>To get a quick feel of what Svelte looks like, go to the online <a href=http://svelte.dev/repl target="_blank">REPL</a> (Read-Eval-Print-Loop).</p>
 
-You can write regular HTML in the "App.svelte" tab, but don't need the <code>{`<html>`}</code>, <code>{`<head>`}</code> and <code>{`<body>`}</code> tags.
-
-A Svelte file can have three parts:
+<p>
+  You can write regular HTML in the "App.svelte" tab, but don't need the <code>{`<html>`}</code>, <code>{`<head>`}</code> and <code>{`<body>`}</code> tags.
+  A Svelte file can have three parts:
+</p>
 
 <ul>
   <li><code>{`<script>`}</code></li>
@@ -75,10 +77,16 @@ A Svelte file can have three parts:
 </div>
 
 <h2> Basics of Svelte</h2>
-The Svelte website has a very good tutorial at http://svelte.dev/tutorial. You should definitely go over it and refer back to it when you have questions. We'll highlight loops, conditionals and reactivity in this document, but these are only a small part of Svelte's strengths.
+<p>
+  The Svelte website has a <a href=http://svelte.dev/tutorial target=_blank>very good tutorial</a>. 
+  You should definitely go over it and refer back to it when you have questions. 
+  We'll highlight loops, conditionals and reactivity in this document, but these are only a small part of Svelte's strengths.
+</p>
 
 <h3> Looping over datapoints: <code>{`{#each}`}</code></h3>
-Svelte helps us to loop over lists in a declarative way. The following code in html gives a bulleted list:
+<p>
+  Svelte helps us to loop over lists in a declarative way. The following code in html gives a bulleted list:
+</p>
 
 <div class=code-half>
     <Highlight language={xml} code=
@@ -235,7 +243,9 @@ Svelte helps us to loop over lists in a declarative way. The following code in h
    </ul>
 </div>
 
-<p>TIP: Go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a> at  and go through the following sections: "Introduction" and "Logic"</p>
+<p class=hint>
+  Go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a> at  and go through the following sections: "Introduction" and "Logic"
+</p>
 
 <p>For our scatterplot, let's add a value to all these datapoints, and draw either a blue circle or a red rectangle based on that value.</p>
 
