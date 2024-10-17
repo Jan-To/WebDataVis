@@ -123,9 +123,9 @@
 
 <h2>Layouting with Flexbox / Grid</h2>
 <p>
-  To be written. For now:
+  TO DO. For now: Grid is a bit simpler and probably enough for our purposes.
 </p>
 <ul>
   <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94'>Youtube: Flexbox</a> (8 min)</li>
-  <li><a href='https://www.youtube.com/watch?v=i1FeOOhNnwU'>Youtube: Grid</a> (24 min, no need to watch all)</li>
+  <li><a href='https://www.youtube.com/watch?v=i1FeOOhNnwU'>Youtube: Grid</a> (24 min, no need to watch it all)</li>
 </ul>

@@ -16,7 +16,8 @@
     { href: base+'/components', label: 'Components' },
     { href: base+'/interaction', label: 'Interaction' },
     { href: base+'/mapsgraphs', label: 'Maps & Graphs' },
-    { href: base+'/styling', label: 'Styling Svelte'}
+    { href: base+'/styling', label: 'Styling Svelte'},
+    { href: base+'/ml', label: 'Machine Learning'}
   ];
 
   export let isOpen = false;
