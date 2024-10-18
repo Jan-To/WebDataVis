@@ -36,7 +36,7 @@
 
 <style>
   .icon {
-    padding-right: 0.5rem;
+    padding-right: 0.7rem;
   }
 
   .sidebar-container {
@@ -95,7 +95,6 @@
 
   li {
     margin-bottom: 0;
-
   } 
 
   li a {

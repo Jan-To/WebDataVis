@@ -14,16 +14,16 @@
   a <code>{`.svelte`}</code> file, we can define variables and data there, like this:  
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={javascript} code=
 {`<script>
   let values = [1,2,3,"a string"]
 </script>
 
 {JSON.stringify(values)}`}/>
-</div>
 <div class=view-half>
   {JSON.stringify([1,2,3,"a string"])}
+</div>
 </div>
 <p>
   In this example, we create a value and show a "stringified" version in the browser.
@@ -66,16 +66,16 @@
 
 <p>And the <code>{`src/routes/+page.svelte`}</code> look like this:</p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
     export let data;
 </script>
 
 {JSON.stringify(data)}`}/>
-</div>
 <div class=view-half>
   {JSON.stringify({values: [1,2,3,"a string"]})}
+</div>
 </div>
 
 <h2> From an online JSON file</h2>
@@ -125,7 +125,7 @@
   A simple page showing the sepal length of all flowers would therefore look like this:
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={javascript} code=
 {`<script>
   export let data;
@@ -136,7 +136,6 @@
   <li>{flower.sepalLength}</li>
   {/each}
 </ul>`}/>
-</div>
 <div class=view-half>
   <ul>
     {#each [
@@ -149,6 +148,7 @@
     <li>{flower.sepalLength}</li>
     {/each}
   </ul>
+</div>
 </div>
 
 <p>The variable <i>must</i> be called <code>{`data`}</code> and it <i>must</i> be defined in the corresponding <code>+page.svelte</code>.</p>
@@ -349,7 +349,7 @@ export default knex({
   Make the <code>{`+page.server.js`}</code> file look like this:
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={javascript} code=
 {`import db from '$lib/db';
 
@@ -372,7 +372,7 @@ export const load = () => {
 
 <p>We can then access these in our <code>{`+page.svelte`}</code>:</p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={javascript} code=
 {`<script>
     export let data = [];
@@ -398,7 +398,7 @@ Say we want to access data from <code>{`knownGene`}</code> table of the UCSC Gen
 
 Replace the <code>{`lib/db.js`}</code> file with the following.
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`import knex from 'knex'
 
@@ -420,7 +420,7 @@ export default knex({
 
 Based on our experience with sqlite3, the <code>{`+page.server.js`}</code> file would look like this:
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`import db from '$lib/db';
 
@@ -445,7 +445,7 @@ Unfortunately, we get an error <code>{`Error: Data returned from load while rend
 If we add a <code>{`console.log(genes)`}</code> in our 
 <code>{`+page.server.js`}</code> file, we see that what is returned from the server is the following:
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`[
   RowDataPacket {
@@ -468,7 +468,7 @@ If we add a <code>{`console.log(genes)`}</code> in our
 
 However, we expected the output to look like this:
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`[
   {
@@ -492,7 +492,7 @@ However, we expected the output to look like this:
 We can accomplish this to parse the output first before we return it, using <code>{`return JSON.parse(JSON.stringify(genes))`}</code> 
 instead of just <code>{`return genes`}</code> (source: https://stackoverflow.com/questions/31221980/how-to-access-a-rowdatapacket-object):
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`import db from '$lib/db';
 
@@ -519,7 +519,7 @@ Above we only loaded a single dataset, but obviously we will sometimes need mult
  in our <code>{`+page.js`}</code>. For example:
 
 [source,javascript,linenums]
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`import Papa from 'papaparse'
 
@@ -541,7 +541,7 @@ export const load = async ({ fetch }) => {
 </div>
 
 [source,javascript,linenums]
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`export const load = async ({ fetch }) => {
   const responseGenes = await fetch("https://some-url/genes.json")
@@ -569,7 +569,7 @@ In many cases, we might want to have a subpage for each datapoint. Imagine a blo
 Similarly, we might have a site that shows a list of genes, but you cannot go to the information of a <i>single</i> gene.
 
 Let's say we want to create a page for every single flower, using its ID in the URL. For example, to get the information (or a visualisation) for flower 5, we would use the URL http://localhost:5173/flowers/5. This is the same URL as before for the list, but adding the flower ID. To get this to work, we use <code>{`[slug]`}</code>: create a new directory under the flowers folder:
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`...
 |
@@ -599,7 +599,7 @@ the <code>{`[slug]`}</code> directory can be very similar to the
 one in the <code>{`flowers`}</code> directory, but there are some important differences:
 
 [source,javascript,linenums]
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`export const load = async ({ fetch, params }) => { (1)
   const res = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')

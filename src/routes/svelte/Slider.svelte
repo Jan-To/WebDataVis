@@ -6,7 +6,7 @@
   $: multiplied_value = slider_value * 2
 </script>
 
-<div class=code-half>
+<div class=code-flex>
   <Highlight language={xml} code=
 {`<script>
   let slider_value = 50;
@@ -15,8 +15,8 @@
 
 <input type="range" min="0" max="100" bind:value={slider_value}/>
 <p>The value {slider_value} multiplied by 2 is {multiplied_value}.</p>`}/>
-</div>
 <div class=view-half>
   <input type="range" min="0" max="100" bind:value={slider_value} />
   <p>The value {slider_value} multiplied by 2 is {multiplied_value}.</p>
+</div>
 </div>

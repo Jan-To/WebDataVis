@@ -80,8 +80,8 @@
 <svg>: an svg
 ...'/>
 <p>
-    You can find a complete list of HTML elements at 
-    <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element' target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>.
+    You can find a complete list of HTML elements
+    <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element' target="_blank">here</a>.
     Note that there are not only static elements like <code>h1</code>, but also interactive ones like <code>{`<button>`}</code> or <code>{`<select>`}</code>.
 </p>
 
@@ -89,14 +89,14 @@
 <p>
     Tags can have attributes, for example:
 </p>
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 '<a href="www.google.com">Click Here</a> defines the destination of a link.
 <p style="color: blue"> sets the colour of that paragraph to blue </p> '/>
-</div>
-<div class='view-half'>
-    <a href="www.google.com">Click Here</a> defines the destination of a link.
-    <p style="color: blue"> sets the colour of that paragraph to blue </p>
+    <div class='view-half'>
+        <a href="www.google.com">Click Here</a> defines the destination of a link.
+        <p style="color: blue"> sets the colour of that paragraph to blue </p>
+    </div>
 </div>
 
 <h3><code>id</code> and <code>class</code></h3> 
@@ -115,7 +115,7 @@
     For example: <code>&lt;li class="datapoint selected"&gt;</code>.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 '<p>Shopping list:</p>
 <ul>
@@ -123,7 +123,6 @@
 <li class="unimportant">Milk</li>
 <li>Toothpaste</li>
 </ul>'/>
-</div>
 <div class='view-half'>
     <p>Shopping list:</p>
     <ul>
@@ -132,18 +131,19 @@
         <li>Toothpaste</li>
     </ul>
 </div>
+</div>
 
 <h3>Some other examples</h3> 
 <p>
     A button that does nothing, and a generic <code>div</code> element. 
     But note that the generic <code>div</code> has an <code>id</code>.
 </p>
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 '<button type="submit">Submit</button>
 <div id="my_new_div">... and a generic HTML block with an id</div>'/>
-</div>
 <div class=view-half>
     <button type="submit">Submit</button>
     <div id="my_new_div">... and a generic HTML block with an id</div>
+</div>
 </div>

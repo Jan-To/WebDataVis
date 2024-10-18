@@ -17,7 +17,7 @@
     In this example below, a counter is updated every time we push the button.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<p>We can use javascript to add additional functionality to a site.</p>
 <button onclick="handleClick()">Increment the counter</button>
@@ -32,7 +32,6 @@
             "You clicked the button " + count + " times."
     }
 </script>`}/>
-</div>
 <div class=view-half>
     <p>We can use javascript to add additional functionality to a site.</p>
     <button onclick="handleClick()">Increment the counter</button>
@@ -45,6 +44,7 @@
             "You clicked the button " + count + " times."
         }
     </script>
+</div>
 </div>
 
 <p>Let's walk through this code:</p>
@@ -160,7 +160,7 @@ console.log(third_variable);  // value of third_value is printed to the console
     Everything on a line after a double forward slash (<code>//</code>) 
     in javascript is seen as a comment and not parsed.
 </p>
-<p class=hint>
+<p class=intermezzo>
     We'll see later that in Svelte, you can also declare variables using 
     <code>$:</code> instead of <code>let</code> or <code>const</code>, 
     which makes the variable reactive to changes of its definition's values. More on that later.

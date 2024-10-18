@@ -33,7 +33,7 @@
 </p>
 <ul>
   <li><a href=vscode:extension/svelte.svelte-vscode>Svelte for VS Code</a></li>
-  <li><a href=vscode:extension/ardenivanov.svelte-intellisense>Svelte Intellisense</a></li>
+  <li><a href=vscode:extension/ardenivanov.svelte-intellisense>Svelte Intellisense</a> (does not work all the time, not sure why)</li>
 </ul>
 
 <h2 style="display: inline-block">SvelteKit</h2>

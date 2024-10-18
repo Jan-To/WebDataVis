@@ -3,6 +3,8 @@
   import bezier_quad from '$lib/assets/Bézier_quad_anim.gif';
   import bezier_cub from '$lib/assets/Bézier_cub_anim.gif';
   import arc_flags from '$lib/assets/svg_arc_flags.png';
+  import viewbox0 from '$lib/assets/viewBox0.png';
+  import viewbox1 from '$lib/assets/viewBox1.png';
   import Paths from './Paths.svelte';
   import PathsM from './PathsM.svelte';
   import PathsZ from './PathsZ.svelte';
@@ -50,7 +52,7 @@
 
 <SimpleSvg/>
 
-<p class=hint>
+<p class=intermezzo>
   The <b>origin</b> <code>(0,0)</code> of an SVG image is at the <b>top left</b>, not the bottom left. 
   This means that higher values for <code>y</code> will give you marks that are lower in the graphic, 
   as you can see with the circle and the rectangle below. When plotting actual data, 
@@ -87,7 +89,7 @@
   Other straightforward marks available to you in SVG are rectangles, ellipses, and lines.
 </p>
 
-<p class=hint>
+<p class=intermezzo>
   Make sure to bookmark <a href=https://developer.mozilla.org/en-US/docs/Web/SVG target=_blank>the Mozilla MDN Docs</a>. 
   You can find information there on what parameters are available for which shapes, how to draw text, 
   transformations and coordinate systems, etc.
@@ -230,7 +232,24 @@
 
 <Scale/>
 
-<h2>Exercises</h2>
-<p>Here are some exercises related to this chapter:</p>
-
-SVG: https://svelte.dev/repl/bbe83abbe89f4e00a1a9d0b87f55b555?version=3.59.1
+<h2>SVG Coordinate Systems</h2>
+<p>
+  Until now, we defined <code>width</code> and <code>height</code> in pixels for the SVG object. Our coordinates were interpreted as these pixel values and,
+  for sake of simplicity, we will continue to do so throughout this tutorial. In practice, it can be benefitial to define your canvas coordinates independent
+  from the draw/pixel coordinates. This is where <code>viewBox</code> is handy.
+</p>
+<p>
+  In theory, the SVG canvas is endless. However, we will only draw a certain window of this endless canvas; the <code>viewBox</code>.
+  Define the parameters with <code>viewBox="<i>origin_x origin_y width height</i>"</code>. 
+  The origin you define here will be drawn at the pixel-origin (top-left corner).
+  The width and height define the window of the endless canvas that we look through. The window is positioned in a way that 
+  the top-left corner matches the viewport-origin and the bottom-right corner matches viewport-origin plus our width & height.
+</p>
+<p>Improve or test your understanding with the following examples:</p>
+<img src={viewbox0} alt="" style="max-width: 980px"/>
+<p>
+  Both images are taken from a german tutorial at 
+  <a href=https://www.mediaevent.de/tutorial/svg-viewbox-koordinaten.html target=_blank>https://www.mediaevent.de/tutorial/svg-viewbox-koordinaten.html</a>. 
+  Have a look, if you want more visual examples.
+</p>
+<img src={viewbox1} alt="" style="max-width: 950px"/>

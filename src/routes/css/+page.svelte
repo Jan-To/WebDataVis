@@ -28,7 +28,7 @@
     We can add CSS directives using the <code>style</code> attribute on HTML elements. For example:
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 '<html>
     <head>
@@ -50,7 +50,6 @@
         <div id="my_new_div">... and a generic HTML block with an id</div>
     </body>
 </html>'/>
-</div>
 <div class=view-half>
     <h1 style="color: red;">HTML & CSS</h1>
         <p style="font-family: cursive;">Shopping list:</p>
@@ -66,6 +65,7 @@
         <button type="submit">Submit</button>
         <div id="my_new_div">... and a generic HTML block with an id</div>
 </div>
+</div>
 
 <h3>CSS in the <code>head</code></h3>
 <p>
@@ -78,7 +78,7 @@
     each list item should be blue, and links should be bold.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 '{`<html>
     <head>
@@ -100,9 +100,9 @@
         </ul>
     </body>
 </html>`}'/>
-</div>
 <div class=view-half>
     <ExHead/>
+</div>
 </div>
 
 <p>
@@ -173,12 +173,12 @@ p::first-letter &#123;
     an <i>ordered</i> list (<code>&lt;ol&gt;</code>) will <i>not</i> be blue. We can also use <i>pseudo-classes</i>, 
     like <code>:hover</code> (which matches the element your mouse is hovering on), or 
     <code>::first-letter</code> (which speaks for itself).
-    For the full reference, see 
+    For the full reference, see the
     <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors' target="_blank">
-    https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors</a>.
+    CSS_Selector Docs</a>.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<html>
     <head>
@@ -235,9 +235,9 @@ p::first-letter &#123;
         </ol>
     </body>
 </html>`}/>
-</div>
 <div class=view-half>
     <ExStyling/>
+</div>
 </div>
 
 <h3>CSS in a separate file</h3>

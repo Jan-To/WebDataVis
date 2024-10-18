@@ -3,7 +3,7 @@
   import xml from "svelte-highlight/languages/xml";
 </script>
 
-<div class=code-half>
+<div class=code-flex>
   <Highlight language={xml} code=
 {`<svg width="200" height="200">
     <g transform="translate(100,100)">
@@ -20,7 +20,6 @@
         fill: steelblue;
     }
 </style>`}/>
-</div>
 <div class=view-half>
   <svg width="200" height="200">
     <g transform="translate(100,100)">
@@ -31,6 +30,7 @@
         <circle cx="0"   cy="-50" r="5" />
     </g>
 </svg>
+</div>
 </div>
 
 <style>

@@ -61,7 +61,7 @@
   </li>
 </ul>
 
-<p class=hint>
+<p class=intermezzo>
   There is a solution for the second point though:
   Use CSS variables to maintain a consistent color scheme, font sizes, and spacing across components. Define them in your <code>styles.css</code> 
   with <code>--primary-color: red;</code> and use them with <code>color: var(--primary-color)</code>.</p>
@@ -126,6 +126,6 @@
   TO DO. For now: Grid is a bit simpler and probably enough for our purposes.
 </p>
 <ul>
-  <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94'>Youtube: Flexbox</a> (8 min)</li>
-  <li><a href='https://www.youtube.com/watch?v=i1FeOOhNnwU'>Youtube: Grid</a> (24 min, no need to watch it all)</li>
+  <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94' target="_blank">Youtube: Flexbox</a> (8 min)</li>
+  <li><a href='https://www.youtube.com/watch?v=i1FeOOhNnwU' target="_blank">Youtube: Grid</a> (24 min, no need to watch it all)</li>
 </ul>

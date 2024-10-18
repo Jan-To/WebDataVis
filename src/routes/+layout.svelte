@@ -98,17 +98,15 @@
 		margin: 0 auto;
 	}
 
-	:global(.code-half) {
+	/* :global(.code-half) {
 			margin: 0 0;
-			width: 65%;
 			display: inline-block;
 	}
 	
 	:global(.view-half) {
-			width: 32%;
 			display: inline-block;
 			margin: auto;
 			margin-left: 1em;
 			vertical-align: top;
-	}
+	} */
 </style>

@@ -62,7 +62,7 @@
 </script`}/>
 
 <p>In <code>{`App.svelte`}</code>:</p>
-<div class="code-half">
+<div class=code-flex>
   <Highlight language={xml} code=
 {`<script>
     import MyComponent from './MyComponent.svelte'
@@ -71,12 +71,12 @@
 <h2>HTML in the parent</2>
 <MyComponent/>
 <MyComponent/>`}/>
+  <div class=view-half>
+    <h2>HTML in the parent</h2>
+    <h3 style="color:blue">HTML in the component</h3>
+    <h3 style="color:blue">HTML in the component</h3>
+  </div>
 </div>
-<dic class=view-half>
-  <h2>HTML in the parent</h2>
-  <h3 style="color:blue">HTML in the component</h3>
-  <h3 style="color:blue">HTML in the component</h3>
-</dic>
 
 <p>
   In the <code>{`<script>`}</code> section, we load the custom 
@@ -158,7 +158,7 @@
   <code>{`datapoints`}</code> attribute. 
   This attribute exists because we defined the <code>{`export let datapoints`}</code> in the component.</p>
 
-<p class=hint>
+<p class=intermezzo>
   Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
   <code>{`scatterplot`}</code> will not work. This in contrast to the regular HTML elements
    (<code>{`h1`}</code>,

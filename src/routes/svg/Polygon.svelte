@@ -3,7 +3,7 @@
   import xml from "svelte-highlight/languages/xml";
 </script>
 
-<div class=code-half>
+<div class=code-flex>
   <Highlight language={xml} code=
 {`<svg width="200" height="200">
     <polygon points="0,200 100,50 100,150 200,0" />
@@ -16,11 +16,11 @@
       stroke-width: 3px;
   }
 </style>`}/>
-</div>
 <div class=view-half>
   <svg width="200" height="200">
     <polygon points="0,200 100,50 100,150 200,0" />
   </svg> 
+</div>
 </div>
 
 <style>

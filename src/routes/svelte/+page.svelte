@@ -38,7 +38,7 @@
 <p>
   Any of these can be omitted if you don't need them.
 </p>
-<p class=hint>
+<p class=intermezzo>
   The javascript and CSS only apply to the HTML written in this specific file. 
   This means that different <i>components</i> (i.e. files) can be styled independently.
 </p>
@@ -59,7 +59,7 @@
 
 <p>Copy the code below in the <a href=http://svelte.dev/repl target="_blank">REPL</a>, and you should see 2 circles and 1 rectangle:</p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<svg width=200 height=150>
   <circle cx=50 cy=50 r=15 />
@@ -67,13 +67,13 @@
   <rect x=150 y=100 width=30 height=20 />
 </svg>
 `}/>
-</div>
 <div class=view-half>
   <svg width=200 height=150>
     <circle cx=50 cy=50 r=15 />
     <circle cx=100 cy=70 r=20 />
     <rect x=150 y=100 width=30 height=20 />
   </svg>
+</div>
 </div>
 
 <h2> Basics of Svelte</h2>
@@ -88,20 +88,20 @@
   Svelte helps us to loop over lists in a declarative way. The following code in html gives a bulleted list:
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<ul>
   <li>John</li>
   <li>Jane</li>
   <li>Joe</li>
 </ul>`}/>
-</div>
 <div class=view-half>
   <ul>
     <li>John</li>
     <li>Jane</li>
     <li>Joe</li>
   </ul>
+</div>
 </div>
 
 <p>  
@@ -114,7 +114,7 @@
   not for the script part which is regular javascript.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
   let names = ["John","Jane","Joe"];
@@ -125,13 +125,13 @@
     <li>{name}</li>
   {/each}
 </ul>`}/>
-</div>
 <div class=view-half>  
   <ul>
     {#each ["John","Jane","Joe"] as name}
       <li>{name}</li>
     {/each}
   </ul>
+</div>
 </div>
 
 <p>
@@ -155,7 +155,7 @@
   (which is closed using <code>{`{/each}`}</code>).
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
   let datapoints = [{x: 100, y: 100},
@@ -181,7 +181,6 @@
         fill-opacity: 0.5;
     }
 </style>`}/>
-</div>
 <div class=view-half>
   <svg width=400 height=400>
     {#each [{x: 100, y: 100},
@@ -198,6 +197,7 @@
     {/each}
   </svg>
 </div>
+</div>
 
 <p>
   In line 21-23, we loop over the <code>{`datapoints`}</code> array, each time putting a single element in a 
@@ -205,7 +205,7 @@
   <code>{`y`}</code> properties like we do on line 22.
 </p>
 
-<p class=hint>
+<p class=intermezzo>
   As with regular arrays, you can refer to javascript <i>objects</i> that were defined in the <code>{`<script>`}</code> section or 
   in the <code>{`#each`}</code> pragma by putting between curly brackets, 
   e.g. <code>{`{dp.x}`}</code>, and adding a period followed by the property.
@@ -218,7 +218,7 @@
   For example, let's create an array of individuals as objects, that contain both a name and a gender.
 </p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
   let individuals = [
@@ -235,21 +235,21 @@
         {/if}
     {/each}
 </ul>`}/>
-</div>
 <div class=view-half>
   <ul>
     <li>Julia (F)</li>
      <li>Jane (F)</li>
    </ul>
 </div>
+</div>
 
-<p class=hint>
+<p class=intermezzo>
   Go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a> at  and go through the following sections: "Introduction" and "Logic"
 </p>
 
 <p>For our scatterplot, let's add a value to all these datapoints, and draw either a blue circle or a red rectangle based on that value.</p>
 
-<div class=code-half>
+<div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
   let datapoints = [{x: 100, y: 100, value: 9},
@@ -285,7 +285,6 @@
     fill: red;
   }
 </style>`}/>
-</div>
 <div class=view-half>
   <svg width=400 height=400 background-color=whitesmoke>
     {#each [{x: 100, y: 100, value: 9},
@@ -305,6 +304,7 @@
       {/if}
     {/each}
   </svg>
+</div>
 </div>
 
 <h3> Reactivity</h3>
