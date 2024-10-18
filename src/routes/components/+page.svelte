@@ -391,7 +391,7 @@
   drawn in to put it in the correct position.</p>
 
 
-<h2>Exercises</h2>
+<h2>Optional Exercises</h2>
 <ul>
   <li><a href="https://svelte.dev/repl/fce70af77dd44da7a568576e1d02eb40?version=3.59.1" target="_blank">Components</a></li>
   <li><a href="https://svelte.dev/repl/2ccb36183e504526b3c3c8df5a3310f6?version=3.59.1" target="_blank">Communication between components</a></li>

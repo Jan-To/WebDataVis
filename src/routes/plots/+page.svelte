@@ -227,7 +227,7 @@
   it is helpful to remember that minimal axes often help focussing on the data, as long as they convey the necessary frame of reference.
 </p>
 
-<h2> Exercises</h2>
+<h2>Optional Exercises</h2>
 <p>Here are some exercises related to this chapter:</p>
 
 <ul>
