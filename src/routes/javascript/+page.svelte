@@ -158,8 +158,10 @@ console.log(third_variable);  // value of third_value is printed to the console
     In contrast to <code>var</code> and <code>let</code>, 
     a variable that is declared using <code>const</code> can <i>not</i> be assigned a new value.
     Everything on a line after a double forward slash (<code>//</code>) 
-    in javascript is seen as a comment and not parsed. <br>
-    NOTE: We'll see later that in Svelte, you can also declare variables using 
+    in javascript is seen as a comment and not parsed.
+</p>
+<p class=hint>
+    We'll see later that in Svelte, you can also declare variables using 
     <code>$:</code> instead of <code>let</code> or <code>const</code>, 
     which makes the variable reactive to changes of its definition's values. More on that later.
 </p>

@@ -37,7 +37,7 @@ circle.hidden {
 </style>
 
 <h3>Airport flights data</h3>
-<p>Note: We're only loading a <em>random part</em> of the data to make sure that everything is responsive on this site.</p>
+<p class=hint>We're only loading a <em>random part</em> of the data to make sure that everything is responsive on this site.</p>
 Airports serving flights in this range (km): {slider_value - 1000} - {slider_value + 1000} <br/>
 <input type="range" min="1" max="10000" bind:value={slider_value} class="slider" id="myRange" />
 <svg width=800 height=400>

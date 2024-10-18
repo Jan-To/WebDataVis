@@ -205,8 +205,8 @@
   <code>{`y`}</code> properties like we do on line 22.
 </p>
 
-<p>
-  NOTE: As with regular arrays, you can refer to javascript <i>objects</i> that were defined in the <code>{`<script>`}</code> section or 
+<p class=hint>
+  As with regular arrays, you can refer to javascript <i>objects</i> that were defined in the <code>{`<script>`}</code> section or 
   in the <code>{`#each`}</code> pragma by putting between curly brackets, 
   e.g. <code>{`{dp.x}`}</code>, and adding a period followed by the property.
 </p>

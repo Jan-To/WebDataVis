@@ -4,7 +4,7 @@
   --text-color: black;
   --primary-color: #1a2238;
   --contrast-color: white;
-  --secondary-color: #9daaf2;
+  --secondary-color: #9daaf2; /* #9daaf2 */
   --third-color: #ff6a3d;
   --fourth-color: #f4db7d;
   --code-color: #f0f0f0;
@@ -12,7 +12,8 @@
   --link-color: var(--third-color);
   --max-width: 984px;
   --font-size: 1.25rem;
-  --sidebar-width: 14rem;
+  --sidebar-width: 250px;
+  --border-radius: 0.8rem;
 }
 
 /* Typography */
@@ -20,11 +21,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   line-height: 1.6;
   margin: 0;
+  font-size: var(--font-size);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Georgia, serif;
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }
@@ -46,6 +48,7 @@ p, li, code {
 }
 
 p {
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
   text-align: justify;
 }
@@ -63,17 +66,22 @@ a {
   transition: color 0.2s ease, border-color 0.2s ease; 
 }
   
-  a:hover, a:focus {
-  border-bottom-color: var(--fourth-color);
+a:hover, a:focus {
+  border-bottom-color: transparent;
+  color: color-mix(in srgb, var(--third-color), black 15%);
 }
   
-  a:visited {
+a:visited {
   color: var(--link-color);
+}
+
+a:visited:hover {
+  color: color-mix(in srgb, var(--third-color), black 15%);
 }
 
 /* Code blocks */
 pre, code {
-  border-radius: 13px;
+  border-radius: var(--border-radius);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
@@ -101,25 +109,32 @@ img {
   max-width: var(--max-width);
   display: block;
   margin: 0 auto;
+  border-radius: var(--border-radius);
 }
 
 /* buttons */
-button {
+.button, .button:visited {
   background-color: var(--third-color);
   color: var(--contrast-color);
-  border-radius: 0.375rem;
+  border-radius: calc(var(--border-radius)*0.6);
   border: none;
   cursor: pointer;
+  font-size: var(--font-size);
+  padding: 0.65rem;
+  display:flex;
+  align-items: center;
+  transition: background-color 0.2s ease; 
 }
 
-button:hover {
+.button:hover, .button:visited:hover {
   background-color: color-mix(in srgb, var(--third-color), black 10%);
+  color: var(--contrast-color);
 }
 
 /* text highlights */
 .intermezzo {
   background-color: color-mix(in srgb, white 80%, var(--secondary-color));
-  border-radius: 13px;
+  border-radius: var(--border-radius);
   padding: 1.5rem;
 }
 
@@ -128,15 +143,20 @@ button:hover {
 }
 
 .hint {
-  background-color: color-mix(in srgb, white 80%, var(--fourth-color));
-  border-radius: 13px;
+  background-color: color-mix(in srgb, white 70%, var(--secondary-color));
+  border-radius: var(--border-radius);
   padding: 1.5rem;
 }
 
 /* Responsive design */
+.container {
+  margin: 0;
+  position: relative;
+  padding: 25px;
+}
 @media (max-width: 768px) {
   .container {
-    padding: 10px;
+    padding: 15px;
   }
 
   h1 {

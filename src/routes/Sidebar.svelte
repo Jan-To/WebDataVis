@@ -1,34 +1,16 @@
 <script>
   import { page } from '$app/stores';
-	import { base } from '$app/paths';
 
-  const navItems = [
-    { href: base+'/', label: 'Coding Vis' },
-    { href: base+'/html', label: 'HTML' },
-    { href: base+'/css', label: 'CSS' },
-    { href: base+'/javascript', label: 'Javascript' },
-    { href: base+'/svg', label: 'SVG' },
-    { href: base+'/svelte', label: 'Svelte' },
-    { href: base+'/setup', label: 'Setup' },
-    { href: base+'/publish', label: 'Publish'},
-    { href: base+'/loading', label: 'Loading Data' },
-    { href: base+'/plots', label: 'Basic Plots' },
-    { href: base+'/components', label: 'Components' },
-    { href: base+'/interaction', label: 'Interaction' },
-    { href: base+'/mapsgraphs', label: 'Maps & Graphs' },
-    { href: base+'/styling', label: 'Styling Svelte'},
-    { href: base+'/ml', label: 'Machine Learning'}
-  ];
+  export let navItems = [];
 
   export let isOpen = false;
   function toggleSidebar() {
     isOpen = !isOpen;
   }
-  $: console.log($page.url.pathname)
 </script>
 
 <div class="sidebar-container">
-  <button on:click={toggleSidebar} class="toggle-btn" aria-label="Toggle Sidebar">
+  <button on:click={toggleSidebar} class="toggle-btn button" aria-label="Toggle Sidebar">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 6h16M4 12h16M4 18h16" />
     </svg>
@@ -42,7 +24,8 @@
         <li>
           <a href="{item.href}" class:active={$page.url.pathname === item.href}>
             {#if isOpen}
-                <span>{item.label}</span>
+              <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
+              <span>{item.label}</span>
             {/if}
           </a>
         </li>
@@ -52,6 +35,10 @@
 </div>
 
 <style>
+  .icon {
+    padding-right: 0.5rem;
+  }
+
   .sidebar-container {
     position: fixed;
     top: 0;
@@ -64,7 +51,6 @@
     position: fixed;
     top: 1rem;
     left: 1rem;
-    padding: 0.5rem;
     z-index: 1001;
   }
 
@@ -79,7 +65,7 @@
     left: 0;
     height: 100%;
     background-color: var(--sidebar-color);
-    color: var(--third-color);
+    color: var(--secondary-color);
     transition: all 0.3s ease-in-out;
     width: 0;
     overflow: hidden;
@@ -109,6 +95,7 @@
 
   li {
     margin-bottom: 0;
+
   } 
 
   li a {
@@ -127,5 +114,6 @@
 
   li a.active {
     background-color: var(--secondary-color);
+    color: var(--text-color);
   }
 </style>
