@@ -67,12 +67,10 @@
 </div>
 </div>
 
-<div class=intermezzo>
-    <p>
-        There is a bug in the library that does the <a href=https://svhe.onrender.com/ target=_blank>code highlighting</a> adding a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
-        Please ignore or fix if you copy code.
-    </p>
-</div>
+<p class=intermezzo>
+    There is a bug in the library that does the <a href=https://svhe.onrender.com/ target=_blank>code highlighting</a> adding a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
+    Please ignore or fix if you copy code.
+</p>
 
 <h3>CSS in the <code>head</code></h3>
 <p>

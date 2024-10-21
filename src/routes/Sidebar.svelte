@@ -21,14 +21,17 @@
     </div>
     <ul class="navbar">
       {#each navItems as item}
-        <li>
-          <a href="{item.href}" class:active={$page.url.pathname === item.href}>
-            {#if isOpen}
-              <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
-              <span>{item.label}</span>
-            {/if}
-          </a>
-        </li>
+          <li>
+            <a href="{item.href}" class:active={$page.url.pathname === item.href}>
+              {#if isOpen}
+                <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
+                <span>{item.label}</span>
+              {/if}
+            </a>
+          </li>
+          {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label) }
+            <hr/>
+          {/if}
       {/each}
     </ul>
   </nav>
@@ -68,7 +71,7 @@
     color: var(--secondary-color);
     transition: all 0.3s ease-in-out;
     width: 0;
-    overflow: hidden;
+    overflow: auto;
   }
 
   nav.open {
@@ -115,4 +118,10 @@
     background-color: var(--secondary-color);
     color: var(--text-color);
   }
+
+	hr {
+		margin: 10px 0;
+    border-bottom: 2px solid color-mix(in srgb, var(--primary-color), var(--secondary-color));
+    border-top: transparent;
+	}
 </style>

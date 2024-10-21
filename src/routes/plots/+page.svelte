@@ -66,7 +66,6 @@
 </p>
 
 <div class=intermezzo>
-
 <h2>D3 - Data-Driven Documents</h2>
 <p>
   D3 (Data-Driven Documents) has been the go-to library for data visualisation for many years. 

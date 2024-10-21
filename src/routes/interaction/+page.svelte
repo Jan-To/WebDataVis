@@ -11,7 +11,7 @@
 <h1> Interactions in Svelte</h1>
 
 <h2> Sliders</h2>
-<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the size of each flower in teh encoding.</p>
+<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the size of each flower in the encoding.</p>
 
 <FlowersSlider/>
 
