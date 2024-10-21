@@ -6,14 +6,17 @@
 
 <h1>Implementing data visualizations using Svelte</h1>
 <p>
-  This is a tutorial for the course <i>Visual Analytics Project</i> at RPTU Kaiserslautern-Landau.
+  A tutorial for the <i>Visual Information Analysis Lab</i> at RPTU Kaiserslautern-Landau<br/>
+  Jan-Tobias Sohns (<i>sohns@rptu.de</i>).
 </p>
-
+<p>
+</p>
 <div class=intermezzo>
   <h2>Disclaimer</h2>
   <p>
-    The course is adapted from the material of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
-    The original material can be found at <a href="http://vda-lab.gitlab.io/datavis-technologies" target="_blank">http://vda-lab.gitlab.io/datavis-technologies</a>.
+    The course is adapted from the <a href="http://vda-lab.gitlab.io/datavis-technologies" target="_blank">excellent course</a> of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
+    The material is available under a CC-BY-NC license. It can be copied/remixed/tweaked/…​, but the original author needs to be credited. 
+    It can also not be used for commercial purposes except by the original author.
   </p>
 </div>
 <h2>History of Programming Visualizations</h2>
