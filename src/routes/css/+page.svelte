@@ -10,13 +10,13 @@
 <h1>Styling elements using CSS</h1> 
 <p>
     A typical website will not only contain HTML, but also CSS 
-    (cascading style sheets) and javascript.
+    (cascading style sheets) and JavaScript.
 </p>
 
 <ul>
-    <li><b>HTML</b> provides the basic <i>structure</i> of the page, which can be enhanced using CSS and javascript</li>
+    <li><b>HTML</b> provides the basic <i>structure</i> of the page, which can be enhanced using CSS and JavaScript</li>
     <li><b>CSS</b> is used to control presentation, formatting and layout: what it <i>looks</i> like.</li>
-    <li><b>javascript</b> is used to control the <i>behaviour</i> of different elements and the page as a whole.</li>
+    <li><b>JavaScript</b> is used to control the <i>behaviour</i> of different elements and the page as a whole.</li>
 </ul>
 
 <p>

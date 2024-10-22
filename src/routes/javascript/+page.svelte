@@ -8,13 +8,13 @@
     function handleClick() {count+=1}
 </script>
 
-<h2>Adding behaviour using javascript</h2> 
-<p>We can use javascript to add additional functionality to a site.</p>
+<h2>Adding behaviour using JavaScript</h2> 
+<p>We can use JavaScript to add additional functionality to a site.</p>
 
 
-<h3>Inline javascript</h3>
+<h3>Inline JavaScript</h3>
 <p>
-    We can add the javascript within the <code>body</code> between <code>script</code> tags. 
+    We can add the JavaScript within the <code>body</code> between <code>script</code> tags. 
     If we want to reference existing elements (such as the <code>demo</code> element 
     in our example below, we have to put the <code>script</code> at the end of the <code>body</code>. 
     In this example below, a counter is updated every time we push the button.
@@ -22,7 +22,7 @@
 
 <div class=code-flex>
     <Highlight language={xml} code=
-{`<p>We can use javascript to add additional functionality to a site.</p>
+{`<p>We can use JavaScript to add additional functionality to a site.</p>
 <button onclick="handleClick()">Increment the counter</button>
 
 <p id="demo"></p>
@@ -36,7 +36,7 @@
     }
 </script>`}/>
 <div class=view-half>
-    <p>We can use javascript to add additional functionality to a site.</p>
+    <p>We can use JavaScript to add additional functionality to a site.</p>
     <button on:click={handleClick}>Increment the counter</button>
     <p id="demo">
         {#if count > 0}
@@ -54,7 +54,7 @@
         whenever we click (<code>onclick</code>) on it. The action is called <code>handleClick</code> 
         (but this might be any name that we give it).
     </li>
-    <li>The <code>{`<script>`}</code>-tags define the javascript section</li>
+    <li>The <code>{`<script>`}</code>-tags define the JavaScript section</li>
     <li>
         The actual function is defined by <code>function handleClick() ...</code>. Whenever we click the button, 
         these lines are executed.
@@ -66,8 +66,9 @@
         and set its contents (<code>innerHTML</code>) to the text "You clicked..."
     </li>
 </ul>
-<p>The <code>document.getElementById()</code> might be overwhelming, but we will find 
-    easier ways to do this later.
+<p>
+    The <code>document.getElementById()</code> might be overwhelming, but you don't need to memorize it. 
+    We will find easier ways to do this later.
 </p>
 
 <div class=intermezzo>
@@ -79,7 +80,7 @@
         follows the same principle as XML, in that it describes the data in the object itself. 
         This format is used in many Application Programming Interfaces (APIs) such as 
         https://dummyjson.com/products, as well as the internal representation of complex data 
-        in javascript code. An example JSON object containing information about the BRCA2 gene, 
+        in JavaScript code. An example JSON object containing information about the BRCA2 gene, 
         involved in breast cancer:
     </p>
 <Highlight language={json} code=
@@ -107,7 +108,7 @@
 }`}/>
 
 <p>
-    Data in JSON format (or javascript objects) are presented in key/value pairs. 
+    Data in JSON format (or JavaScript objects) are presented in key/value pairs. 
     To be completely JSON-compliant the key should be put in quotes, although those 
     are often omitted for brevity (as in the example above). Different key/value pairs 
     are separated by a comma. JSON values can be of different types. They can be:
@@ -129,14 +130,14 @@
 </p>
 </div>
 
-<h2>Javascript Variables</h2>
+<h2>JavaScript Variables</h2>
 <p>
-    Variables in javascript are defined using the <code>var</code>, <code>let</code>, 
+    Variables in JavaScript are defined using the <code>var</code>, <code>let</code>, 
     or <code>const</code> commands. 
     For all purposes, <code>var</code> and <code>let</code> are exactly the same. 
     There are slight differences in their scopes, 
     but <code>let</code> was created because <code>var</code> 's scope was an important source 
-    for bugs in javascript. Ergo: use <code>let</code>. 
+    for bugs in JavaScript. Ergo: use <code>let</code>. 
     <i>Declaring</i> and <i>assigning</i> variables are two different things: a variable 
     <i>declaration</i> means that you create the variable and give it a name;
     with variable <i>assignment</i> you give it an actual value. 
@@ -164,9 +165,9 @@ console.log(third_variable);  // value of third_value is printed to the console
     which makes the variable reactive to changes of its definition's values. More on that later.
 </p>
 
-<h2>Javascript Functions</h2>
+<h2>JavaScript Functions</h2>
 <g>
-    There are several ways of creating functions in javascript. 
+    There are several ways of creating functions in JavaScript. 
     Below, we show three statements that do the same thing: 
     take 2 arguments, add them, return the result.
 </g>

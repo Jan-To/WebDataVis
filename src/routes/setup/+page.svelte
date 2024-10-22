@@ -13,15 +13,15 @@
   To set up a development environment on your own machine, you will need:
 </p>
 <ul>
-  <li>An environment to run javascript in</li>
+  <li>An environment to run JavaScript in</li>
   <li>A code editor node that speeds up your coding</li>
   <li>The directory structure for a SvelteKit application</li>
 </ul>
 
-<h2 style="display: inline-block">Javascript Environment</h2>
+<h2 style="display: inline-block">JavaScript Environment</h2>
 <img src={node} alt="" style="max-width: 100px; display: inline-block; vertical-align: middle; margin-left: 16px;"/>
 <p>
-  We suggest you use <a href=https://nodejs.org/en target=_blank>nodejs</a>, a javascript runtime. 
+  We suggest you use <a href=https://nodejs.org/en target=_blank>nodejs</a>, a JavaScript runtime. 
   Choose your preferred install option <a href=https://nodejs.org/en/download/prebuilt-installer target=_blank>here</a>.
 </p>
 

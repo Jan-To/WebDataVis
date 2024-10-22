@@ -232,7 +232,7 @@
 <h2>Brushing</h2>
 <p>
   The above is a poor-man's version, and we'd like to have a more useful brush where you can select a <i>region</i> of the plot. 
-  D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. 
+  D3 allows you to do this, but again: it does some things that are unclear to the beginning JavaScript programmer. 
   In the example below, we only create a proof-of-concept for brushing; in a real setting you would create separate components 
   which would solve some of the issue of the brush going outside the plot, etc.
 </p>

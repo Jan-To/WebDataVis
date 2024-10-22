@@ -167,7 +167,7 @@
 <p>
   Above we have used a colour scale that ranges from red to green according to longitude. 
   If we want to handle categorical aspects in the data (e.g. if a flight is international or domestic), 
-  we can actually do this easier, using HTML classes. For an overview, see the "HTML, CSS and javascript" section of this tutorial. 
+  we can actually do this easier, using HTML classes. For an overview, see the "HTML, CSS and JavaScript" section of this tutorial. 
   (This will become very important once we start looking into brushing and linking in the next section.)
 </p>
 

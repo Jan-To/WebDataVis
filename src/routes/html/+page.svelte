@@ -55,7 +55,7 @@
     The collection of all these 
     (nested) elements is called the Document Object Model or <i>DOM</i>.
     Tags exist to denote headers, lists, paragraphs, etc.
-    Most tags need to be <i>opened</i> and then <i>closed</i>. For example:
+    Tags need to be <i>opened</i> and then <i>closed</i>. For example:
 </p>
 
 <Highlight language={xml} code=
@@ -64,8 +64,6 @@
 '/>
 
 <p>
-    There are some exceptions, such as when you create a horizontal line <code>&lt;hr/&gt;</code> 
-    or want to add a linebreak <code>&lt;br/&gt;</code> .
     Here's a list of the most relevant attributes:
 </p>
 

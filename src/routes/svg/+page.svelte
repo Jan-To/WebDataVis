@@ -30,7 +30,7 @@
 <h2>Scalable vector graphics</h2>
 
 <p>
-  Knowing how HTML, CSS and javascript work, we can start making our visualisations. 
+  Knowing how HTML, CSS and JavaScript work, we can start making our visualisations. 
   There are two main approaches for making visualisations in a webbrowser. 
   You can either tell the computer which pixels need to have which colour (<i>pixel-based</i>), 
   or you can tell it at a higher level that you want a circle at a certain position on the screen (<i>vector-based</i>). 

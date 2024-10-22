@@ -156,10 +156,10 @@
 <div class=intermezzo>
   <h2>Synchronous vs asynchronous programming</h2>
   <p>
-    In contrast to other languages that you may know (e.g. python and R), javascript is an <i>asynchronous</i> language. 
+    In contrast to other languages that you may know (e.g. python and R), JavaScript is an <i>asynchronous</i> language. 
     When you write a program in a synchronous programming language, the program executes instructions in series. 
     This means that each instruction must be completed before moving on to the next one. 
-    In contrast, in an asynchronous programming language like javascript, 
+    In contrast, in an asynchronous programming language like JavaScript, 
     the program can start executing a new instruction before completing the previous one. 
     In some cases we do not want that and actually need to wait until the previous command has finished. 
     To get around it, we can use <a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises target="_blank">promises</a> 
