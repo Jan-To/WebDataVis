@@ -93,7 +93,7 @@
     </head>
     <body>
         <h1>CSS in the head</h1>
-        <p>We have some text here with a <a href="www.google.com">
+        <p>We have some text here with a <a href="https://www.google.com/">
             link</a> to Google, and a list:</p>
         <ul>
             <li>Eggs</li>

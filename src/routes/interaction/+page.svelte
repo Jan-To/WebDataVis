@@ -45,19 +45,8 @@
   when we hover over a datapoint.
 </p>
 
-<p>A quick and dirty way to do this, is by using a <code>{`title`}</code> element embedded within the visual element. For example: instead of</p>
-
-<div class=code-flex>
-  <Highlight language={xml} code=
-  {`<circle cx=50 cy=50 r=10/>`}/>
-<div class=view-half>
-  <svg width=50 height=50>
-    <circle cx=30 cy=30 r=10/>
-  </svg>
-</div>
-</div>
-
-<p>we can write</p>
+<p>A quick and dirty way to do this, is by using a <code>{`title`}</code> element embedded within the visual element. 
+  For example, we can add a <code>{`title`}</code> to a basic black circle:</p>
 
 <div class=code-flex>
   <Highlight language={xml} code=

@@ -6,12 +6,12 @@
 <div class=code-flex>
   <Highlight language={xml} code=
 {`<svg width="300" height="300">
-    <circle cx="20" cy="50" r="30"/>
+    <circle cx="30" cy="50" r="30"/>
     <rect x="100" y="200" width="70" height="30" />
 </svg>`}/>
 <div class=view-half>
   <svg width="300" height="300">
-    <circle cx="20" cy="50" r="30"/>
+    <circle cx="30" cy="50" r="30"/>
     <rect x="100" y="200" width="70" height="30" />
   </svg>
 </div>
