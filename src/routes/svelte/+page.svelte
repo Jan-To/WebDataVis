@@ -200,9 +200,9 @@
 </div>
 
 <p>
-  In line 21-23, we loop over the <code>{`datapoints`}</code> array, each time putting a single element in a 
+  We loop over the <code>{`datapoints`}</code> array, each time putting a single element in a 
   local <code>{`dp`}</code> variable. We can refer to the <code>{`x`}</code> and 
-  <code>{`y`}</code> properties like we do on line 22.
+  <code>{`y`}</code> properties with <code>dp.x</code> / <code>dp.y</code>.
 </p>
 
 <p class=intermezzo>
@@ -244,7 +244,8 @@
 </div>
 
 <p class=intermezzo>
-  Go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a> at  and go through the following sections: "Introduction" and "Logic"
+  For more practical tutorials, go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a>
+  and go through the sections <i>Introduction</i> and <i>Logic</i>.
 </p>
 
 <p>For our scatterplot, let's add a value to all these datapoints, and draw either a blue circle or a red rectangle based on that value.</p>
@@ -324,5 +325,5 @@
 <p>
   We've seen before that we can use curly brackets <code>{`{}`}</code> to pass in a value. Here we also need to work in the other direction: 
   when the value of the slider changes, it should be passed through to the script above. We do that using <code>{`bind:value`}</code>. 
-  Sliding left and right will now update the multiplied value as well. You can try it below.
+  Sliding left and right will now update the multiplied value as well.
 </p>

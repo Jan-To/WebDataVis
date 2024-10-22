@@ -46,8 +46,6 @@
             Link to the Vis-Team website is 
             <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
-        <button type="submit">Submit</button>
-        <div id="my_new_div">... and a generic HTML block with an id</div>
     </body>
 </html>'/>
 <div class=view-half>
@@ -62,15 +60,8 @@
             Link to the Vis-Team website is 
             <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
-        <button type="submit">Submit</button>
-        <div id="my_new_div">... and a generic HTML block with an id</div>
 </div>
 </div>
-
-<p class=intermezzo>
-    There is a bug in the library that does the <a href=https://svhe.onrender.com/ target=_blank>code highlighting</a> adding a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
-    Please ignore or fix if you copy code.
-</p>
 
 <h3>CSS in the <code>head</code></h3>
 <p>
@@ -81,6 +72,12 @@
     We can do this in the <code>&lt;head&gt;</code> using the <code>&lt;style&gt;</code> element. 
     In the example below, we make all headers of level 1 green, 
     each list item should be blue, and links should be bold.
+</p>
+
+<p class=intermezzo>
+    There is a bug in the <a href=https://svhe.onrender.com/ target=_blank>code highlighting library</a> 
+    that adds a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
+    Please this ignore while reading and remember if you copy the code.
 </p>
 
 <div class=code-flex>

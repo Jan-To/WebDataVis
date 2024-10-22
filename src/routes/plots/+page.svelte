@@ -156,9 +156,9 @@
 </p>
 <p>
   D3 provides a lot of other scales as well, including logarithmic, time, radial etc. Check out 
-  <a href=https://github.com/d3/d3-scale target="_blank">https://github.com/d3/d3-scale</a> for more information.
+  <a href=https://github.com/d3/d3-scale target="_blank">d3-scale</a> for more information.
 
-  Let's add another scale: we can let the size of the point be dependent of the `distance` in the csv file
+  Let's add another scale: we can let the size of the point be dependent of the <i>distance</i> in the csv file
 </p>
 
 <Flights4 {data}/>
@@ -227,7 +227,7 @@
 </p>
 
 <h2>Optional Exercises</h2>
-<p>Here are some exercises related to this chapter:</p>
+<p>Here is a list of exercises related to this chapter or you try to implement some of the extensions mentioned above.</p>
 
 <ul>
   <li><a href="https://svelte.dev/repl/724a8216d6c84491b7b04951718f0b0d?version=3.59.1" target="_blank">Svelte markup</a></li>

@@ -39,6 +39,10 @@
 
 <div id="svelte-nodelink"></div>
 
-<h3>Practice</h3>
-
-<p>Create a network graph where the nodes are not just circles, but a glyph like we did for the iris flowers.</p>
+<p>
+  You noticed the dragging is not completely smooth, as we <i>dragNode</i> only <code>on:mousemove</code>. 
+  You can probably do better in a real implementation.
+</p>
+<p>
+  An extension idea: Create a network graph where the nodes are not just circles, but a glyph like we did for the iris flowers.
+</p>

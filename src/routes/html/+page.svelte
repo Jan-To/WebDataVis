@@ -45,7 +45,7 @@
 
 <h3>Create your first page</h3>
 <p>
-    If you want to experiment, create a file called with an <code>html</code> extension 
+    If you want to experiment, create a file with an <code>html</code> extension 
     with the contents shown above, and open it in any webbrowser. 
 </p>
 
@@ -82,7 +82,8 @@
 <p>
     You can find a complete list of HTML elements
     <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element' target="_blank">here</a>.
-    Note that there are not only static elements like <code>h1</code>, but also interactive ones like <code>{`<button>`}</code> or <code>{`<select>`}</code>.
+    Note that there are not only static elements like <code>{`<h1>`}</code>, 
+    but also interactive ones like <code>{`<button>`}</code> or <code>{`<select>`}</code>.
 </p>
 
 <h3>Attributes</h3>
@@ -91,10 +92,10 @@
 </p>
 <div class=code-flex>
     <Highlight language={xml} code=
-'<a href="www.google.com">Click Here</a> defines the destination of a link.
+'<a href="https://www.google.com/">Click Here</a> defines the destination of a link.
 <p style="color: blue"> sets the colour of that paragraph to blue </p> '/>
     <div class='view-half'>
-        <a href="www.google.com">Click Here</a> defines the destination of a link.
+        <a href="https://www.google.com/">Click Here</a> defines the destination of a link.
         <p style="color: blue"> sets the colour of that paragraph to blue </p>
     </div>
 </div>

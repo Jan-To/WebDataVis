@@ -6,10 +6,14 @@
 
 <h1>Implementing data visualizations using Svelte</h1>
 <p>
-  A tutorial for the <i>Visual Information Analysis Lab</i> at RPTU Kaiserslautern-Landau<br/>
-  Jan-Tobias Sohns (<i>sohns@rptu.de</i>).
+  A tutorial for the <i>Visual Information Analysis Lab</i> at RPTU Kaiserslautern-Landau
 </p>
-<p>
+<p style='color:#7d7d7d; text-align:end;'>
+  <span><i>Jan-Tobias Sohns</i></span><br/>
+  <span style='display:inline-flex;align-items:center;'>
+    <svg width=25 height=25 viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/></svg>
+    <i>sohns@rptu.de</i>
+  </span>
 </p>
 <div class=intermezzo>
   <h2>Disclaimer</h2>

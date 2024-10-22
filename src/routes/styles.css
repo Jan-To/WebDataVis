@@ -105,14 +105,13 @@ pre code {
 }
 
 .code-flex pre {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
 .view-half {
-  flex: 0 1 auto;
-  margin-left: 1em;
+  flex: 1 1 auto;
 }
 
 /* images --- Please define an individual max-width on each image  */

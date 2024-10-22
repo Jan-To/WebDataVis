@@ -130,8 +130,7 @@
 </p>
 </div>
 
-<h1>Javascript basics</h1>
-<h2>Variables</h2>
+<h2>Javascript Variables</h2>
 <p>
     Variables in javascript are defined using the <code>var</code>, <code>let</code>, 
     or <code>const</code> commands. 
@@ -166,7 +165,7 @@ console.log(third_variable);  // value of third_value is printed to the console
     which makes the variable reactive to changes of its definition's values. More on that later.
 </p>
 
-<h2>Functions</h2>
+<h2>Javascript Functions</h2>
 <g>
     There are several ways of creating functions in javascript. 
     Below, we show three statements that do the same thing: 

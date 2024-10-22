@@ -129,8 +129,7 @@
 <Paths/>
 
 <p>
-  We can close the path (and change the polyline to a polygon) by adding a <code>Z</code> at the end of the string: 
-  <code><path d="M 0,200 L 100,50 L 100,150 L 200,0 Z" /></code>.
+  We can close the path (and change the polyline to a polygon) by adding a <code>Z</code> at the end of the string.
 </p>
 
 <PathsZ/>
@@ -246,10 +245,10 @@
   the top-left corner matches the viewport-origin and the bottom-right corner matches viewport-origin plus our width & height.
 </p>
 <p>Improve or test your understanding with the following examples:</p>
-<img src={viewbox0} alt="" style="max-width: 980px"/>
+<img src={viewbox0} alt="" style="max-width: 850px"/>
 <p>
   Both images are taken from a german tutorial at 
   <a href=https://www.mediaevent.de/tutorial/svg-viewbox-koordinaten.html target=_blank>https://www.mediaevent.de/tutorial/svg-viewbox-koordinaten.html</a>. 
-  Have a look, if you want more visual examples.
+  Have a look, if you want more visual examples of the viewBox.
 </p>
-<img src={viewbox1} alt="" style="max-width: 950px"/>
+<img src={viewbox1} alt="" style="max-width: 850px"/>

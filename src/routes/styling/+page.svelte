@@ -123,7 +123,7 @@
 
 <h2>Layouting with Flexbox / Grid</h2>
 <p>
-  TO DO. For now: Grid is a bit simpler and probably enough for our purposes.
+  TODO. Grid is probaly a bit more fitting for general dashboard layout and maybe enough for our purposes.
 </p>
 <ul>
   <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94' target="_blank">Youtube: Flexbox</a> (8 min)</li>

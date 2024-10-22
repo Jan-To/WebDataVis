@@ -124,4 +124,14 @@
     border-bottom: 2px solid color-mix(in srgb, var(--primary-color), var(--secondary-color));
     border-top: transparent;
 	}
+
+  @media (max-width: 768px) {
+    li a {
+      padding: 0.25rem 0.5rem;
+    }
+
+    hr {
+      margin: 5px 0;
+    }
+  }
 </style>
