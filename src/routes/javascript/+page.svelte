@@ -16,7 +16,7 @@
 <p>
     We can add the JavaScript within the <code>body</code> between <code>script</code> tags. 
     If we want to reference existing elements (such as the <code>demo</code> element 
-    in our example below, we have to put the <code>script</code> at the end of the <code>body</code>. 
+    in our example below), we have to put the <code>script</code> at the end of the <code>body</code>. 
     In this example below, a counter is updated every time we push the button.
 </p>
 
@@ -50,18 +50,18 @@
 
 <ul>
     <li>
-        In line 2, we create a <code>button</code> to which we attach an action 
+        In the second line, we create a <code>button</code> to which we attach an action 
         whenever we click (<code>onclick</code>) on it. The action is called <code>handleClick</code> 
-        (but this might be any name that we give it).
+        (but we can give it any name).
     </li>
     <li>The <code>{`<script>`}</code>-tags define the JavaScript section</li>
     <li>
         The actual function is defined by <code>function handleClick() ...</code>. Whenever we click the button, 
         these lines are executed.
     </li>
-    <li>First we increment the counter with 1.</li>
+    <li>First we increment the counter by 1.</li>
     <li>
-        Then we find the element with <code>id</code> of <code>demo</code> 
+        Then we find the element which has the <code>id</code>-value <code>"demo"</code> 
         (<code>document.getElementById("demo")</code>) 
         and set its contents (<code>innerHTML</code>) to the text "You clicked..."
     </li>
@@ -79,7 +79,8 @@
         The JSON ("JavaScript Object Notation") data representation format 
         follows the same principle as XML, in that it describes the data in the object itself. 
         This format is used in many Application Programming Interfaces (APIs) such as 
-        https://dummyjson.com/products, as well as the internal representation of complex data 
+        <a href=https://dummyjson.com/products target=_blank>https://dummyjson.com/products</a>, 
+        as well as the internal representation of complex data 
         in JavaScript code. An example JSON object containing information about the BRCA2 gene, 
         involved in breast cancer:
     </p>
@@ -117,7 +118,7 @@
     <li><b>Scalars</b>: strings (in quotes; see e.g. <code>common_name</code> above), numbers 
         (without quotes; see e.g. <code>start</code>), booleans 
         (<code>true</code>/<code>false</code>), or <code>null</code>.</li>
-    <li><b>Strings</b> containing zero or more elements, surrounded by square brackets (<code>[]</code>). 
+    <li><b>Arrays</b> containing zero or more elements, surrounded by square brackets (<code>[]</code>). 
         For example, see <code>names</code> in the example above.</li>
     <li>Other <b>objects</b>, surrounded by curley brackets <code>{`{}`}</code> (see e.g. <code>location</code>).</li>
 </ul>
@@ -157,7 +158,7 @@ console.log(third_variable);  // value of third_value is printed to the console
     In contrast to <code>var</code> and <code>let</code>, 
     a variable that is declared using <code>const</code> can <i>not</i> be assigned a new value.
     Everything on a line after a double forward slash (<code>//</code>) 
-    in javascript is seen as a comment and not parsed.
+    in JavaScript is seen as a comment and not parsed.
 </p>
 <p class=intermezzo>
     We'll see later that in Svelte, you can also declare variables using 

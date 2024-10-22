@@ -101,10 +101,12 @@
 <h3><code>id</code> and <code>class</code></h3> 
 <p>
     We will use the special attributes <code>id</code> and <code>class</code> a lot later in this session.
-
+</p>
+<p>
     The <code>id</code> attribute gives an element a certain id (obviously), 
-    and that id needs to be unique within the document.
-
+    and that id needs to be unique within the document. We can use this to address a specific element.
+</p>
+<p>
     The <code>class</code> attribute assigns that element to a certain class. 
     We can use this to easily select different elements together. 
     See for example the <code>unimportant</code> class that we add to 

@@ -70,6 +70,8 @@
     to every single <code>&lt;h1&gt;</code>. To set the style for whole groups of elements, 
     we better define that once instead of for each element. 
     We can do this in the <code>&lt;head&gt;</code> using the <code>&lt;style&gt;</code> element. 
+    With CSS in the head, we can define the overall style of our webpage. We will later learn
+    how to define styles in an extra file, so we can swap the file quickly for new general styles.
     In the example below, we make all headers of level 1 green, 
     each list item should be blue, and links should be bold.
 </p>
@@ -263,7 +265,7 @@ p::first-letter &#123;
 <h3>Developer tools and console</h3>
 <p>
     Whatever you write in the <code>.html</code> file, it gets <i>rendered</i> in the browser 
-    so you do not see the tags anymore. However, each browser has <i>developer 
+    translating the tags into visual properties. However, each browser has <i>developer 
     tools</i> that allow you to get to the underlying HTML code. You can activate them here:
 </p>
 <ul>
