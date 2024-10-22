@@ -1,8 +1,11 @@
 <script>
-  import Highlight from "svelte-highlight";
-  import xml from "svelte-highlight/languages/xml";
-  import json from "svelte-highlight/languages/json";
-  import javascript from "svelte-highlight/languages/javascript";
+    import Highlight from "svelte-highlight";
+    import xml from "svelte-highlight/languages/xml";
+    import json from "svelte-highlight/languages/json";
+    import javascript from "svelte-highlight/languages/javascript";
+
+    let count = 0;
+    function handleClick() {count+=1}
 </script>
 
 <h2>Adding behaviour using javascript</h2> 
@@ -34,16 +37,12 @@
 </script>`}/>
 <div class=view-half>
     <p>We can use javascript to add additional functionality to a site.</p>
-    <button onclick="handleClick()">Increment the counter</button>
-    <p id="demo"></p>
-    <script>
-        let count = 0;
-        function handleClick() {
-            count += 1
-            document.getElementById("demo").innerHTML = 
-            "You clicked the button " + count + " times."
-        }
-    </script>
+    <button on:click={handleClick}>Increment the counter</button>
+    <p id="demo">
+        {#if count > 0}
+        You clicked the button {count} times.
+        {/if}
+    </p>
 </div>
 </div>
 
@@ -55,9 +54,9 @@
         whenever we click (<code>onclick</code>) on it. The action is called <code>handleClick</code> 
         (but this might be any name that we give it).
     </li>
-    <li>Lines 6 to 13 define the javascript</li>
+    <li>The <code>{`<script>`}</code>-tags define the javascript section</li>
     <li>
-        The actual function is defined in lines 8 to 12. Whenever we click the button, 
+        The actual function is defined by <code>function handleClick() ...</code>. Whenever we click the button, 
         these lines are executed.
     </li>
     <li>First we increment the counter with 1.</li>
