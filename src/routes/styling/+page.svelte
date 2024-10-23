@@ -123,9 +123,9 @@
 
 <h2>Layouting with Flexbox / Grid</h2>
 <p>
-  TODO. Grid is probaly a bit more fitting for general dashboard layout and maybe enough for our purposes.
+  TODO. Grid is probaly better suited for general dashboard layout and flexbox may only be needed for smaller arrangements.
 </p>
 <ul>
   <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94' target="_blank">Youtube: Flexbox</a> (8 min)</li>
-  <li><a href='https://www.youtube.com/watch?v=i1FeOOhNnwU' target="_blank">Youtube: Grid</a> (24 min, no need to watch it all)</li>
+  <li><a href='https://www.youtube.com/watch?v=EiNiSFIPIQE' target="_blank">Youtube: Grid</a> (13 min)</li>
 </ul>
