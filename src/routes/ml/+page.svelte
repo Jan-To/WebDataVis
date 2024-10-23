@@ -10,13 +10,15 @@
 <ul>
   <li>
     Use the available <b>JavaScript libraries</b>. There are JavaScript libraries to handle many cases of your necessary machine learning needs. 
-    Here is a <a href=https://www.zipy.ai/blog/best-javascript-machine-learning-libraries target=_blank>Blog post</a> that lists the hyped
+    Here is a <a href=https://www.zipy.ai/blog/best-javascript-machine-learning-libraries target=_blank>blog post</a> that lists the hyped
     ones. You can probably find other libraries fitted to the traditional parts of clustering, dimension reduction, etc. For a simple problem, 
     you could even write it your own (though this is not the intent of this course).
   </li>
   <li>
-    Use a <b>compute server</b>. The established language for machine learning is Python. We can run a Python server to do all the preprocessing
-    and compute our models and communicate with the browser to visualize them. This is the most common approach, as each aspect stays within its 
+    Use a <b>compute server</b>. The established language for machine learning is Python. We can run a Python server (e.g. with
+    <a href=https://flask.palletsprojects.com/ target=_blank>Flask</a>) to do all the preprocessing
+    and compute our models. This server then communicates with the browser to visualize the models. 
+    This is the most common approach, as each aspect stays within its 
     estabished environment. The client + server architecture means you have two software parts running and communicating, which may induce 
     architectural complexity for development and deployment.
   </li>
