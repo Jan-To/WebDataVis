@@ -103,7 +103,7 @@
   </li>
   <li>
     Svelte as a representative of <b>writing HTML & JavaScript from scratch</b>. Writing JavaScript yourself gives complete control over 
-    all parts of the visualization: when and how data should be loaded, when and where algorithms should run, how each detail of you plot looks and interacts.
+    all parts of the visualization: when and how data should be loaded, when and where algorithms should run, how each detail of your plot looks and interacts.
     We picked Svelte as it has a relatively understandable syntax compared to more established libraries like <a href=https://react.dev>React</a> 
     and therefore should provide an easier entry to web development. While you <i>can</i> control every detail that does not necessarily mean you <i>have to</i>.
     There are places where it is totally sensible to use existing libraries to speed up programming (e.g. <a href=https://d3js.org>D3</a>).
