@@ -22,6 +22,10 @@
 
 <Map/>
 
+<p>
+  An alternative to leaflet is the <a href=https://svelte-maplibre.vercel.app/ target=_blank>MapLibre</a> library.
+</p>
+
 <h2>Force-directed graph</h2>
 <p>
   D3 has a very solid library for drawing node-link diagrams, available at <a href=https://github.com/d3/d3-force target="_blank">d3-force</a>. 
