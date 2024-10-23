@@ -1,5 +1,6 @@
 <script>
   import { page } from '$app/stores';
+  import LastUpdated from './LastUpdated.svelte';
 
   export let navItems = [];
 
@@ -16,24 +17,27 @@
     </svg>
   </button>
   <nav class:open={isOpen}>
-    <div class='sidebar-header'>
-      <h1>Content</h1>
+    <div class='nav-content'>
+      <div class='sidebar-header'>
+        <h1>Content</h1>
+      </div>
+      <ul class="navbar">
+        {#each navItems as item}
+            <li>
+              <a href="{item.href}" class:active={$page.url.pathname === item.href}>
+                {#if isOpen}
+                  <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
+                  <span>{item.label}</span>
+                {/if}
+              </a>
+            </li>
+            {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label) }
+              <hr/>
+            {/if}
+        {/each}
+      </ul>
     </div>
-    <ul class="navbar">
-      {#each navItems as item}
-          <li>
-            <a href="{item.href}" class:active={$page.url.pathname === item.href}>
-              {#if isOpen}
-                <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
-                <span>{item.label}</span>
-              {/if}
-            </a>
-          </li>
-          {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label) }
-            <hr/>
-          {/if}
-      {/each}
-    </ul>
+    <LastUpdated/>
   </nav>
 </div>
 
@@ -63,6 +67,8 @@
   }
 
   nav {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
@@ -76,6 +82,10 @@
 
   nav.open {
     width: var(--sidebar-width);
+  }
+
+  .nav-content {
+    flex: 1;
   }
 
   .sidebar-header {
