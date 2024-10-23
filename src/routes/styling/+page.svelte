@@ -90,6 +90,12 @@
     perfect for building clean layouts, if you don't want to focus on customization yourself.
   </li>
   <li>
+    <a href="https://tailwindcss.com/" target=_blank>Tailwind CSS</a> - A general purpose framework with a plethora of 
+    short-notation classes for all kinds of purposes, but no ready-made components. Tailwind is the most used framework 
+    and some of the libraries here (optionally) make use of it. Whether the short-hand notations are clever or make your 
+    css unreadable is debatable.
+  </li>
+  <li>
     <a href="https://svelte-headlessui.goss.io/" target="_blank">HeadlessUI</a> – Provides unstyled, accessible components for building 
     fully custom designs, ideal for developers who want control over their UI while ensuring accessibility.
   </li>
@@ -123,7 +129,7 @@
 
 <h2>Layouting with Flexbox / Grid</h2>
 <p>
-  TODO. Grid is probaly better suited for general dashboard layout and flexbox may only be needed for smaller arrangements.
+  TODO <br/> Grid is probaly better suited for general dashboard layout and flexbox may only be needed for smaller arrangements.
 </p>
 <ul>
   <li><a href='https://www.youtube.com/watch?v=phWxA89Dy94' target="_blank">Youtube: Flexbox</a> (8 min)</li>
