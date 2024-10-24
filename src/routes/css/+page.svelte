@@ -10,13 +10,13 @@
 <h1>Styling elements using CSS</h1> 
 <p>
     A typical website will not only contain HTML, but also CSS 
-    (cascading style sheets) and javascript.
+    (cascading style sheets) and JavaScript.
 </p>
 
 <ul>
-    <li><b>HTML</b> provides the basic <i>structure</i> of the page, which can be enhanced using CSS and javascript</li>
+    <li><b>HTML</b> provides the basic <i>structure</i> of the page, which can be enhanced using CSS and JavaScript</li>
     <li><b>CSS</b> is used to control presentation, formatting and layout: what it <i>looks</i> like.</li>
-    <li><b>javascript</b> is used to control the <i>behaviour</i> of different elements and the page as a whole.</li>
+    <li><b>JavaScript</b> is used to control the <i>behaviour</i> of different elements and the page as a whole.</li>
 </ul>
 
 <p>
@@ -46,8 +46,6 @@
             Link to the Vis-Team website is 
             <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
-        <button type="submit">Submit</button>
-        <div id="my_new_div">... and a generic HTML block with an id</div>
     </body>
 </html>'/>
 <div class=view-half>
@@ -62,16 +60,7 @@
             Link to the Vis-Team website is 
             <a style="font-weight: bold;" href="https://vis.cs.rptu.de/">here</a>.
         </p>
-        <button type="submit">Submit</button>
-        <div id="my_new_div">... and a generic HTML block with an id</div>
 </div>
-</div>
-
-<div class=intermezzo>
-    <p>
-        There is a bug in the library that does the <a href=https://svhe.onrender.com/ target=_blank>code highlighting</a> adding a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
-        Please ignore or fix if you copy code.
-    </p>
 </div>
 
 <h3>CSS in the <code>head</code></h3>
@@ -81,8 +70,16 @@
     to every single <code>&lt;h1&gt;</code>. To set the style for whole groups of elements, 
     we better define that once instead of for each element. 
     We can do this in the <code>&lt;head&gt;</code> using the <code>&lt;style&gt;</code> element. 
+    With CSS in the head, we can define the overall style of our webpage. We will later learn
+    how to define styles in an extra file, so we can swap the file quickly for new general styles.
     In the example below, we make all headers of level 1 green, 
     each list item should be blue, and links should be bold.
+</p>
+
+<p class=intermezzo>
+    There is a bug in the <a href=https://svhe.onrender.com/ target=_blank>code highlighting library</a> 
+    that adds a <code>*&#123;&#125;</code> in front of <code>{`</code>`}</code> in the code snippets.
+    Please this ignore while reading and remember if you copy the code.
 </p>
 
 <div class=code-flex>
@@ -98,7 +95,7 @@
     </head>
     <body>
         <h1>CSS in the head</h1>
-        <p>We have some text here with a <a href="www.google.com">
+        <p>We have some text here with a <a href="https://www.google.com/">
             link</a> to Google, and a list:</p>
         <ul>
             <li>Eggs</li>
@@ -268,7 +265,7 @@ p::first-letter &#123;
 <h3>Developer tools and console</h3>
 <p>
     Whatever you write in the <code>.html</code> file, it gets <i>rendered</i> in the browser 
-    so you do not see the tags anymore. However, each browser has <i>developer 
+    translating the tags into visual properties. However, each browser has <i>developer 
     tools</i> that allow you to get to the underlying HTML code. You can activate them here:
 </p>
 <ul>

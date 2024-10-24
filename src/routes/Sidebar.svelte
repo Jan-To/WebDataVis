@@ -1,5 +1,6 @@
 <script>
   import { page } from '$app/stores';
+  import LastUpdated from './LastUpdated.svelte';
 
   export let navItems = [];
 
@@ -16,21 +17,27 @@
     </svg>
   </button>
   <nav class:open={isOpen}>
-    <div class='sidebar-header'>
-      <h1>Content</h1>
-    </div>
-    <ul class="navbar">
-      {#each navItems as item}
-        <li>
-          <a href="{item.href}" class:active={$page.url.pathname === item.href}>
-            {#if isOpen}
-              <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
-              <span>{item.label}</span>
+    <div class='nav-content'>
+      <div class='sidebar-header'>
+        <h1>Content</h1>
+      </div>
+      <ul class="navbar">
+        {#each navItems as item}
+            <li>
+              <a href="{item.href}" class:active={$page.url.pathname === item.href}>
+                {#if isOpen}
+                  <svg class=icon width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d={item.path}/></svg>
+                  <span>{item.label}</span>
+                {/if}
+              </a>
+            </li>
+            {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label) }
+              <hr/>
             {/if}
-          </a>
-        </li>
-      {/each}
-    </ul>
+        {/each}
+      </ul>
+    </div>
+    <LastUpdated/>
   </nav>
 </div>
 
@@ -60,6 +67,8 @@
   }
 
   nav {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
@@ -68,11 +77,15 @@
     color: var(--secondary-color);
     transition: all 0.3s ease-in-out;
     width: 0;
-    overflow: hidden;
+    overflow: auto;
   }
 
   nav.open {
     width: var(--sidebar-width);
+  }
+
+  .nav-content {
+    flex: 1;
   }
 
   .sidebar-header {
@@ -114,5 +127,21 @@
   li a.active {
     background-color: var(--secondary-color);
     color: var(--text-color);
+  }
+
+	hr {
+		margin: 10px 0;
+    border-bottom: 2px solid color-mix(in srgb, var(--primary-color), var(--secondary-color));
+    border-top: transparent;
+	}
+
+  @media (max-width: 768px) {
+    li a {
+      padding: 0.25rem 0.5rem;
+    }
+
+    hr {
+      margin: 5px 0;
+    }
   }
 </style>

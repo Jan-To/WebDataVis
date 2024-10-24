@@ -11,7 +11,7 @@
 <h1> Interactions in Svelte</h1>
 
 <h2> Sliders</h2>
-<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the size of each flower in teh encoding.</p>
+<p>Let's add a slider to the iris visualisation from the previous section that allows us to change the size of each flower in the encoding.</p>
 
 <FlowersSlider/>
 
@@ -34,26 +34,19 @@
 
 
 
-<p>Getting back to our airport data, let's create a version with a slider that highlights only those airports serving flights with a given distance:</p>
+<p>Getting back to our airport data, let's create a version with a slider that highlights only those airports serving flights with a given distance.</p>
 
 <Flightsslider/>
 
 <h2> Tooltips</h2>
-<p>Following the "overview first, zoom and filter, and details on demand" mantra, we want to be able to show details when we hover over a datapoint.</p>
+<p>
+  Following the <a href=https://data.europa.eu/apps/data-visualisation-guide/the-information-seeking-mantra target=_blank>
+  overview first, zoom and filter, details on demand</a> mantra, we want to be able to show details 
+  when we hover over a datapoint.
+</p>
 
-<p>A quick and dirty way to do this, is by using a <code>{`title`}</code> element embedded within the visual element. For example: instead of</p>
-
-<div class=code-flex>
-  <Highlight language={xml} code=
-  {`<circle cx=50 cy=50 r=10/>`}/>
-<div class=view-half>
-  <svg width=50 height=50>
-    <circle cx=30 cy=30 r=10/>
-  </svg>
-</div>
-</div>
-
-<p>we can write</p>
+<p>A quick and dirty way to do this, is by using a <code>{`title`}</code> element embedded within the visual element. 
+  For example, we can add a <code>{`title`}</code> to a basic black circle:</p>
 
 <div class=code-flex>
   <Highlight language={xml} code=
@@ -81,7 +74,10 @@
 <p>
   The main magic happens through the Svelte conditional <code>{`{#if ...}`}</code>, where we only show this <code>{`div`}</code> when 
   <code>{`selected_datapoint`}</code> is defined. The <code>{`div`}</code> gets an id of 
-  <code>{`tooltip`}</code> and we set its position next to the location of the mouse. The div itself contains an SVG with the flower, 
+  <code>{`tooltip`}</code> and we set its position next to the location of the mouse. 
+</p>
+<p>
+    The div itself contains an SVG with the flower, 
   and a line of text stating the species. If <code>{`Flower`}</code> would be an SVG itself, we wouldn't have to define the 
   <code>{`<svg>`}</code> here, but looking at the <code>{`Flower.svelte`}</code> file, it returns a 
   <code>{`<g>`}</code> which should be <i>part</i> of an SVG.
@@ -228,7 +224,7 @@
   However, if there are more components that need to access (and possibly write) certain variables, Svelte provides so called <code>stores</code>.
   Stores are variables that are declared in an extra file <code>stores.js</code> and are, after an <code>import x from "./store"</code>, accessible in all components.
   Since <codes>stores</codes> are objects with a <code>subscribe</code> method, dependent components are responsive to changes of the store's value, 
-  which is accessible with <code>$storevariable</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores target="_blank">exercises</a> or 
+  which is accessible with <code>$x</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores target="_blank">exercises</a> or 
   <a href=https://svelte.dev/examples/writable-stores target="_blank">examples</a> of stores.
 </p>
 
@@ -236,7 +232,7 @@
 <h2>Brushing</h2>
 <p>
   The above is a poor-man's version, and we'd like to have a more useful brush where you can select a <i>region</i> of the plot. 
-  D3 allows you to do this, but again: it does some things that are unclear to the beginning javascript programmer. 
+  D3 allows you to do this, but again: it does some things that are unclear to the beginning JavaScript programmer. 
   In the example below, we only create a proof-of-concept for brushing; in a real setting you would create separate components 
   which would solve some of the issue of the brush going outside the plot, etc.
 </p>

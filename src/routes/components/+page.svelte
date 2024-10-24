@@ -213,7 +213,6 @@
   export let data = [];
 </script>
 
-<h1>Airports</h1>
 <Scatterplot datapoints={data.flights} long="from_long" lat="from_lat" />
 <Scatterplot datapoints={data.flights} long="to_long" lat="to_lat" />
 `}/>
@@ -225,8 +224,9 @@
   It looks like this:
 </p>
 
-<h2>Airports</h2>
+<p>"from_long" & "from_lat":</p>
 <Scatterplot datapoints={data.flights} long="from_long" lat="from_lat"/>
+<p>"to_long" & "to_lat":</p>
 <Scatterplot datapoints={data.flights} long="to_long" lat="to_lat"/>
 
 <p>As an exercise, you can create a more generic scatterplot component that is not specific for plotting longitudes and latitudes.</p>
@@ -381,7 +381,7 @@
 `}/>
 
 <p>We create a function that returns an x and y offset for a given index to form a uniform grid. 
-  There are better ways of doing this (later in the <a href="{base}/styling">chapter about Svelte CSS</a>), 
+  There are better ways of doing this (later in the <a href="{base}/styling">chapter about Styling Svelte</a>), 
   but we just code our own here, creating rows of 20 flowers. We use <code>{`console.log`}</code> 
   to make sure that the datapoints we load are actually what we expect. This is a typical way in Svelte 
   to check what's going on: because we start the command with a <code>{`$:`}</code>, this will run every time the value 
@@ -389,10 +389,3 @@
   <i>and</i> its index (which we call <code>{`idx`}</code>). This index is what will be used by 
   <code>{`get_xy`}</code> to calculate the position on the screen. Finally, we transform the flower that is 
   drawn in to put it in the correct position.</p>
-
-
-<h2>Optional Exercises</h2>
-<ul>
-  <li><a href="https://svelte.dev/repl/fce70af77dd44da7a568576e1d02eb40?version=3.59.1" target="_blank">Components</a></li>
-  <li><a href="https://svelte.dev/repl/2ccb36183e504526b3c3c8df5a3310f6?version=3.59.1" target="_blank">Communication between components</a></li>
-</ul>

@@ -15,7 +15,7 @@
   In this tutorial, 
   we will use <a href=http://svelte.dev target="_blank">Svelte</a> and <a href=http://kit.svelte.dev target="_blank">SvelteKit</a> as our main approach. 
   SvelteKit is a programming framework like React or Vue that provides us with some tools to build websites 
-  (and therefore visualisations) more easily. Svelte is a preprocessor that converts code that we write into vanilla javascript. 
+  (and therefore visualisations) more easily. Svelte is a preprocessor that converts code that we write into vanilla JavaScript. 
   You can compare SvelteKit to a restaurant, and Svelte to its kitchen. The magic happens in the kitchen, 
   but customers interact with it through the restaurant. <b>Svelte</b> is a language and compiler that allows you to create reusable components; 
   <b>SvelteKit</b> is a full-stack web application framework built <i>on top of</i> Svelte.
@@ -23,14 +23,14 @@
 
 <p>Below, we'll first go over the basics of Svelte, and then integrate that into SvelteKit.</p>
 
-<h2> HTML, CSS and javascript in Svelte</h2>
+<h2> HTML, CSS and JavaScript in Svelte</h2>
 <p>
-  In the previous sections, we generally kept HTML, CSS and javascript in separate files. 
+  In the previous sections, we generally kept HTML, CSS and JavaScript in separate files. 
   In Svelte, we do not do this. A Svelte file therefore consists of 3 parts:
 </p>
 
 <ol>
-  <li>a javascript section (<code>{`<script></script>`}</code>)</li>
+  <li>a JavaScript section (<code>{`<script></script>`}</code>)</li>
   <li>a CSS section (<code>{`<style></style>`}</code>)</li>
   <li>an HTML section (the rest)</li>
 </ol>
@@ -39,7 +39,7 @@
   Any of these can be omitted if you don't need them.
 </p>
 <p class=intermezzo>
-  The javascript and CSS only apply to the HTML written in this specific file. 
+  The JavaScript and CSS only apply to the HTML written in this specific file. 
   This means that different <i>components</i> (i.e. files) can be styled independently.
 </p>
 
@@ -111,7 +111,7 @@
   In the HTML itself, we can loop over <code>{`names`}</code>, using the <code>{`{#each}`}</code> directive 
   (which is closed using <code>{`{/each}`}</code>). 
   Note that the <code>{`{#each}`}</code> syntax works only in the HTML part of a Svelte file, 
-  not for the script part which is regular javascript.
+  not for the script part which is regular JavaScript.
 </p>
 
 <div class=code-flex>
@@ -136,7 +136,7 @@
 
 <p>
   In the loop, each value is put in the temporary variable <code>{`name`}</code>.
-  You can refer to the value of javascript variables that were defined in the <code>{`<script>`}</code> section or in 
+  You can refer to the value of JavaScript variables that were defined in the <code>{`<script>`}</code> section or in 
   the <code>{`{#each}`}</code> pragma by putting between curly brackets, e.g. <code>{`{name}`}</code>. 
 </p>
 
@@ -200,13 +200,13 @@
 </div>
 
 <p>
-  In line 21-23, we loop over the <code>{`datapoints`}</code> array, each time putting a single element in a 
+  We loop over the <code>{`datapoints`}</code> array, each time putting a single element in a 
   local <code>{`dp`}</code> variable. We can refer to the <code>{`x`}</code> and 
-  <code>{`y`}</code> properties like we do on line 22.
+  <code>{`y`}</code> properties with <code>dp.x</code> / <code>dp.y</code>.
 </p>
 
 <p class=intermezzo>
-  As with regular arrays, you can refer to javascript <i>objects</i> that were defined in the <code>{`<script>`}</code> section or 
+  As with regular arrays, you can refer to JavaScript <i>objects</i> that were defined in the <code>{`<script>`}</code> section or 
   in the <code>{`#each`}</code> pragma by putting between curly brackets, 
   e.g. <code>{`{dp.x}`}</code>, and adding a period followed by the property.
 </p>
@@ -244,7 +244,8 @@
 </div>
 
 <p class=intermezzo>
-  Go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a> at  and go through the following sections: "Introduction" and "Logic"
+  For more practical tutorials, go to the <a href=http://svelte.dev/tutorial target="_blank">svelte tutorial</a>
+  and go through the sections <i>Introduction</i> and <i>Logic</i>.
 </p>
 
 <p>For our scatterplot, let's add a value to all these datapoints, and draw either a blue circle or a red rectangle based on that value.</p>
@@ -324,5 +325,5 @@
 <p>
   We've seen before that we can use curly brackets <code>{`{}`}</code> to pass in a value. Here we also need to work in the other direction: 
   when the value of the slider changes, it should be passed through to the script above. We do that using <code>{`bind:value`}</code>. 
-  Sliding left and right will now update the multiplied value as well. You can try it below.
+  Sliding left and right will now update the multiplied value as well.
 </p>

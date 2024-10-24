@@ -6,28 +6,35 @@
 
 <h1>Implementing data visualizations using Svelte</h1>
 <p>
-  This is a tutorial for the course <i>Visual Analytics Project</i> at RPTU Kaiserslautern-Landau.
+  A tutorial for the <i>Visual Information Analysis Lab</i> at RPTU Kaiserslautern-Landau
 </p>
-
+<p style='color:#7d7d7d; text-align:end;'>
+  <span><i>Jan-Tobias Sohns</i></span><br/>
+  <span style='display:inline-flex;align-items:center;'>
+    <svg width=25 height=25 viewBox="0 0 24 24"><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/></svg>
+    <i>sohns@rptu.de</i>
+  </span>
+</p>
 <div class=intermezzo>
   <h2>Disclaimer</h2>
   <p>
-    The course is adapted from the material of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
-    The original material can be found at <a href="http://vda-lab.gitlab.io/datavis-technologies" target="_blank">http://vda-lab.gitlab.io/datavis-technologies</a>.
+    The course is adapted from the <a href="http://vda-lab.gitlab.io/datavis-technologies" target="_blank">excellent course</a> of Prof. Dr. Jan Aerts at the KU Leuven. <br/>
+    The material is available under a CC-BY-NC license. It can be copied/remixed/tweaked/…​, but the original author needs to be credited. 
+    It can also not be used for commercial purposes except by the original author.
   </p>
 </div>
 <h2>History of Programming Visualizations</h2>
 <p>
   Back in the 1990s, java was the programming language of choice if you wanted something visual 
   and interactive on your screen. 
-  Over the years, this has shifted towards standard web technologies HTML, CSS and javascript.
+  Over the years, this has shifted towards standard web technologies such as HTML, CSS and JavaScript.
 </p>
 
 <p>
   The scientific field of Data Visualization (and later Visual Analytics) did not follow this trend completely.
-  Most people stuck to the language they are already invested in; and in this case, that was not necessarily a bad thing.
-  If you need to visualize data, you probably work with data a lot already. So you know that you need <i>clean</i> and <i>well-formatted</i> data,
-  or even a data-model. So you visualize your data in the language that offers you the most libraries, modules, functions and amenities.
+  Most people stuck to the language they were already invested in; and in this case, that was not necessarily a bad thing.
+  If you need to visualize data, you probably work with a lot of data. Thus, you know that you need <i>clean</i> and <i>well-formatted</i> data,
+  or even a data-model. Therefore, you want to visualize your data in the language that offers you the most libraries, modules, functions and amenities.
 </p>
 
 <img src={vaworkflow} alt="" style="max-width: 650px"/>
@@ -48,7 +55,7 @@
   <li><b>R</b> offers a plethora of means for statistical analysis and is therefore well-suited for a focus on statistics or engineering.</li>
   <li><b>Python</b> was, and still is, the most polular data processing language of the last decade, mainly for its coding speed and versatility. 
     It offers established packages for table and image data, as well as the most advanced machine learning to-date.</li>
-  <li><b>Javascript</b> is most popular in web development and therefore works directly on the visualization and offers the easiest sharing.</li>
+  <li><b>JavaScript</b> is most popular in web development and therefore works directly on the visualization and offers the easiest sharing.</li>
   <li><b>Commercial software</b> solutions like Tableau and PowerBI provide solutions in cases where the visualization is not too complex or needs to be available fast.</li>
 </ul>
 
@@ -80,23 +87,23 @@
   <li>
     PowerBI and Tableau as full <b>software solutions</b>. They have the fastest prototyping and the most quality-of-life functions, 
     but the ready-made components can be limiting regarding your own designs. The trade-off can be worthwhile when the focus 
-    is on simple visualizations and time is money.
+    is on simple visualizations and time is of essence.
   </li>
   <li>
-    Bokeh and Ploty as <b>Python libraries</b> that then compile to Javascript code. They have most basic charts that you can fully write in Python, 
+    Bokeh and Ploty as <b>Python libraries</b> that then compile to JavaScript code. They have most basic charts that you can fully write in Python, 
     inbuild interaction and linking. This works great for learning visualization design initially, as in our previous courses, or 
-    when you are already working in Python, looking at you ML engineers. However, customization is limited by the translation step to Javascript and 
+    when you are already working in Python (looking at you ML engineers). However, customization is limited by the translation step to JavaScript and 
     sharing is inconvenient, as a background Python server handles all data queries.
   </li>
   <li>
-    Observable Framework as a representative of <b>javascript visualization frameworks/libraries</b>. They tend to have a more charts than Python 
+    Observable Framework as a representative of <b>JavaScript visualization frameworks/libraries</b>. They tend to have a more charts than Python 
     libraries and limitations mainly arise from your own expertise at customizing the existing codebase. 
-    Most of these ecosystems rely on the established visualization library <a href=https://d3js.org>D3</a>, that is powerful but has a steep learning curve.
+    Most of these ecosystems rely on the established visualization library <a href=https://d3js.org>D3</a>, which, while powerful, has a steep learning curve.
     We picked observable as it has the benefit of a (static) Python data loader that eases the integration into existing Python processes.
   </li>
   <li>
-    Svelte as a representative of <b>HTML & Javascript from scratch</b>. Writing javascript yourself gives complete control over 
-    all parts of the visualization: when and how data should be loaded, when and where algorithms should run, how each detail of you plot looks and interacts.
+    Svelte as a representative of <b>writing HTML & JavaScript from scratch</b>. Writing JavaScript yourself gives complete control over 
+    all parts of the visualization: when and how data should be loaded, when and where algorithms should run, how each detail of your plot looks and interacts.
     We picked Svelte as it has a relatively understandable syntax compared to more established libraries like <a href=https://react.dev>React</a> 
     and therefore should provide an easier entry to web development. While you <i>can</i> control every detail that does not necessarily mean you <i>have to</i>.
     There are places where it is totally sensible to use existing libraries to speed up programming (e.g. <a href=https://d3js.org>D3</a>).
@@ -110,8 +117,8 @@
 </p>
 
 <p>
-  For this course, we chose to use Svelte and an optional degree of helper libraries, due to the best trade-off between 
-  medium learning curve, fine-grained control, direct programming paradigm and the ease of sharing. Before we go into the details 
+  For this course, we chose to use Svelte and a range of helper libraries, due to the best trade-off between 
+  medium learning curve, fine-grained control, direct programming paradigm and ease of sharing. Before we go into the details 
   of Svelte, we start with an introduction into general and graphic web programming. Feel free to skip that part (or any part), 
   if you feel like you already have sufficient experience.
 </p>

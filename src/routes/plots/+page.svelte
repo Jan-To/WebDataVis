@@ -66,7 +66,6 @@
 </p>
 
 <div class=intermezzo>
-
 <h2>D3 - Data-Driven Documents</h2>
 <p>
   D3 (Data-Driven Documents) has been the go-to library for data visualisation for many years. 
@@ -157,9 +156,9 @@
 </p>
 <p>
   D3 provides a lot of other scales as well, including logarithmic, time, radial etc. Check out 
-  <a href=https://github.com/d3/d3-scale target="_blank">https://github.com/d3/d3-scale</a> for more information.
+  <a href=https://github.com/d3/d3-scale target="_blank">d3-scale</a> for more information.
 
-  Let's add another scale: we can let the size of the point be dependent of the `distance` in the csv file
+  Let's add another scale: we can let the size of the point be dependent of the <i>distance</i> in the csv file
 </p>
 
 <Flights4 {data}/>
@@ -168,7 +167,7 @@
 <p>
   Above we have used a colour scale that ranges from red to green according to longitude. 
   If we want to handle categorical aspects in the data (e.g. if a flight is international or domestic), 
-  we can actually do this easier, using HTML classes. For an overview, see the "HTML, CSS and javascript" section of this tutorial. 
+  we can actually do this easier, using HTML classes. For an overview, see the "HTML, CSS and JavaScript" section of this tutorial. 
   (This will become very important once we start looking into brushing and linking in the next section.)
 </p>
 
@@ -228,7 +227,7 @@
 </p>
 
 <h2>Optional Exercises</h2>
-<p>Here are some exercises related to this chapter:</p>
+<p>Here is a list of exercises related to this chapter or you try to implement some of the extensions mentioned above.</p>
 
 <ul>
   <li><a href="https://svelte.dev/repl/724a8216d6c84491b7b04951718f0b0d?version=3.59.1" target="_blank">Svelte markup</a></li>
