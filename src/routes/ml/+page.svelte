@@ -2,7 +2,7 @@
   import PythonWorker from "./PythonWorker.svelte";
   import { runPythonStore } from "$lib/stores/worker";
   import Scatterplot from "./Scatterplot.svelte";
-    import Loadingspinner from "./Loadingspinner.svelte";
+  import Loadingspinner from "./Loadingspinner.svelte";
   
   let resultPromise;
 </script>
@@ -45,7 +45,7 @@
 {#await resultPromise}
   <Loadingspinner size=100/>
   <p style='margin-bottom: 0.25rem;'>Loading local Pyodite server.</p>
-  <p style='margin-top: 0.25rem;'>This takes ~5 second the first time.</p>
+  <p style='margin-top: 0.25rem;'>This takes ~5 seconds the first time.</p>
 {:then results} 
   {#if results?.data} 
     <Scatterplot datapoints={results.data} x="0" y="1" color={results.labels} />

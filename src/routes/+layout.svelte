@@ -11,15 +11,7 @@
 		const contentwidth = parseInt(getComputedStyle(document.body).getPropertyValue('--max-width'), 10);
 		const sidebarwidth = parseInt(getComputedStyle(document.body).getPropertyValue('--sidebar-width'), 10);
 		const totalwidth = contentwidth + sidebarwidth;
-		console.log(totalwidth);
-		if (window.matchMedia('(min-width:'+totalwidth+'px)').matches) {
-			isOpen = true;
-			console.log("widescreen");
-			console.log(getComputedStyle(document.body).getPropertyValue('--max-width'))
-		} else {
-			isOpen = false;
-			console.log("narrowscreen");
-		}
+		isOpen = window.matchMedia('(min-width:'+totalwidth+'px)').matches;
   });
 
 	const navItems = [
