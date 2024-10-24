@@ -1,5 +1,10 @@
 <script>
-
+  import PythonWorker from "./PythonWorker.svelte";
+  import { runPythonStore } from "$lib/stores/worker";
+  import Scatterplot from "./Scatterplot.svelte";
+    import Loadingspinner from "./Loadingspinner.svelte";
+  
+  let resultPromise;
 </script>
 
 <h1>Machine Learning in the Web</h1>
@@ -29,8 +34,38 @@
   </li>
 </ul>
 
-<h2>Injecting Python with Pyodite</h2>
+<h2>Injecting Python with Pyodide</h2>
 <p>
   We recomment to use <a href=https://pyodide.org/en/stable/ target=_blank>Pyodide</a> for injecting Python in JavaScript / Svelte applications.
   TODO Tutorial...
 </p>
+
+<button class=button on:click={runPythonStore.run}>Run Python Script</button>
+<div class=pyex>
+{#await resultPromise}
+  <Loadingspinner size=100/>
+  <p style='margin-bottom: 0.25rem;'>Loading local Pyodite server.</p>
+  <p style='margin-top: 0.25rem;'>This takes ~5 second the first time.</p>
+{:then results} 
+  {#if results?.data} 
+    <Scatterplot datapoints={results.data} x="0" y="1" color={results.labels} />
+  {:else}
+    <p>Press the button to run script in Pyodide.</p>      
+  {/if}
+{/await}
+</div>
+
+<PythonWorker scriptName='my_python_script.py' bind:resultPromise />
+
+<style>
+  .pyex {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    background-color: whitesmoke;
+  }
+</style>
