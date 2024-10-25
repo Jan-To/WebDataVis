@@ -2,6 +2,9 @@
     import { base } from '$app/paths';
     import { onDestroy, onMount } from "svelte";
     import { runPythonStore } from "$lib/stores/worker";
+
+    // get script context / parameters from stores 
+    // change to export let, if you want to pass directly
     import { n_clusters } from '$lib/stores/parameters';
 
     export let resultPromise;
