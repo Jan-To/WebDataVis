@@ -93,7 +93,7 @@ results = {
   You can probably hide the startup time within your initial page load.
 </p>
 <p>
-  The Pyidode docs contain a detailed explanation on <a href=https://pyodide.org/en/stable/usage/webworker.html target=_blank>how to set up a Pyodide web worker</a>.
+  The Pyodide docs contain a detailed explanation on <a href=https://pyodide.org/en/stable/usage/webworker.html target=_blank>how to set up a Pyodide web worker</a>.
   However, we will provide code snippets that should serve as a good starting point for most scenarios. You don't need to grasp every detail,
   as all lines that potentially change are explained in annotations. There are four parts to our setup:
 </p>
