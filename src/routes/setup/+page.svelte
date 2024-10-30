@@ -44,7 +44,7 @@
 </p>
 
 <Highlight language={bash} code=
-{`npm create svelte@latest my-app
+{`npx sv create my-app
 cd my-app
 npm install
 npm run dev -- --open
