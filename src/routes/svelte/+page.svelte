@@ -310,14 +310,18 @@
 
 <h3> Reactivity</h3>
 <p>
-  This is one of the major features of Svelte which has an immense effect on programming experience, its <i>reactivity</i>. 
-  Reactivity means that when some variable <code>{`a`}</code> depends on a variable <code>{`b`}</code>, and 
+  One of the major features of Svelte which has an immense effect on programming experience is reactivity. 
+  Reactivity means that when some variable <code>{`a`}</code> is derived from a variable <code>{`b`}</code>, and 
   <code>{`b`}</code> is changed, that the value of <code>{`a`}</code> is automatically updated as well. 
   This is what makes a tool like Excel so strong: if you have a cell in a spreadsheet with a formula <code>{`=A1*2`}</code>, 
-  it will have the value of cell A1 multiplied by 2. If you change the value of A1, the value in the derived cell is <i>automatically</i> updated as well. 
+  it will have the value of cell A1 multiplied by 2. If you change the value of A1, the value in the derived cell 
+  is <i>automatically</i> updated as well. 
   Most programming languages do not have this baked in, but with Svelte you do have that functionality.
 
-  We do this using the <code>{`$:`}</code> pragma. For example:
+  We do this using the <code>{`$state()`}</code> and <code>{`$derived()`}</code> keywords. 
+  The <code>{`$state()`}</code> keyword declares a reactive state, which means that your UI reacts when it changes.
+  The <code>{`$derived()`}</code> keyword declares a derived state, which will be react to all changes to its dependencies.
+  For example:
 </p>
 
 <Slider/>

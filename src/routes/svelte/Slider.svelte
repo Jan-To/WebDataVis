@@ -2,15 +2,15 @@
   import Highlight from "svelte-highlight";
   import xml from "svelte-highlight/languages/xml";
 
-  let slider_value = 50;
-  $: multiplied_value = slider_value * 2
+  let slider_value = $state(50);
+  let multiplied_value = $derived(slider_value * 2);
 </script>
 
 <div class=code-flex>
   <Highlight language={xml} code=
 {`<script>
-  let slider_value = 50;
-  $: multiplied_value = slider_value * 2
+  let slider_value = $state(50);
+  let multiplied_value = $derived(slider_value * 2);
 </script>
 
 <input type="range" min="0" max="100" bind:value={slider_value}/>
