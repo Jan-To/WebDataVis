@@ -56,8 +56,8 @@ Airports serving flights in this range (km): {slider_value - 1000} - {slider_val
 
 <Highlight language={xml} code=
 {`<script>
-  let slider_value = 5000;
-  export let data = []
+  let datapoints = $state([]) // load with onMount, hidden here
+  let slider_value = $state(5000);
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min

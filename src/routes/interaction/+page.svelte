@@ -20,8 +20,14 @@
 <ul>
   <li>We create a new variable that holds the value for the slider and set its default to 3.</li>
   <li>We add the actual slider.</li>
-  <li>We want to replace the hard-coded value of <code>{`3`}</code> with the dynamic value from the slider. Hence, we pass it as an argument to <code>{`<Flower/>`}</code></li>
-  <li>We accept the argument in <code>{`<Flower/>`}</code> via <code>export let</code>. Due to the <code>$:</code> declaration, the draw variables are already reactive.</li>
+  <li>
+    We want to replace the hard-coded value of <code>{`3`}</code> with the dynamic value from the slider. 
+    Hence, we pass it as a property to <code>{`<Flower/>`}</code>
+  </li>
+  <li>
+    We accept the property in <code>{`<Flower/>`}</code>. 
+    Due to the <code>$derived()</code> declaration, the draw variables are already reactive.
+  </li>
   <li>Finally, we let the circle radius also react to the flower scaling with the addition of <code>{`{scale*3.5}`}</code></li>
 </ul>
 
@@ -31,8 +37,6 @@
 <p>Change this example so that, instead of a grid of flowers, these flowers are presented as a scatterplot based on the length and width of their sepals, like so:</p>
 
 <img src={scatterflowers} alt="" width=50%/>
-
-
 
 <p>Getting back to our airport data, let's create a version with a slider that highlights only those airports serving flights with a given distance.</p>
 
@@ -85,7 +89,7 @@
 
 <p>
   The <code>{`div`}</code> gets a position (<code>{`style="left: ...`}</code>) that depends on <code>{`mouse_x`}</code> and 
-  <code>{`mouse_y`}</code>. These are set <code>on:mouseover</code> when we hover over a circle, using the 
+  <code>{`mouse_y`}</code>. These are set <code>onmouseover</code> when we hover over a circle, using the 
   <code>{`setMousePosition(event)`}</code>. 
   The <code>event</code> that is automatically passed is the event that triggered the <code>mouseover</code>. 
   Check what is in these events by adding a <code>{`console.log(event)`}</code> in the <code>{`setMousePosition`}</code> function.
@@ -113,11 +117,12 @@
   import { scaleLinear } from 'd3-scale';
   import { extent } from 'd3-array';
 
-  export let datapoints = []
-  export let x;
-  export let y;
-
-  export let selected_datapoint = undefined;
+  let {
+    datapoints = [],
+    x,
+    y,
+    selected_datapoint = $bindable(undefined)
+  } = $props();
 
   $: xScale = scaleLinear()
                 .domain(extent(datapoints.map((d) => { return d[x]})))
@@ -131,8 +136,8 @@
   {#each datapoints as datapoint}
     <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
             r=5
-            on:mouseover={function() {selected_datapoint = datapoint}}
-            on:mouseout={function() {selected_datapoint = undefined}}
+            onmouseover={function() {selected_datapoint = datapoint}}
+            onmouseout={function() {selected_datapoint = undefined}}
             class:selected="{selected_datapoint && datapoint.id <h1> selected_datapoint.id}"</h1>
     />
   {/each}
@@ -158,13 +163,13 @@
 
 <ul>
   <li>We'll need to have a <code>{`selected_datapoint`}</code> variable to keep track of which datapoint is the selected one.</li>
-  <li>Using <code>{`on:mouseover`}</code> we can set the <code>{`selected_datapoint`}</code>...</li>
-  <li>... which is unset on <code>{`on:mouseout`}</code>.</li>
+  <li>Using <code>{`onmouseover`}</code> we can set the <code>{`selected_datapoint`}</code>...</li>
+  <li>... which is unset on <code>{`onmouseout`}</code>.</li>
   <li>
     Finally, we can set the class of our circle to <code>{`selected`}</code> 
     if <code>{`selected_datapoint`}</code> is defined and the id of our datapoint is the same as the selected datapoint.
   </li>
-  <li>We <code>export</code> the variable <code>selected_datapoint</code> to make it visible from outside.</li>
+  <li>We declare the property <code>selected_datapoint</code> as <code>$bindable()</code> to allow dataflow from child to parent component.</li>
 </ul>
 
 <p><code>{`src/routes/+page.svelte`}</code>:</p>
@@ -217,7 +222,7 @@
   that info back into the main code, from where it then can be passed to the other scatterplot.
 </p>
 
-<h2>Stores</h2>
+<h2>Stores (are an old concept from Svelte 4. TODO)</h2>
 
 <p>
   Note that there are multiple ways of achieving this linking. Passing around data through the application hierarchy like above is feasible in this small example.

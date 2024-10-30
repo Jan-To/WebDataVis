@@ -41,7 +41,7 @@
   but GitHub-Pages does not offer this functionality. If you need or want to use Python, injecting Python is a valid solution.
 </p>
 
-<h2>Injecting Python with Pyodide</h2>
+<h2>Injecting Python with Pyodide (code version Svelte 4)</h2>
 <p>
   We recommend to use <a href=https://pyodide.org/en/stable/ target=_blank>Pyodide</a> for injecting Python in JavaScript applications.
   Find an example on how to integrate Pyodide in Svelte below.

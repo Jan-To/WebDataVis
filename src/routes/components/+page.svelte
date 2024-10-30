@@ -59,7 +59,7 @@
   h3 {
     color=: blue;
   }
-</script`}/>
+</script>`}/>
 
 <p>In <code>{`App.svelte`}</code>:</p>
 <div class=code-flex>
@@ -91,8 +91,8 @@
 <p>
   You will notice that the parent <code>{`script`}</code> and <code>{`style`}</code> 
   is not available within the child-component. If you need to transfer variables from parent to child, 
-  add <code>export let x</code> to the child to declare an attribute <code>x</code> that can be accessed
-  upon creation in the parent. In the scatterplot example above, this is <code>which="from/to"</code>, 
+  add <code>{`const { x=0, y=[] } = $props()`}</code> in the child to declare input properties <code>x</code>
+  and <code>y</code>. In the scatterplot example above, this is <code>which="from/to"</code>, 
   where <code>which</code> is the variable name.
 </p>
 
@@ -103,7 +103,7 @@
 
 <Highlight language={xml} code=
 {`<script>
-  export let datapoints = [];
+  let { datapoints = [] } = $props();
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
@@ -131,9 +131,10 @@
 `}/>
 
 <p>
-  In the first line of <code>{`script`}</code>, this component defines a <code>{`datapoints`}</code> variable. 
-  Because of the <code>{`export let`}</code> instead of just <code>{`let`}</code> we can access this variable from outside. 
-  Now how do we do that? 
+  In the first line of <code>{`script`}</code>, this component defines a <code>{`datapoints`}</code> property. 
+  Because of the <code>{`$props()`}</code> instead of just <code>{`let`}</code> we can set this variable from the parent. 
+</p>
+<p>
   We have moved all scatterplot specific code from <code>{`src/routes/+page.svelte`}</code> into this new component. 
   We rewrite <code>{`src/routes/+page.svelte`}</code> to look like this:
 </p>
@@ -141,35 +142,37 @@
 <Highlight language={xml} code=
 {`<script>
   import Scatterplot from './Scatterplot.svelte';
-  export let data = [];
+  let { data = [] } = $props(); // load data from file to parent
 </script>
 
 <h1>Airports</h1>
-<Scatterplot datapoints={data.flights}/>
+<Scatterplot datapoints={data.flights}/> <!-- hand data to child -->
 `}/>
 
 <p>
   We first import this new <code>{`Scatterplot`}</code> element that we created. 
   We get the data just like before from <code>{`+page.js`}</code>. 
-  Finally, we pass <code>{`data.flights`}</code> as the value for the 
+</p>
+<p>
+  Then, we pass <code>{`data.flights`}</code> as the value for the 
   <code>{`datapoints`}</code> variable of the 
   <code>{`Scatterplot`}</code>. The 
   <code>{`Scatterplot`}</code> element takes a 
   <code>{`datapoints`}</code> attribute. 
-  This attribute exists because we defined the <code>{`export let datapoints`}</code> in the component.</p>
+  This attribute exists because we defined it as <code>{`$props`}</code> in the child component.</p>
 
 <p class=intermezzo>
   Components that we create ourselves (like <code>{`Scatterplot`}</code>) must be capitalised: 
-  <code>{`scatterplot`}</code> will not work. This in contrast to the regular HTML elements
+  <code>{`scatterplot`}</code> will not work. This contrasts Svelte components to regular HTML elements
    (<code>{`h1`}</code>,
    <code>{`div`}</code>,...).
 </p>
 
 <p>
   In our new <code>{`Scatterplot`}</code> component, the fact that we use the departure airports 
-  (<code>{`from_long`}</code> and 
-  <code>{`from_lat`}</code>) is hard-coded. We can change our code so that we can pass this as an argument. 
-  In the code below, we <code>{`export`}</code> two new variables
+  (<code>{`from_long`}</code> and <code>{`from_lat`}</code>) is hard-coded. 
+  We can change our code so that we can pass this as properties. 
+  In the code below, we add two new properties
    (<code>{`long`}</code> and
     <code>{`lat`}</code>) that we default to the departure airport.
 </p>
@@ -177,9 +180,7 @@
 <code>{`src/routes/Scatterplot.svelte`}</code>:
 <Highlight language={xml} code=
 {`<script>
-  export let datapoints = [];
-  export let long = 'from_long';
-  export let lat = 'from_lat';
+  let { datapoints = [], long = 'from_long', lat = 'from_lat' } = $props();
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min
@@ -292,17 +293,17 @@
     //   sepalWidth: 3.5,
     //   species: "setosa" }
 
-    export let datapoint = {};
+    let { datapoint = {} } = $props();
 
-    let scale = 3;
-    $: sl = scale * datapoint.sepalLength;
-    $: sw = scale * datapoint.sepalWidth;
-    $: pl = scale * datapoint.petalLength;
-    $: pw = scale * datapoint.petalWidth;
-    $: sepal_path =
-        "M 0,0 " + "C " + sl + ",-" + sw + " " + sl + "," + sw + " 0,0 Z";
-    $: petal_path =
-        "M 0,0 " + "C " + pl + ",-" + pw + " " + pl + "," + pw + " 0,0 Z";
+    const scale = 3;
+    const sl = $derived(scale*datapoint.sepal_length)
+    const sw = $derived(scale*datapoint.sepal_width)
+    const pl = $derived(scale*datapoint.petal_length)
+    const pw = $derived(scale*datapoint.petal_width)
+    const sepal_path = $derived(
+      "M 0,0 " + "C " + sl + ",-" + sw + " " + sl + "," + sw + " 0,0 Z")
+    const petal_path = $derived(
+      "M 0,0 " + "C " + pl + ",-" + pw + " " + pl + "," + pw + " 0,0 Z")
 </script>
 
 <g>
@@ -328,15 +329,13 @@
         fill: #d95f02;
         fill-opacity: 0.3;
     }
-</style>
-
-`}/>
+</style>`}/>
 
 <p>The following things are noteworthy:</p>
 <ul>
   <li>
     The <code>scale</code> we define here is just a hack-y way for getting images that I find good in size. 
-    As an exercise, replace this hard-coded <code>scale</code> with a slider.
+    We will soon replace this hard-coded <code>scale</code> with a slider.
   </li>
   <li>
     Here we define the <code>{`path`}</code> to draw a single petal or sepal. 
@@ -360,14 +359,14 @@
 {`<script>
     import Flower from './Flower.svelte'
     
-    export let data = [];
+    const { data } = $props();
 
     const get_xy = function(idx) {
         let y = 25 + (Math.floor(idx / 20) * 50)
         let x = 25 + ((idx % 20) * 50)
         return [x,y]
     }
-    $: console.log(data.flowers)
+    $effect(() => { console.log(data.flowers) })
 
 </script>
 
@@ -380,12 +379,18 @@
 </svg>
 `}/>
 
-<p>We create a function that returns an x and y offset for a given index to form a uniform grid. 
+<p>
+  We create a function that returns an x and y offset for a given index to form a uniform grid. 
   There are better ways of doing this (later in the <a href="{base}/styling">chapter about Styling Svelte</a>), 
-  but we just code our own here, creating rows of 20 flowers. We use <code>{`console.log`}</code> 
-  to make sure that the datapoints we load are actually what we expect. This is a typical way in Svelte 
-  to check what's going on: because we start the command with a <code>{`$:`}</code>, this will run every time the value 
-  for <code>{`datapoints`}</code> changes (in our case once, after loading). We loop over all datapoints, but we return both the single datapoint
+  but we just code our own here, creating rows of 20 flowers. 
+</p>
+<p>
+  We use <code>{`console.log`}</code> to make sure that the datapoints we load are actually what we expect. 
+  This is a typical way in Svelte to check what's going on: Because we wrap the command in an 
+  <code><a href=https://svelte.dev/docs/svelte/$effect target=_blank>{`$effect()`}</a></code>-function, this will run every time the value 
+  for <code>{`datapoints`}</code> changes (in our case once, after loading). We loop over all datapoints, 
+  but we return both the single datapoint
   <i>and</i> its index (which we call <code>{`idx`}</code>). This index is what will be used by 
   <code>{`get_xy`}</code> to calculate the position on the screen. Finally, we transform the flower that is 
-  drawn in to put it in the correct position.</p>
+  drawn in to put it in the correct position.
+</p>

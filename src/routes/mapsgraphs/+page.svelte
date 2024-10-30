@@ -13,9 +13,7 @@
 </p>
 
 <p>
-  You'll first have to install the leaflet library with <code>{`npm i -d leaflet`}</code>. 
-  You will also have to add the following line to your <code>{`+page.js`}</code>: 
-  <code>{`export const ssr = false;`}</code>
+  You'll first have to install the leaflet library with <code>{`npm i -d leaflet`}</code>.
 </p>
 
 <p>A minimal, basic map:</p>
@@ -44,7 +42,7 @@
 <div id="svelte-nodelink"></div>
 
 <p>
-  You noticed the dragging is not completely smooth, as we <i>dragNode</i> only <code>on:mousemove</code>. 
+  You noticed the dragging is not completely smooth, as we <i>dragNode</i> only <code>onmousemove</code>. 
   You can probably do better in a real implementation.
 </p>
 <p>

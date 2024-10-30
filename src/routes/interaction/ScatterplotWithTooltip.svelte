@@ -100,7 +100,7 @@ Species: {selected_datapoint.species}
 <Highlight language={xml} code=
 {`<script>
     import Scatterplot from './Scatterplot.svelte'
-    export let data = [];
+    let data = $state([]) // load with onMount(), hidden here
 </script>
 
 <Scatterplot datapoints={data.flowers} x="sepalLength" y="sepalWidth"/>
@@ -120,16 +120,14 @@ Species: {selected_datapoint.species}
   import { extent } from 'd3-array';
   import Flower from './Flower.svelte'
 
-  export let datapoints = [];
-  export let x;
-  export let y;
+  let { datapoints=[], x="", y="" } = $props();
 
-  export let selected_datapoint = undefined;
+  let selected_datapoint = $state(undefined);
 
-  $: xScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400])
-  $: yScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400])
+  let xScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400]))
+  let yScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400]))
 
-  let mouse_x, mouse_y; // save mouse position on mouseover event for fixed positioning of tooltip
+  let mouse_x = $state(), mouse_y = $state(); // save mouse position on mouseover event for fixed positioning of tooltip
   const setMousePosition = function(event) {
     mouse_x = event.clientX;
     mouse_y = event.clientY;
@@ -140,8 +138,8 @@ Species: {selected_datapoint.species}
   {#each datapoints as datapoint} <!-- define hover-event handling & responses below -->
     <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])} r=5
             class:selected="{selected_datapoint && datapoint.id == selected_datapoint.id}" 
-            on:mouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}}
-            on:mouseout={function() {selected_datapoint = undefined}}/>
+            onmouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}}
+            onmouseout={function() {selected_datapoint = undefined}}/>
   {/each}
 </svg>
 
