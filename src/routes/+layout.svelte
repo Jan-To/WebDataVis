@@ -52,7 +52,7 @@
 			<div class=intermezzo>
 				<p>
 					With unfortunate timing, <i>Svelte</i> received a major update from <i>version 4</i> to <i>5</i> on the day of our kickoff meeting. 
-					While most content in this tutorial still applies, some commands may be <i>deprecated</i>. I am working on it.
+					While most content was updated on 30.10.24, some inconsistencies may still occur. I am working on it.
 				</p>
 			</div>
 			{@render children?.()}
