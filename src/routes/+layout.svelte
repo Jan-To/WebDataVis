@@ -42,6 +42,12 @@
 	<Sidebar bind:isOpen {navItems}/>
 	<div class='content-container {isOpen ? 'open' : 'closed'}'>
 		<div class='content'>
+			<div class=intermezzo>
+				<p>
+					With unfortunate timing, <i>Svelte</i> received a major update from <i>version 4</i> to <i>5</i> on the day of our kickoff meeting. 
+					While most content in this tutorial still applies, some commands may be <i>deprecated</i>. I am working on it.
+				</p>
+			</div>
 			<slot></slot>
 			<div class=nextbuttons>
 				{#if currentIndex > 0}
