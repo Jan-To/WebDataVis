@@ -6,7 +6,7 @@
     import { runPythonStore } from "$lib/stores/worker";
 
     // get script context / parameters from stores 
-    // change to export let, if you want to pass directly
+    // change to property, if you want to pass directly
     import { n_clusters } from '$lib/stores/parameters';
 
     let { resultPromise = $bindable(), scriptName } = $props();
@@ -15,7 +15,6 @@
     let script;
     let id = 0;
     let callbacks = {};
-
 
     onMount(async () => {
         initWorker();
@@ -73,6 +72,7 @@
             worker.terminate();
         }
     });
+    
     // make runCode() globally available:
     // call runCode() whenever the store runPythonCounter changes
     // if runCode() is only called from parent component:

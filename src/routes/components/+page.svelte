@@ -211,7 +211,7 @@
 <Highlight language={xml} code=
 {`<script>
   import Scatterplot from './Scatterplot.svelte';
-  export let data = [];
+  let { data = [] } = $props(); // load data from file to parent
 </script>
 
 <Scatterplot datapoints={data.flights} long="from_long" lat="from_lat" />
