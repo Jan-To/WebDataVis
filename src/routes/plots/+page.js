@@ -1,6 +1,6 @@
 import { base } from '$app/paths';
 
-export const load = async ({ fetch }) => {
+export async function load ({ fetch }) {
   const responseJSON = await fetch(base + "/flights_part.json")
   const data = await responseJSON.json()
 

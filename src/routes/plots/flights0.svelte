@@ -2,12 +2,12 @@
   import Highlight from "svelte-highlight";
   import javascript from "svelte-highlight/languages/javascript";
 
-  let { data } = $props();
+  const { data } = $props();
 </script>
 
 <Highlight language={javascript} code=
 {`<script>
-    export let data = [];
+    const { data } = $props();
 </script>
 
 <svg width="800" height="400">

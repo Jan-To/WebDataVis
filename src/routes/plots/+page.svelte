@@ -117,7 +117,7 @@
 {`<script>
   import { scaleLinear } from 'd3-scale'; (1)
 
-  export let data = [];
+  const { data } = $props();
 
   const scaleX = scaleLinear().domain([-180,180]).range([0,800]) (2)
   const scaleY = scaleLinear().domain([-90,90]).range([400,0]) (2)
