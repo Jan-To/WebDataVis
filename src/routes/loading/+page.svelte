@@ -58,7 +58,7 @@
 </p>
 
 <Highlight language={javascript} code=
-{`export const load = () => {
+{`export function load({ params }) {
   return {
     values: [1,2,3,"a string"]
   }
@@ -69,7 +69,7 @@
 <div class=code-flex>
     <Highlight language={xml} code=
 {`<script>
-    export let data;
+    const { data } = $props()
 </script>
 
 {JSON.stringify(data)}`}/>
@@ -99,7 +99,7 @@
 </p>
 
 <Highlight language={javascript} code=
-{`export const load = async ({ fetch }) => {
+{`export async function load({ fetch, params }) {
   const response = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
   const dataFlowers = await response.json()
 
@@ -109,9 +109,9 @@
 <p>What happens here?</p>
 
 <ol>
-  <li>We create an asynchronous function <code>{`load`}</code>...</li>
-  <li>...that captures the HTTP response into a variable <code>{`response`}</code>...</li>
-  <li>...from which we extract the <code>{`json`}</code> part which actually contains the data.</li>
+  <li>We create an asynchronous function <code>{`load`}</code> ...</li>
+  <li>... that captures the HTTP response into a variable <code>{`response`}</code> ...</li>
+  <li>... from which we extract the <code>{`json`}</code> part which actually contains the data.</li>
   <li>We create the actual return value of the <code>{`+page.js`}</code> file: it is
     a <i>map</i> with a single key <code>{`flowers`}</code> and its value coming 
     from <code>{`dataFlowers`}</code>.</li>
@@ -128,7 +128,7 @@
 <div class=code-flex>
     <Highlight language={javascript} code=
 {`<script>
-  export let data;
+  const data = $props()
 </script>
 
 <ul>
@@ -167,7 +167,10 @@
   </p>
 </div>
 
-<p>The <code>{`+page.js`}</code> example above is a minimal one: you can add additional data transformations. For example, the iris dataset has the following form:</p>
+<p>
+  The <code>{`+page.js`}</code> example above is a minimal one: you can add additional data transformations. 
+  For example, the iris dataset has the following form:
+</p>
 
  <Highlight language={javascript} code=
 {`[
@@ -186,7 +189,7 @@
 </p>
 
 <Highlight language={javascript} code=
-{`export const load = async ({ fetch }) => {
+{`export async function load({ fetch, params }) {
     const responseFlowers = await fetch('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json')
     const dataFlowers = await responseFlowers.json()
     dataFlowers.forEach((d,i) => { d.id = i, d.species = "Iris " + d.species })
@@ -232,7 +235,7 @@ Domododevo,Moscow,Russia,38.51,55.681,Balandino,Chelyabinsk,Russia,61.838,55.509
 <Highlight language={javascript} code=
 {`import Papa from 'papaparse'
 
-export const load = async ({ fetch }) => {
+export async function load({ fetch, params }) {
     const responseFlights = await fetch('https://jan-to.github.io/WebDataVis/flights_part.csv', 
       { headers: { 'Content-Type': 'text/csv' } })
     let csvFlights = await responseFlights.text()
@@ -290,7 +293,7 @@ Franz Josef Strauss (Munich)`}/>
 {`import Papa from 'papaparse';
 import { base } from '$app/paths';
 
-export const load = async ({ fetch }) => {
+export async function load({ fetch, params }) {
   const responseJSON = await fetch(base + '/flights_part.json')
   const dataJSON = await responseJSON.json()
 
@@ -628,7 +631,7 @@ In the <code>{`+page.svelte`}</code> file we can then display or visualise only 
 <p>
   For a tutorial on loading from an SQL database, see 
   <a href=https://vda-lab.gitlab.io/datavis-technologies/_basic_data_visualisation_with_svelte.html#_from_an_sql_database>this tutorial</a>. 
-  For the full documentation on how to load data in SvelteKit, see <a href=https://kit.svelte.dev/docs/load target="_blank">https://kit.svelte.dev/docs/load</a>.
+  Check out the full documentation on <a href=https://kit.svelte.dev/docs/load target="_blank">how to load data in SvelteKit</a>.
 </p>
 
 <div class=intermezzo>
