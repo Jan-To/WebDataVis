@@ -5,7 +5,7 @@
   import { onMount } from 'svelte';
   import Flower from './Flower.svelte';
 
-  let datapoints = []
+  let datapoints = $state([])
 
   onMount(() => {
       Papa.parse("https://vda-lab.github.io/assets/iris.csv", {
@@ -17,7 +17,7 @@
       })
   })
 
-  let slider_value = 3;
+  let slider_value = $state(3);
   const get_xy = function(idx) {
       let y = 25 + (Math.floor(idx / 20) * 50)
       let x = 25 + ((idx % 20) * 50)

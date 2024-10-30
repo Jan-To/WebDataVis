@@ -1,4 +1,6 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { base } from '$app/paths';
     import { onDestroy, onMount } from "svelte";
     import { runPythonStore } from "$lib/stores/worker";
@@ -7,19 +9,13 @@
     // change to export let, if you want to pass directly
     import { n_clusters } from '$lib/stores/parameters';
 
-    export let resultPromise;
-    export let scriptName;
+    let { resultPromise = $bindable(), scriptName } = $props();
 
     let worker;
     let script;
     let id = 0;
     let callbacks = {};
 
-    // make runCode() globally available:
-    // call runCode() whenever the store runPythonCounter changes
-    // if runCode() is only called from parent component:
-    // expose runCode() directly
-    $: $runPythonStore && runCode();
 
     onMount(async () => {
         initWorker();
@@ -76,5 +72,12 @@
         if (worker) {
             worker.terminate();
         }
+    });
+    // make runCode() globally available:
+    // call runCode() whenever the store runPythonCounter changes
+    // if runCode() is only called from parent component:
+    // expose runCode() directly
+    run(() => {
+        $runPythonStore && runCode();
     });
 </script>

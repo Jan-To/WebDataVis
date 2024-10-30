@@ -1,19 +1,25 @@
 <script>    
-    export let datapoint = {}
-    export let scale = 3; // add export
+    /**
+     * @typedef {Object} Props
+     * @property {any} [datapoint]
+     * @property {number} [scale]
+     */
 
-    $: sl = scale*datapoint.sepal_length
-    $: sw = scale*datapoint.sepal_width
-    $: pl = scale*datapoint.petal_length
-    $: pw = scale*datapoint.petal_width
-    $: sepal_path = "M 0,0 " +
+    /** @type {Props} */
+    let { datapoint = {}, scale = 3 } = $props();
+
+    let sl = $derived(scale*datapoint.sepal_length)
+    let sw = $derived(scale*datapoint.sepal_width)
+    let pl = $derived(scale*datapoint.petal_length)
+    let pw = $derived(scale*datapoint.petal_width)
+    let sepal_path = $derived("M 0,0 " +
                     "C " + sl + ",-" + sw +
                         " " + sl + "," + sw +
-                        " 0,0 Z"
-    $: petal_path = "M 0,0 " +
+                        " 0,0 Z")
+    let petal_path = $derived("M 0,0 " +
                     "C " + pl + ",-" + pw +
                     " " + pl + "," + pw +
-                    " 0,0 Z"
+                    " 0,0 Z")
 </script>
 
 <g>                <!-- dynamic radius -->

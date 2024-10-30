@@ -4,7 +4,7 @@
     import json from "svelte-highlight/languages/json";
     import javascript from "svelte-highlight/languages/javascript";
 
-    let count = 0;
+    let count = $state(0);
     function handleClick() {count+=1}
 </script>
 
@@ -37,7 +37,7 @@
 </script>`}/>
 <div class=view-half>
     <p>We can use JavaScript to add additional functionality to a site.</p>
-    <button on:click={handleClick}>Increment the counter</button>
+    <button onclick={handleClick}>Increment the counter</button>
     <p id="demo">
         {#if count > 0}
         You clicked the button {count} times.

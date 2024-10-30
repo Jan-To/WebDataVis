@@ -1,7 +1,13 @@
 <script>
-  export let datapoints = [];
-  export let long = 'from_long';
-  export let lat = 'from_lat';
+  /**
+   * @typedef {Object} Props
+   * @property {any} [datapoints]
+   * @property {string} [long]
+   * @property {string} [lat]
+   */
+
+  /** @type {Props} */
+  let { datapoints = [], long = 'from_long', lat = 'from_lat' } = $props();
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min

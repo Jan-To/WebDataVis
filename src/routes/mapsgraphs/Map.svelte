@@ -53,7 +53,7 @@
   </script>
 </svelte:head>
 
-<div id="map" />
+<div id="map"></div>
 
 <style>
   #map {

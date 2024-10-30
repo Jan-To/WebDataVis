@@ -2,13 +2,15 @@
   import { scaleLinear } from 'd3-scale';
   import { extent } from 'd3-array';
 
-  export let datapoints = []
-  export let x
-  export let y
-  export let selected_datapoint = undefined;
+  let {
+    datapoints = [],
+    x,
+    y,
+    selected_datapoint = $bindable(undefined)
+  } = $props();
 
-  $: xScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400])
-  $: yScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400])
+  let xScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400]))
+  let yScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400]))
 </script>
 
 <svg width=400 height=400>
@@ -16,8 +18,8 @@
     <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
             r=5
             class:selected="{selected_datapoint && datapoint.id == selected_datapoint.id}"
-            on:mouseover={function() {selected_datapoint = datapoint}}
-            on:mouseout={function() {selected_datapoint = undefined}}/>
+            onmouseover={function() {selected_datapoint = datapoint}}
+            onmouseout={function() {selected_datapoint = undefined}}/>
   {/each}
 </svg>
 
@@ -25,7 +27,6 @@
   svg {
     background-color: whitesmoke;
     margin: 5px;
-    padding: 20px;
   }
   circle {
     fill: steelblue;

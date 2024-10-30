@@ -3,16 +3,18 @@
   import { extent } from 'd3-array';
   import { schemeCategory10 } from 'd3-scale-chromatic';
 
-  export let datapoints = []
-  export let x
-  export let y
-  export let color
+  let {
+    datapoints = [],
+    x,
+    y,
+    color
+  } = $props();
 
-  $: xScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400])
-  $: yScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400])
-  $: colorScale = scaleOrdinal()
+  let xScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400]))
+  let yScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400]))
+  let colorScale = $derived(scaleOrdinal()
         .domain([...new Set(Object.values(color))].sort())
-        .range(schemeCategory10);
+        .range(schemeCategory10));
 </script>
 
 <svg width=400 height=400>

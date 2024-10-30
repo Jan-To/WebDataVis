@@ -1,11 +1,17 @@
 <script>
-  export let size = 40;
+  /**
+   * @typedef {Object} Props
+   * @property {number} [size]
+   */
+
+  /** @type {Props} */
+  let { size = 40 } = $props();
   let strokeWidth = size/10;
 
-  $: center = size / 2;
-  $: radius = (size - strokeWidth) / 2;
-  $: circumference = 2 * Math.PI * radius;
-  $: dashArray = `${0.25 * circumference} ${0.75 * circumference}`;
+  let center = $derived(size / 2);
+  let radius = $derived((size - strokeWidth) / 2);
+  let circumference = $derived(2 * Math.PI * radius);
+  let dashArray = $derived(`${0.25 * circumference} ${0.75 * circumference}`);
 </script>
 
 <svg

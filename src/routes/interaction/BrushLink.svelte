@@ -22,18 +22,11 @@
     })
 </script>
   
-<table>
-    <tr>
-        <td>
-            <Scatterplot 
-                bind:selected_datapoint={selected_datapoint} 
-                datapoints={datapoints} 
-                x="sepal_length" y="sepal_width"/>
-        </td>
-        <td>
-            <Scatterplot 
-                bind:selected_datapoint={selected_datapoint} 
-                datapoints={datapoints} 
-                x="petal_length" y="petal_width"/></td>
-    </tr>
-</table>
+<Scatterplot 
+    bind:selected_datapoint={selected_datapoint} 
+    datapoints={datapoints} 
+    x="sepal_length" y="sepal_width"/>
+<Scatterplot 
+    bind:selected_datapoint={selected_datapoint} 
+    datapoints={datapoints} 
+    x="petal_length" y="petal_width"/>

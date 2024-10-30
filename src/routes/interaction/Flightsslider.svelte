@@ -3,8 +3,8 @@
   import xml from "svelte-highlight/languages/xml";
   import { onMount } from "svelte";
 
-  let slider_value = 5000;
-  let datapoints = []
+  let slider_value = $state(5000);
+  let datapoints = $state([])
 
   onMount(() => {
     fetch("https://vda-lab.gitlab.io/datavis-technologies/assets/flights_part.json")

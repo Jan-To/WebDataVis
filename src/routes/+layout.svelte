@@ -5,8 +5,15 @@
   import { page } from '$app/stores';
   import { afterNavigate } from '$app/navigation';
 	import './styles.css';
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
 
-	let isOpen = true;
+	/** @type {Props} */
+	let { children } = $props();
+
+	let isOpen = $state(true);
 	afterNavigate(() => {
 		const contentwidth = parseInt(getComputedStyle(document.body).getPropertyValue('--max-width'), 10);
 		const sidebarwidth = parseInt(getComputedStyle(document.body).getPropertyValue('--sidebar-width'), 10);
@@ -31,7 +38,7 @@
 	{ href: base+'/styling', label: 'Style Svelte', path: "m2.53 19.65l1.34.56v-9.03l-2.43 5.86c-.41 1.02.08 2.19 1.09 2.61m19.5-3.7L17.07 3.98a2.01 2.01 0 0 0-1.81-1.23c-.26 0-.53.04-.79.15L7.1 5.95a2 2 0 0 0-1.08 2.6l4.96 11.97a2 2 0 0 0 2.6 1.08l7.36-3.05a1.994 1.994 0 0 0 1.09-2.6M7.88 8.75c-.55 0-1-.45-1-1s.45-1 1-1s1 .45 1 1s-.45 1-1 1m-2 11c0 1.1.9 2 2 2h1.45l-3.45-8.34z"},
     { href: base+'/ml', label: 'Machine Learning', path: "M2 9V5q0-.825.588-1.412T4 3h16q.825 0 1.413.588T22 5v4h-2V5H4v4zm2 9q-.825 0-1.412-.587T2 16v-5h2v5h16v-5h2v5q0 .825-.587 1.413T20 18zm-2 3q-.425 0-.712-.288T1 20t.288-.712T2 19h20q.425 0 .713.288T23 20t-.288.713T22 21zm0-10V9h6q.275 0 .525.15t.375.4l1.175 2.325L13.15 6.5q.125-.225.35-.363T14 6t.525.138t.375.412L16.125 9H22v2h-6.5q-.275 0-.525-.137t-.375-.413l-.65-1.325l-3.075 5.375q-.125.25-.375.375T9.975 15t-.513-.15t-.362-.4L7.375 11z"}
   ];
-	$: currentIndex = navItems.findIndex(item => item.href === $page.url.pathname);
+	let currentIndex = $derived(navItems.findIndex(item => item.href === $page.url.pathname));
 </script>
 
 <svelte:head>
@@ -48,7 +55,7 @@
 					While most content in this tutorial still applies, some commands may be <i>deprecated</i>. I am working on it.
 				</p>
 			</div>
-			<slot></slot>
+			{@render children?.()}
 			<div class=nextbuttons>
 				{#if currentIndex > 0}
 					<a class=button href="{navItems[currentIndex-1].href}">
@@ -56,7 +63,7 @@
 						{navItems[currentIndex-1].label}
 					</a>
 				{:else}
-					<div/>
+					<div></div>
 				{/if}
 				{#if currentIndex < navItems.length-1}
 					<a class=button href="{navItems[currentIndex+1].href}">

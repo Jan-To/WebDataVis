@@ -3,7 +3,7 @@
   import xml from "svelte-highlight/languages/xml";
   import { scaleLinear } from 'd3-scale';
 
-  export let data = [];
+  let { data = [] } = $props();
 
   const scaleX = scaleLinear().domain([-180,180]).range([0,800])
   const scaleY = scaleLinear().domain([-90,90]).range([400,0])

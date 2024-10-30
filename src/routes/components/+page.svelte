@@ -7,7 +7,7 @@
   import iris from '$lib/assets/iris.jpg';
   import flowers from '$lib/assets/flowers.png';
 
-  export let data = [];
+  let { data = [] } = $props();
 </script>
 
 <h1>Custom components</h1>

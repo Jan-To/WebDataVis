@@ -7,7 +7,7 @@
   import { scaleLinear } from 'd3-scale';
   import { extent } from 'd3-array';
 
-  let datapoints = [];
+  let datapoints = $state([]);
   let margins = {"left": 30, "top": 30, "bottom": 30, "right": 30};
 
   let x = "sepal_length"
@@ -23,13 +23,13 @@
     })
   })
   
-  $: xDomain = extent(datapoints, (d) => d.sepal_length)
-  $: yDomain = extent(datapoints, (d) => d.sepal_width)
-  $: xScale = scaleLinear().domain(xDomain).range([margins.left,300-margins.right])
-  $: yScale = scaleLinear().domain(yDomain).range([margins.top,300-margins.bottom])
+  let xDomain = $derived(extent(datapoints, (d) => d.sepal_length))
+  let yDomain = $derived(extent(datapoints, (d) => d.sepal_width))
+  let xScale = $derived(scaleLinear().domain(xDomain).range([margins.left,300-margins.right]))
+  let yScale = $derived(scaleLinear().domain(yDomain).range([margins.top,300-margins.bottom]))
   
-  $: xTicks = [4.5,5,5.5,6,6.5,7,7.5]
-  $: yTicks = [2,2.5,3,3.5,4]
+  let xTicks = $derived([4.5,5,5.5,6,6.5,7,7.5])
+  let yTicks = $derived([2,2.5,3,3.5,4])
 </script>
 
 <svg width=300 height=300>

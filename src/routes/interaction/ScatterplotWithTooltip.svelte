@@ -9,8 +9,8 @@
   import Papa from 'papaparse';
   import { onMount } from 'svelte';
 
-  let datapoints = []
-  let selected_datapoint = undefined
+  let datapoints = $state([])
+  let selected_datapoint = $state(undefined)
 
   let x = "sepal_length"
   let y = "sepal_width"
@@ -34,10 +34,10 @@
     })
   })
 
-  $: xScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400])
-  $: yScale = scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400])
+  let xScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[x]}))).range([0,400]))
+  let yScale = $derived(scaleLinear().domain(extent(datapoints.map((d) => { return d[y]}))).range([0,400]))
 
-  let mouse_x, mouse_y;
+  let mouse_x = $state(), mouse_y = $state();
   const setMousePosition = (e) => {
     mouse_x = e.clientX;
     mouse_y = e.clientY;
@@ -49,8 +49,8 @@
     <circle cx={xScale(datapoint[x])} cy={yScale(datapoint[y])}
             r=5
             class:selected="{selected_datapoint && datapoint.id == selected_datapoint.id}"
-            on:mouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}}
-            on:mouseout={function() {selected_datapoint = undefined}}>
+            onmouseover={function(event) {selected_datapoint = datapoint; setMousePosition(event)}}
+            onmouseout={function() {selected_datapoint = undefined}}>
       </circle>
   {/each}
 </svg>

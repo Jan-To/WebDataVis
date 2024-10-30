@@ -17,7 +17,7 @@
   import Arcs from "../svg/Arcs.svelte";
   import Axes from './Axes.svelte';
 
-  export let data = [];
+  let { data = [] } = $props();
 </script>
 
 <h1> Our first real scatterplot</h1>

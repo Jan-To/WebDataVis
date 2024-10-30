@@ -6,7 +6,7 @@
   import Scatterplot from "./Scatterplot.svelte";
   import Loadingspinner from "./Loadingspinner.svelte";
   
-  let resultPromise;
+  let resultPromise = $state();
 </script>
 
 <h1>Machine Learning in the Web</h1>
@@ -72,7 +72,7 @@ results = {
 }`}/>
 <p>Try running the script with the button below.</p>
 
-<button class=button on:click={runPythonStore.run}>Run Python Script</button>
+<button class=button onclick={runPythonStore.run}>Run Python Script</button>
 <div class=pyex>
 {#await resultPromise}
   <Loadingspinner size=100/>

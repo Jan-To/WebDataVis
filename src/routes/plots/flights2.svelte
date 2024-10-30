@@ -2,7 +2,7 @@
   import Highlight from "svelte-highlight";
   import javascript from "svelte-highlight/languages/javascript";
 
-  export let data;
+  let { data } = $props();
 
   const rescale = function(x, domain_min, domain_max, range_min, range_max) {
     return ((range_max - range_min)*(x-domain_min))/(domain_max-domain_min) + range_min

@@ -2,16 +2,22 @@
   import { page } from '$app/stores';
   import LastUpdated from './LastUpdated.svelte';
 
-  export let navItems = [];
 
-  export let isOpen = false;
+  /**
+   * @typedef {Object} Props
+   * @property {any} [navItems]
+   * @property {boolean} [isOpen]
+   */
+
+  /** @type {Props} */
+  let { navItems = [], isOpen = $bindable(false) } = $props();
   function toggleSidebar() {
     isOpen = !isOpen;
   }
 </script>
 
 <div class="sidebar-container">
-  <button on:click={toggleSidebar} class="toggle-btn button" aria-label="Toggle Sidebar">
+  <button onclick={toggleSidebar} class="toggle-btn button" aria-label="Toggle Sidebar">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 6h16M4 12h16M4 18h16" />
     </svg>
@@ -31,7 +37,7 @@
                 {/if}
               </a>
             </li>
-            {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label) }
+            {#if ['Code Vis','SVG','Load Data','Load Data','Maps & Graphs'].includes(item.label)}
               <hr/>
             {/if}
         {/each}

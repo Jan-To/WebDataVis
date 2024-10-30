@@ -4,22 +4,22 @@
   import { onMount } from 'svelte';
   import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
 
-  let nodes = [
+  let nodes = $state([
     {"id": 1,"name": "A"}, {"id": 2,"name": "B"},
     {"id": 3,"name": "C"}, {"id": 4,"name": "D"},
     {"id": 5,"name": "E"}, {"id": 6,"name": "F"},
     {"id": 7,"name": "G"}, {"id": 8,"name": "H"},
     {"id": 9,"name": "I"}, {"id": 10,"name": "J"}
-  ]
-  let links = [
+  ])
+  let links = $state([
     {"source": 1,"target": 2}, {"source": 1,"target": 5},
     {"source": 2,"target": 6}, {"source": 2,"target": 4},
     {"source": 2,"target": 7}, {"source": 3,"target": 4},
     {"source": 8,"target": 3}, {"source": 4,"target": 5},
     {"source": 4,"target": 9}, {"source": 5,"target": 10}
-  ]
+  ])
 
-  let draggedNode = null;
+  let draggedNode = $state(null);
   let simulation;
 
   function dragNode(event) {
@@ -49,8 +49,8 @@
 </script>
 
 <svg width="400" height="400" 
-  on:mousemove={dragNode}
-  on:mouseup={() => { if ( draggedNode ) { runSimulation() }; draggedNode = null; }}>
+  onmousemove={dragNode}
+  onmouseup={() => { if ( draggedNode ) { runSimulation() }; draggedNode = null; }}>
   {#each links as link}
   <line x1='{link.source.x}' y1='{link.source.y}'
         x2='{link.target.x}' y2='{link.target.y}' >
@@ -63,7 +63,7 @@
           cx={point.x}
           cy={point.y}
           r="8"
-          on:mousedown={() => { draggedNode = point ; runSimulation() } }
+          onmousedown={() => { draggedNode = point ; runSimulation() }}
           >
         <title>{point.id}</title>
       </circle>

@@ -1,11 +1,17 @@
 <script>
     import { onMount } from 'svelte';
   
-    export let owner = "jan-to";
-    export let repo = "WebDataVis";
-    export let branch = 'main';
+  /**
+   * @typedef {Object} Props
+   * @property {string} [owner]
+   * @property {string} [repo]
+   * @property {string} [branch]
+   */
+
+  /** @type {Props} */
+  let { owner = "jan-to", repo = "WebDataVis", branch = 'main' } = $props();
   
-    let lastUpdated = 'Loading...';
+    let lastUpdated = $state('Loading...');
   
     async function fetchLastUpdated() {
       try {
