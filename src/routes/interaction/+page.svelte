@@ -222,15 +222,17 @@
   that info back into the main code, from where it then can be passed to the other scatterplot.
 </p>
 
-<h2>Stores (are an old concept from Svelte 4. TODO)</h2>
+<h2>Global Variables</h2>
 
 <p>
-  Note that there are multiple ways of achieving this linking. Passing around data through the application hierarchy like above is feasible in this small example.
-  However, if there are more components that need to access (and possibly write) certain variables, Svelte provides so called <code>stores</code>.
-  Stores are variables that are declared in an extra file <code>stores.js</code> and are, after an <code>import x from "./store"</code>, accessible in all components.
-  Since <codes>stores</codes> are objects with a <code>subscribe</code> method, dependent components are responsive to changes of the store's value, 
-  which is accessible with <code>$x</code>. See the Svelte website for more <a href=https://learn.svelte.dev/tutorial/writable-stores target="_blank">exercises</a> or 
-  <a href=https://svelte.dev/examples/writable-stores target="_blank">examples</a> of stores.
+  There are multiple ways of achieving this linking. 
+  Passing around data through the application hierarchy like above is feasible in this small example.
+  However, if there are more components that need to access (and possibly write) certain variables, 
+  we may want a global reactive variable.
+  We can declare such variables in an extra file ending with <code>*.svelte.js</code> that we can access from anywhere.
+  Make them locally available with <code>import x from "./...*.svelte.js"</code>.
+  If you declare a global rune (<code>$state()</code> / <code>$derived()</code> / ...), dependent 
+  components are responsive to changes of the rune's value, just as with a local rune.
 </p>
 
 <!--
