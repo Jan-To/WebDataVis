@@ -13,7 +13,6 @@ async function initPyodide() {
 
 let pyodideReadyPromise = initPyodide();
 
-
 self.onmessage = async (event) => {
     // make sure loading is done (should be already)
     await pyodideReadyPromise;

@@ -2,11 +2,12 @@
   import { Highlight } from "svelte-highlight";
   import { javascript, xml, python } from "svelte-highlight/languages";
   import PythonWorker from "./PythonWorker.svelte";
-  import { runPythonStore } from "$lib/stores/worker";
   import Scatterplot from "./Scatterplot.svelte";
   import Loadingspinner from "./Loadingspinner.svelte";
   
+  let worker;
   let resultPromise = $state();
+  let clusters = $state(3);
 </script>
 
 <h1>Machine Learning in the Web</h1>
@@ -41,7 +42,9 @@
   but GitHub-Pages does not offer this functionality. If you need or want to use Python, injecting Python is a valid solution.
 </p>
 
-<h2>Injecting Python with Pyodide (code version Svelte 4)</h2>
+
+
+<h2>Injecting Python with Pyodide</h2>
 <p>
   We recommend to use <a href=https://pyodide.org/en/stable/ target=_blank>Pyodide</a> for injecting Python in JavaScript applications.
   Find an example on how to integrate Pyodide in Svelte below.
@@ -72,21 +75,17 @@ results = {
 }`}/>
 <p>Try running the script with the button below.</p>
 
-<button class=button onclick={runPythonStore.run}>Run Python Script</button>
+<button class=button onclick={worker.runCode}>Run Python Script</button>
 <div class=pyex>
 {#await resultPromise}
   <Loadingspinner size=100/>
   <p style='margin-bottom: 0.25rem;'>Setting up Pyodide environment.</p>
   <p style='margin-top: 0.25rem;'>This takes ~5 seconds the first time.</p>
-{:then results} 
-  {#if results?.data} 
-    <Scatterplot datapoints={results.data} x="0" y="1" color={results.labels} />
-  {:else}
-    <p>Press the button to run script in Pyodide.</p>      
-  {/if}
+{:then results}
+  <Scatterplot datapoints={results.data} x="0" y="1" color={results.labels} />
 {/await}
 </div>
-<PythonWorker scriptName='my_python_script.py' bind:resultPromise />
+<PythonWorker {clusters} bind:this={worker} bind:resultPromise />
 
 <p>
   The significant startup time stems from setting up the Python environment in the browser. Further calls to the environment run immediately.
@@ -103,6 +102,7 @@ results = {
   <li>The <b>worker API</b> that exposes an interface to communicate with the web worker.</li>
   <li>The <b>consumer</b> that wants to run the Python script. E.g. this page with our button.</li>
 </ul>
+
 <h3>Web Worker</h3>
 <p>The web worker will run in our separate worker thread. Hence, it needs to </p>
 <ul>
@@ -124,7 +124,6 @@ async function initPyodide() {
 }
 
 let pyodideReadyPromise = initPyodide();
-
 
 self.onmessage = async (event) => {
     // make sure loading is done (should be already)
@@ -176,30 +175,18 @@ self.onmessage = async (event) => {
 {`<script>
     import { base } from '$app/paths';
     import { onDestroy, onMount } from "svelte";
-    import { runPythonStore } from "$lib/stores/worker";
 
-    // get script context / parameters from stores 
-    // change to property, if you want to pass directly
-    import { n_clusters } from '$lib/stores/parameters';
-
-    let { resultPromise = $bindable(), scriptName } = $props();
+    let { resultPromise = $bindable(), clusters } = $props();
 
     let worker;
     let script;
     let id = 0;
     let callbacks = {};
 
-    // Make runCode() globally available by calling
-    // runCode() whenever the store 'runPythonCounter' changes.
-    // If runCode() is only called from parent component
-    // you can expose runCode() directly.
-    $: $runPythonStore && runCode();
-
     onMount(async () => {
         initWorker();
         await initScript();
-        // run script on startup or not
-        // runCode(); 
+        // runCode();      // run script on startup or not
     });
 
     async function initWorker() {
@@ -220,18 +207,17 @@ self.onmessage = async (event) => {
     }
 
     async function initScript() {
-        const response = await fetch(base + '/' + scriptName);
+        const response = await fetch(base + '/my_python_script.py');
         script = await response.text();
     }
 
-    function runCode() {
+    export function runCode() {
         if (!script) {
             console.log("Error: Trying to run worker without a valid Python script")
             return;
         }
-        // run script with current context
-        // context is a single store here, but could be data or local variable
-        resultPromise = runPythonAsync(script, { n_clusters: $n_clusters });
+        // run script with current context parameters
+        resultPromise = runPythonAsync(script, { n_clusters: clusters });
     }
 
     function runPythonAsync( script, context={} ) {
@@ -253,10 +239,8 @@ self.onmessage = async (event) => {
     });
 </script>`}/>
 <p>
-  The adjustable parts are in the beginning of the file. We chose to get the context parameter(s) from a global store as this may be the most realistic.
-  If they don't need global scope, you can expose them directly to the parent consumer. Similarly, we managed running the script <code>runCode()</code>
-  over an on-change-listener to another global store. Thereby the run-command is globally available as well. If you don't need global availability, you 
-  can solve this by exposing <code>runCode()</code> to the consumer directly.
+  The adjustable parts are in the beginning of the file. We hand down the context parameter(s) as a <code>$state</code> from the consumer 
+  as this may be the most realistic. Similarly, we expose running the script <code>runCode()</code> to the consumer as well.
 </p>
 
 <h3>Consumer</h3>
@@ -268,41 +252,19 @@ self.onmessage = async (event) => {
 <Highlight language={xml} code=
 {`<script>
   import PythonWorker from "./PythonWorker.svelte";
-  import { runPythonStore } from "$lib/stores/worker";
 
-  let resultPromise;
+  let worker;
+  let resultPromise = $state();
+  let clusters = $state(3);
 </script>
+<PythonWorker {clusters} bind:this={worker} bind:resultPromise />
 
-<button class=button on:click={runPythonStore.run}>Run Python Script</button>
-<!-- possible await structure, simpler scenarios may suffice -->
+<button class=button onclick={worker.runCode}>Run Python Script</button>
 {#await resultPromise}
-  <!-- loading spinner -->
-{:then results} 
-  {#if results?.data} 
-    <!-- do something with {results.data} or {results.labels} -->
-  {:else}
-    <!-- No data & not waiting on promise -->    
-  {/if}
-{/await}
-<PythonWorker scriptName='my_python_script.py' bind:resultPromise />`}/>
-
-<h3>Stores (optional)</h3>
-<p>
-  In the above, we requested computation with <code>runPythonStore.run</code>. We solve this via a store that counts upwards 
-  each time it is called. Here is how to define it:
-</p>
-<p style="margin-bottom: 1rem;"><code>lib/stores/worker.js</code></p>
-<Highlight language={javascript} code=
-{`import { writable } from 'svelte/store';
-
-export const runPythonStore = createRunCounter();
-
-function createRunCounter() {
-  const  { subscribe, set, update } = writable(0);
-  return { subscribe, set, update,
-      run: () => update(n => n + 1 % Number.MAX_SAFE_INTEGER)
-  };
-}`}/>
+  <!-- Loading Spinner -->
+{:then results}
+  <Scatterplot datapoints={results.data} x="0" y="1" color={results.labels} />
+{/await}`}/>
 
 <style>
   .pyex {

@@ -1,15 +1,8 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import { base } from '$app/paths';
     import { onDestroy, onMount } from "svelte";
-    import { runPythonStore } from "$lib/stores/worker";
 
-    // get script context / parameters from stores 
-    // change to property, if you want to pass directly
-    import { n_clusters } from '$lib/stores/parameters';
-
-    let { resultPromise = $bindable(), scriptName } = $props();
+    let { resultPromise = $bindable(), clusters } = $props();
 
     let worker;
     let script;
@@ -19,8 +12,7 @@
     onMount(async () => {
         initWorker();
         await initScript();
-        // run script on startup or not
-        // runCode(); 
+        // runCode();  // run script on startup or not
     });
 
     async function initWorker() {
@@ -41,18 +33,17 @@
     }
 
     async function initScript() {
-        const response = await fetch(base + '/' + scriptName);
+        const response = await fetch(base + '/my_python_script.py');
         script = await response.text();
     }
 
-    function runCode() {
+    export function runCode() {
         if (!script) {
             console.log("Error: Trying to run worker without a valid Python script")
             return;
         }
-        // run script with current context
-        // context is a single store here, but could be data or local variable
-        resultPromise = runPythonAsync(script, { n_clusters: $n_clusters });
+        // run script with current context parameters
+        resultPromise = runPythonAsync(script, { n_clusters: clusters });
     }
 
     function runPythonAsync( script, context={} ) {
@@ -71,13 +62,5 @@
         if (worker) {
             worker.terminate();
         }
-    });
-    
-    // make runCode() globally available:
-    // call runCode() whenever the store runPythonCounter changes
-    // if runCode() is only called from parent component:
-    // expose runCode() directly
-    run(() => {
-        $runPythonStore && runCode();
     });
 </script>
