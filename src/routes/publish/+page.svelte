@@ -43,7 +43,8 @@
   <li>
     We want to deploy a <i>static site</i>, so we configure the corresponding 
     <a href=https://kit.svelte.dev/docs/adapter-static#github-pages target=_blank>Svelte adapter</a> to <i>static</i>. 
-    Therefore, we change the file <code>svelte.config.js</code> like below. 
+    Therefore, we add <code>"@sveltejs/adapter-static": "^3.0.0",</code> to our development dependencies defined in <code>package.json</code>. 
+    Then we use this static adapter in <code>svelte.config.js</code> like below. 
 
 <Highlight language={javascript} code=
 {`import adapter from '@sveltejs/adapter-static';

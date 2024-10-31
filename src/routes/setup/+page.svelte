@@ -51,7 +51,21 @@ npm run dev -- --open
 `}/>
 
 <p>
-  The first step will create a new directory (called <code>{`my-app`}</code>) with your application. It will ask you for some information 
+  The first step will create a new directory (called <code>{`my-app`}</code>) with your application. It will ask you for some further information:
+</p>
+<ul>
+  <li>Which template to choose: We recommend an empty skeleton.</li>
+  <li>
+    Whether to use TypeScript: This is up to you. TypeScript brings type-safety and higher-quality code, but we won't focus on teaching you this. 
+    For our small demo-projects, postponing to learn TypeScript is fine.
+  </li>
+  <li>
+    Which helper libraries you want to include: We recommend to only pick concepts you are familiar with and can decide if you want them or not.
+    You don't necessarily need any of them, so you can skip.
+  </li>
+</ul>
+
+<p>
   like if you'd want to have an empty (skeleton) setup, or already have demo code included. The <code>{`npm run install`}</code> installs 
   all dependencies (which are listed in the <code>{`package.json`}</code> file). 
 </p>
