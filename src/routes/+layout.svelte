@@ -51,7 +51,7 @@
 		<div class='content'>
 			<div class=intermezzo>
 				<p>
-					With unfortunate timing, <i>Svelte</i> received a major update from <i>version 4</i> to <i>5</i> on the day of our kickoff meeting. 
+					<i>Svelte</i> received a major update (v5) on the day of our kickoff meeting. 
 					All content should be updated by now, but please message me, if you notice errors.
 				</p>
 			</div>
