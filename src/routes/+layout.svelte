@@ -51,8 +51,7 @@
 		<div class='content'>
 			<div class=intermezzo>
 				<p>
-					<i>Svelte</i> received a major update (v5) on the day of our kickoff meeting. 
-					All content should be updated by now, but please message me, if you notice errors.
+					<i>Svelte</i> is updated regularly. We try to keep the content up to date, but some things may be outdated. Please message me, if you notice errors.
 				</p>
 			</div>
 			{@render children?.()}
